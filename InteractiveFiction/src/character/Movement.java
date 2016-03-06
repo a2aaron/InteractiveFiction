@@ -16,4 +16,8 @@ public class Movement {
 		return currentRoom;
 	}
 	
+	public String getCurrentRoomName() {
+		return currentRoom.getRoomName();
+	}
+	
 }
