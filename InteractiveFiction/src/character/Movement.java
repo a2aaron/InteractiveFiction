@@ -7,9 +7,25 @@ public class Movement {
 	public Movement(CompassRoom room) {
 		this.currentRoom = room;
 	}
+	/**
+	 * Returns 0 on success and
+	 * -1 on failure to move.
+	 */
+	public boolean canMove(String direction) {
+		if (currentRoom.getExitRoom(direction) == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	
 	public void move(String direction) {
-			currentRoom = currentRoom.getExitRoom(direction); 
+		if (canMove(direction) == true) {
+			currentRoom = currentRoom.getExitRoom(direction);
+		} else {
+			// Can't move, just ignore.
+		}
 	}
 	
 	public CompassRoom getCurrentRoom() {
