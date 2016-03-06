@@ -23,6 +23,10 @@ public class CompassRoom {
 		this.westExit = w;
 	}
 	
+	public CompassRoom(String name) {
+		this.roomName = name;
+	}
+	
 	public void linkRoom(String direction, CompassRoom room) {
 		switch(direction) {
 		case "north":
@@ -46,7 +50,8 @@ public class CompassRoom {
 				return southExit;
 			case "west":
 				return westExit;
-		}	
+		}
+		
 		// If none of the above apply
 		return null;
 	}
