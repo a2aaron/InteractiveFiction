@@ -10,10 +10,10 @@ public class CompassRoom {
 	String roomName;
 	
 	// TODO: This would be much better as an Enum.
-	CompassRoom northExit;
-	CompassRoom eastExit;
-	CompassRoom southExit;
-	CompassRoom westExit;
+	CompassRoom northExit = null;
+	CompassRoom eastExit = null;
+	CompassRoom southExit = null;
+	CompassRoom westExit = null;
 
 	public CompassRoom(String name, CompassRoom n, CompassRoom e, CompassRoom s, CompassRoom w) {
 		this.roomName = name;
@@ -26,17 +26,24 @@ public class CompassRoom {
 	public CompassRoom(String name) {
 		this.roomName = name;
 	}
-	
-	public void linkRoom(String direction, CompassRoom room) {
-		switch(direction) {
+
+	/**
+	 * Link a room from this room to another room 
+	 * */
+	public void linkTo(String direction, CompassRoom room) {
+		switch(direction.toLowerCase()) {
 		case "north":
 			northExit = room;
+			break;
 		case "east":
 			eastExit = room;
+			break;
 		case "south":
 			southExit = room;
+			break;
 		case "west":
 			westExit = room;
+			break;
 		}
 	}
 	
