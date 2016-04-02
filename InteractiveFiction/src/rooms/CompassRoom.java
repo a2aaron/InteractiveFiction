@@ -1,14 +1,14 @@
 package rooms;
 
 public class CompassRoom {
-/**
- * TODO: Make CompassRoom a subclass of a generic room class
- * CompassRoom has four exits, north, south, east, and west.
- * These exits should be other rooms. Note that CompassRooms do not
- * have to have Eucledian geometry.
- */
+	/**
+	 * TODO: Make CompassRoom a subclass of a generic room class
+	 * CompassRoom has four exits, north, south, east, and west.
+	 * These exits should be other rooms. Note that CompassRooms do not
+	 * have to have Eucledian geometry.
+	 */
 	String roomName;
-	
+
 	// TODO: This would be much better as an Enum.
 	CompassRoom northExit = null;
 	CompassRoom eastExit = null;
@@ -22,7 +22,7 @@ public class CompassRoom {
 		this.southExit = s;
 		this.westExit = w;
 	}
-	
+
 	public CompassRoom(String name) {
 		this.roomName = name;
 	}
@@ -54,16 +54,16 @@ public class CompassRoom {
 
 	public CompassRoom getExitRoom(String direction) {
 		switch(direction) {
-			case "north":
-				return northExit;
-			case "east":
-				return eastExit;
-			case "south":
-				return southExit;
-			case "west":
-				return westExit;
+		case "north":
+			return northExit;
+		case "east":
+			return eastExit;
+		case "south":
+			return southExit;
+		case "west":
+			return westExit;
 		}
-		
+
 		// If none of the above apply
 		return null;
 	}
