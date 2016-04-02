@@ -1,8 +1,11 @@
 package character;
 
 import rooms.CompassRoom;
+import types.Directions;
+import types.Directions.CompassDirections;
 
 public class Movement {
+	Directions directionHelper = new Directions();
 	CompassRoom currentRoom;
 	public Movement(CompassRoom room) {
 		this.currentRoom = room;
@@ -11,8 +14,8 @@ public class Movement {
 	 * Returns true on success and
 	 * false on failure to move.
 	 */
-	public boolean canMove(String direction) {
-		if (isMovement(direction)) {
+	public boolean canMove(CompassDirections direction) {
+		if (directionHelper.isCompassDirection(direction)) {
 			if (currentRoom.getExitRoom(direction) == null) {
 				return false;
 			} else {
@@ -23,24 +26,9 @@ public class Movement {
 		}
 	}
 	
-	public boolean isMovement(String direction) {
-		switch(direction) {
-		case "north":
-			return true;
-		case "east":
-			return true;
-		case "south":
-			return true;
-		case "west":
-			return true;
-		default:
-			return false;
-		}
-	}
-	
-	public void move(String direction) {
-		if (canMove(direction) == true) {
-			currentRoom = currentRoom.getExitRoom(direction);
+	public void move(CompassDirections directions) {
+		if (canMove(directions) == true) {
+			currentRoom = currentRoom.getExitRoom(directions);
 		} else {
 			// Can't move, just ignore.
 		}
@@ -52,6 +40,10 @@ public class Movement {
 	
 	public String getCurrentRoomName() {
 		return currentRoom.getRoomName();
+	}
+	
+	public String getCurrentRoomDescription() {
+		return currentRoom.getRoomDescription();
 	}
 	
 }

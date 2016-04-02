@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import character.Movement;
 import rooms.CompassRoom;
+import types.Directions.CompassDirections;
+
 
 public class MovementTest {
 	
@@ -16,19 +18,19 @@ public class MovementTest {
 		CompassRoom westRoom = new CompassRoom("This room has a west exit");
 		CompassRoom eastRoom = new CompassRoom("This room has a east exit");
 		// Link rooms.
-		westRoom.linkTo("west", eastRoom);
-		eastRoom.linkTo("east", westRoom);
+		westRoom.linkTo(CompassDirections.West, eastRoom);
+		eastRoom.linkTo(CompassDirections.East, westRoom);
 		// Initialize player in west exit room.
 		Movement player = new Movement(westRoom);
 		// Should be able to move west.
 		assertEquals(westRoom, player.getCurrentRoom());
-		assertEquals(true, player.canMove("west"));
-		assertEquals(false, player.canMove("east"));
+		assertEquals(true, player.canMove(CompassDirections.West));
+		assertEquals(false, player.canMove(CompassDirections.East));
 		// Move west into eastRoom.
-		player.move("west");
+		player.move(CompassDirections.West);
 		// Should be able to move east.
 		assertEquals(eastRoom, player.getCurrentRoom());
-		assertSame(false, player.canMove("west"));
-		assertSame(true, player.canMove("east"));
+		assertSame(false, player.canMove(CompassDirections.West));
+		assertSame(true, player.canMove(CompassDirections.East));
 	}
 }

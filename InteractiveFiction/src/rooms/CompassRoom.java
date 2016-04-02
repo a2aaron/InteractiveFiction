@@ -1,6 +1,8 @@
 package rooms;
 
-public class CompassRoom {
+import types.Directions.CompassDirections;
+
+public class CompassRoom{
 	/**
 	 * TODO: Make CompassRoom a subclass of a generic room class
 	 * CompassRoom has four exits, north, south, east, and west.
@@ -8,12 +10,10 @@ public class CompassRoom {
 	 * have to have Eucledian geometry.
 	 */
 	String roomName;
-
+	String roomDescription;
 	// TODO: This would be much better as an Enum.
-	CompassRoom northExit = null;
-	CompassRoom eastExit = null;
-	CompassRoom southExit = null;
-	CompassRoom westExit = null;
+	CompassRoom northExit, eastExit, southExit, westExit = null;
+	
 
 	public CompassRoom(String name, CompassRoom n, CompassRoom e, CompassRoom s, CompassRoom w) {
 		this.roomName = name;
@@ -27,79 +27,65 @@ public class CompassRoom {
 		this.roomName = name;
 	}
 
+	public CompassRoom(String name, String description) {
+		this.roomName = name;
+		this.roomDescription = description;
+	}
+	
 	/**
 	 * Link a room from this room to another room 
 	 * */
-	public void linkTo(String direction, CompassRoom room) {
-		switch(direction.toLowerCase()) {
-		case "north":
+	public void linkTo(CompassDirections direction, CompassRoom room) {
+		switch(direction) {
+		case North:
 			northExit = room;
 			break;
-		case "east":
+		case East:
 			eastExit = room;
 			break;
-		case "south":
+		case South:
 			southExit = room;
 			break;
-		case "west":
+		case West:
 			westExit = room;
 			break;
 		}
 	}
 
-	public void twoSidedLink(String direction, CompassRoom room) {
+	public void twoSidedLink(CompassDirections direction, CompassRoom room) {
 		linkTo(direction, room);
-		room.linkTo(getReverseDirection(direction), this);
+		room.linkTo(direction.getOpposite(direction), this);
 	}
 
-	public CompassRoom getExitRoom(String direction) {
+	public CompassRoom getExitRoom(CompassDirections direction) {
 		switch(direction) {
-		case "north":
+		case North:
 			return northExit;
-		case "east":
+		case East:
 			return eastExit;
-		case "south":
+		case South:
 			return southExit;
-		case "west":
+		case West:
 			return westExit;
+		default:
+			return null;
 		}
+	}
 
-		// If none of the above apply
-		return null;
-	}
-	public void setRoomName(String name){
-		roomName = name;
-	}
 	public String getRoomName(){
 		return roomName;
 	}
 
-	//TODO: Make direction it's own data type, probably.
-	public String getReverseDirection(String direction) {
-		switch(direction) {
-		case "north":
-			return "south";
-		case "east":
-			return "west";
-		case "south":
-			return "north";
-		case "west":
-			return "east";
-			//		case "left":
-			//			return "right";
-			//		case "right":
-			//			return "left";
-			//		case "up":
-			//			return "down";
-			//		case "down":
-			//			return "up";
-			//		case "forwards":
-			//			return "backwards";
-			//		case "backwards":
-			//			return "forward";
-		default:
-			return "none";
-		}
+	public String getRoomDescription() {
+		return roomDescription;
+		
 	}
-
+	
+	public void setRoomName(String name){
+		roomName = name;
+	}
+	
+	public void setRoomDescription(String description) {
+		roomDescription = description;
+	}
 }
