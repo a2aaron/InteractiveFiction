@@ -8,17 +8,35 @@ public class Movement {
 		this.currentRoom = room;
 	}
 	/**
-	 * Returns 0 on success and
-	 * -1 on failure to move.
+	 * Returns true on success and
+	 * false on failure to move.
 	 */
 	public boolean canMove(String direction) {
-		if (currentRoom.getExitRoom(direction) == null) {
-			return false;
+		if (isMovement(direction)) {
+			if (currentRoom.getExitRoom(direction) == null) {
+				return false;
+			} else {
+				return true;
+			}
 		} else {
-			return true;
+			return false;
 		}
 	}
 	
+	public boolean isMovement(String direction) {
+		switch(direction) {
+		case "north":
+			return true;
+		case "east":
+			return true;
+		case "south":
+			return true;
+		case "west":
+			return true;
+		default:
+			return false;
+		}
+	}
 	
 	public void move(String direction) {
 		if (canMove(direction) == true) {
