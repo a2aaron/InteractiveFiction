@@ -46,7 +46,12 @@ public class CompassRoom {
 			break;
 		}
 	}
-	
+
+	public void twoSidedLink(String direction, CompassRoom room) {
+		linkTo(direction, room);
+		room.linkTo(getReverseDirection(direction), this);
+	}
+
 	public CompassRoom getExitRoom(String direction) {
 		switch(direction) {
 			case "north":
@@ -68,4 +73,33 @@ public class CompassRoom {
 	public String getRoomName(){
 		return roomName;
 	}
+
+	//TODO: Make direction it's own data type, probably.
+	public String getReverseDirection(String direction) {
+		switch(direction) {
+		case "north":
+			return "south";
+		case "east":
+			return "west";
+		case "south":
+			return "north";
+		case "west":
+			return "east";
+			//		case "left":
+			//			return "right";
+			//		case "right":
+			//			return "left";
+			//		case "up":
+			//			return "down";
+			//		case "down":
+			//			return "up";
+			//		case "forwards":
+			//			return "backwards";
+			//		case "backwards":
+			//			return "forward";
+		default:
+			return "none";
+		}
+	}
+
 }

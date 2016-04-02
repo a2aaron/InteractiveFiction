@@ -61,4 +61,16 @@ public class RoomLinkerTest {
 		assertEquals("eastRoom should not have an east exit.",
 				null, eastRoom.getExitRoom("east"));
 	}
+	
+	@Test
+	public void twoWayLinkTest() {
+		CompassRoom northRoom = new CompassRoom("Has south exit.");
+		CompassRoom southRoom = new CompassRoom("Has north exit.");
+		northRoom.twoSidedLink("south", southRoom);
+
+		assertEquals("northRoom should link to southRoom.",
+				southRoom, northRoom.getExitRoom("south"));
+		assertEquals("southRoom should link to southRoom.",
+				northRoom, southRoom.getExitRoom("north"));		
+	}
 }
