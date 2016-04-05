@@ -2,7 +2,12 @@ package rooms;
 
 import types.Directions.CompassDirections;
 
-public class CompassRoom{
+import java.util.ArrayList;
+
+import types.AbstractItem;
+import types.Vace;
+
+public class CompassRoom extends GenericRoom{
 	/**
 	 * TODO: Make CompassRoom a subclass of a generic room class
 	 * CompassRoom has four exits, north, south, east, and west.
@@ -11,11 +16,13 @@ public class CompassRoom{
 	 */
 	String roomName;
 	String roomDescription;
-	// TODO: This would be much better as an Enum.
+	// TODO: Change to entrances and exits.
 	CompassRoom northExit, eastExit, southExit, westExit = null;
+	RoomInventory roomInventory;
 	
 
-	public CompassRoom(String name, CompassRoom n, CompassRoom e, CompassRoom s, CompassRoom w) {
+	public CompassRoom(String name, String description, CompassRoom n, CompassRoom e, CompassRoom s, CompassRoom w) {
+		super(name, description);
 		this.roomName = name;
 		this.northExit = n;
 		this.eastExit = e;
@@ -24,18 +31,20 @@ public class CompassRoom{
 	}
 
 	public CompassRoom(String name) {
-		this.roomName = name;
+		super(name, null);
 	}
 
 	public CompassRoom(String name, String description) {
-		this.roomName = name;
-		this.roomDescription = description;
+		super(name, description);
+		roomInventory = new RoomInventory(
+				new Vace("Example Vace",
+						"This is a vace with a color!\n", "green"));
 	}
 	
 	/**
 	 * Link a room from this room to another room 
 	 * */
-	public void linkTo(CompassDirections direction, CompassRoom room) {
+	public void linkRoomTo(CompassDirections direction, CompassRoom room) {
 		switch(direction) {
 		case North:
 			northExit = room;
@@ -53,8 +62,8 @@ public class CompassRoom{
 	}
 
 	public void twoSidedLink(CompassDirections direction, CompassRoom room) {
-		linkTo(direction, room);
-		room.linkTo(direction.getOpposite(direction), this);
+		linkRoomTo(direction, room);
+		room.linkRoomTo(direction.getOpposite(direction), this);
 	}
 
 	public CompassRoom getExitRoom(CompassDirections direction) {
@@ -71,21 +80,16 @@ public class CompassRoom{
 			return null;
 		}
 	}
-
-	public String getRoomName(){
-		return roomName;
-	}
-
-	public String getRoomDescription() {
-		return roomDescription;
-		
+	
+	public RoomInventory getRoomInventory() {
+		return roomInventory;
 	}
 	
-	public void setRoomName(String name){
-		roomName = name;
+	public ArrayList<AbstractItem> getRoomItems() {
+		return roomInventory.getInventoryList();
 	}
 	
-	public void setRoomDescription(String description) {
-		roomDescription = description;
+	public void addItem(AbstractItem item) {
+		roomInventory.addItem(item);
 	}
 }

@@ -1,11 +1,16 @@
 package world;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import character.Inventory;
 import character.Movement;
 import rooms.CompassRoom;
+import rooms.RoomInventory;
+import types.AbstractItem;
 import types.Directions;
 import types.Directions.CompassDirections;
+import types.Vace;
 
 public class Interpreter {
 	public Interpreter() {
@@ -14,7 +19,7 @@ public class Interpreter {
 
 	public static void main(String[] args) {
 		Scanner playerInput = new Scanner(System.in);
-		
+
 		CompassRoom startingRoom = new CompassRoom(
 				"Starting Room", "This is the room you start in!");
 		CompassRoom northRoom = new CompassRoom(
@@ -29,35 +34,81 @@ public class Interpreter {
 		startingRoom.twoSidedLink(CompassDirections.East, eastRoom);
 		startingRoom.twoSidedLink(CompassDirections.West, westRoom);
 		startingRoom.twoSidedLink(CompassDirections.South, southRoom);
-		
+
 		Movement player = new Movement(startingRoom);
+		Inventory playerInventory = new Inventory(null);
 		Directions directionHelper = new Directions();
 		boolean playing = true;
 		while(playing) {
-			System.out.println("You are in room: " + player.getCurrentRoomName());
-			System.out.println("Enter a movement command.");
+			System.out.print("[" + player.getCurrentRoomName() + "] > ");
 			String command = playerInput.nextLine().toLowerCase();
 			if(directionHelper.isCompassDirection(command)) {
 				CompassDirections direction = directionHelper.StringToDirection(command);
 				if (player.canMove(direction)) {
-					player.move(direction);	
+					player.move(direction);
 				} else {
 					System.out.println("Can't move there.");
 				}
 			} else {
-				if (command.equals("quit")) {
+				switch(command) {
+				case "quit":
 					playing = false;
 					playerInput.close();
 					System.out.println("Quit. Goodbye");
-				} else if (command.equals("help")) {
+					break;
+				case "help":
 					System.out.println("Help? What help?");
-				} else if (command.equals("look")) {
+					break;
+				case "look":
 					String description = player.getCurrentRoom().getRoomDescription();
+					System.out.println("---[DESCRIPTION]---");
 					System.out.println(description);
-				} else {
+					System.out.println("-------------");
+					System.out.println("---[ITEMS]---");
+					ArrayList<AbstractItem> roomItems =
+						player.getCurrentRoom()
+						.getRoomInventory()
+						.getInventoryList();
+					
+					for(AbstractItem item : roomItems) {
+							System.out.println("[" + item.getName() + "]"); 
+							System.out.println(item.getDescription());
+					}
+					System.out.println("-------------");
+					break;
+				case "i":
+				case "inventory":
+					System.out.println(playerInventory.getInventory());
+					break;
+				case "rename":
+				case "rename room":
+					System.out.println("Type a new name for the room.");
+					String newName = playerInput.nextLine();
+					player.getCurrentRoom().setRoomName(newName);
+					break;
+				case "add vace":
+					System.out.println("Type color of vace");
+					String color = playerInput.nextLine();
+					player.getCurrentRoom().addItem(
+							new Vace("Debug Vace", "Hello World!\n", color));
+					break;
+				case "break all":
+					ArrayList<AbstractItem> breakItems = player.getCurrentRoom()
+					.getRoomInventory()
+					.getInventoryList();
+
+					for(AbstractItem item : breakItems) {
+						if (item instanceof Vace) {
+							((Vace) item).breakVace();
+							System.out.println("Broke: " + item.getName());
+						}
+					}
+					break;
+				default:
 					System.out.println("Invalid Command: [" + command +"]");
+
 				}
 			} 
-		}		
+		}
 	}
 }

@@ -18,8 +18,8 @@ public class MovementTest {
 		CompassRoom westRoom = new CompassRoom("This room has a west exit");
 		CompassRoom eastRoom = new CompassRoom("This room has a east exit");
 		// Link rooms.
-		westRoom.linkTo(CompassDirections.West, eastRoom);
-		eastRoom.linkTo(CompassDirections.East, westRoom);
+		westRoom.linkRoomTo(CompassDirections.West, eastRoom);
+		eastRoom.linkRoomTo(CompassDirections.East, westRoom);
 		// Initialize player in west exit room.
 		Movement player = new Movement(westRoom);
 		// Should be able to move west.

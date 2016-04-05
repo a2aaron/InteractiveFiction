@@ -1,23 +1,68 @@
 package rooms;
 
-public abstract class GenericRoom {
+import java.util.ArrayList;
+
+import types.AbstractItem;
+import types.Directions.CompassDirections;
+
+public class GenericRoom {
 	String roomName;
 	String roomDescription;
+	RoomInventory roomInventory;
+	ArrayList<CompassDirections> exits = new ArrayList<CompassDirections>();
+	ArrayList<CompassDirections> entrances = new ArrayList<CompassDirections>();
 	
 	public GenericRoom() {
-		// TODO Auto-generated constructor stub
+		
+	}
+	
+	public GenericRoom(String name, String description) {
+		roomName = name;
+		roomDescription = description;
 	} 
 	
-	public abstract void addExit(Enum<?> exit);
-	public abstract void linkExitTo(GenericRoom room);
+	public GenericRoom(RoomInventory items) {
+		roomInventory = items;
+	}
 	
-	public String getRoomName() { return roomName;}
-	public String getRoomDescription() { return roomDescription; }
-	public abstract Enum<?> getExits();
-	public abstract Enum<?> getEntrances();
+	public void addItem(AbstractItem item) {
+		roomInventory.addItem(item);
+	}
+	
+	public void addExit(CompassDirections exit) {
+		exits.add(exit);
+	}
+	
+	public void addEntrance(CompassDirections entrance) {
+		exits.add(entrance);
+	}
+	
+	public void linkRoomTo(CompassDirections direction, GenericRoom room) {
+		exits.add(direction);
+		entrances.add(direction.getOpposite(direction));
+	}
+	
+	public String getRoomName() {
+		return roomName;
+	}
+	
+	public String getRoomDescription() {
+		return roomDescription;
+	}
+	
+	public ArrayList<AbstractItem> getRoomItems() {
+		return roomInventory.getInventoryList();
+	}
+	
+	public RoomInventory getRoomInventory() {
+		return roomInventory;
+	}
 
-	public void setRoomName(String roomName) { this.roomName = roomName; }
-	public void setRoomDescription(String roomDescription) { this.roomDescription = roomDescription; }
-	public abstract Enum<?> setExits();
-	public abstract Enum<?> setEntrances();
+	public void setRoomName(String newName) {
+		roomName = newName;
+	}
+	
+	public void setRoomDescription(String newDescription) {
+		roomDescription = newDescription;
+	}
 }

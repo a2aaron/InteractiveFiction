@@ -1,6 +1,11 @@
 package types;
 
 public class Directions {
+	/* TODO: These are directions, however a class
+	 * which handles links (direction, starting room, destination room)
+	 * would be highly useful. 
+	 */ 
+	
 	public enum CompassDirections {
 		North, South, East, West;
 

@@ -13,7 +13,7 @@ public class RoomLinkerTest {
 	public void oneWayLinkTest() {
 		CompassRoom exitRoom = new CompassRoom("exitRoom");
 		CompassRoom noExit = new CompassRoom("noExit");
-		exitRoom.linkTo(CompassDirections.North, noExit);
+		exitRoom.linkRoomTo(CompassDirections.North, noExit);
 		assertEquals("exitRoom should link to noExit.",
 				noExit, exitRoom.getExitRoom(CompassDirections.North));
 		assertEquals("noExit should not link to exit room",
@@ -30,14 +30,14 @@ public class RoomLinkerTest {
 		assertEquals("southRoom is unlinked and should not have any exit.",
 				null, southRoom.getExitRoom(CompassDirections.North));
 		
-		northRoom.linkTo(CompassDirections.South, southRoom);
+		northRoom.linkRoomTo(CompassDirections.South, southRoom);
 		assertEquals("northRoom should link to southRoom.",
 				southRoom, northRoom.getExitRoom(CompassDirections.South));
 		
 		assertEquals("southRoom is still unlinked and should not have any exit.",
 				null, southRoom.getExitRoom(CompassDirections.North));
 
-		southRoom.linkTo(CompassDirections.North, northRoom);
+		southRoom.linkRoomTo(CompassDirections.North, northRoom);
 		assertEquals("southRoom should link to southRoom.",
 				northRoom, southRoom.getExitRoom(CompassDirections.North));		
 		
@@ -49,8 +49,8 @@ public class RoomLinkerTest {
 		CompassRoom eastRoom = new CompassRoom("eastRoom");
 		CompassRoom westRoom = new CompassRoom("westRoom");
 		// Link rooms.
-		westRoom.linkTo(CompassDirections.East, eastRoom); // [west] -> [east]
-		eastRoom.linkTo(CompassDirections.West, westRoom); // [west] <- [east]
+		westRoom.linkRoomTo(CompassDirections.East, eastRoom); // [west] -> [east]
+		eastRoom.linkRoomTo(CompassDirections.West, westRoom); // [west] <- [east]
 		
 		assertEquals("westRoom should link east to eastRoom.",
 				eastRoom, westRoom.getExitRoom(CompassDirections.East));
