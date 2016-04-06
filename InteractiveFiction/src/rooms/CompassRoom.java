@@ -37,8 +37,7 @@ public class CompassRoom extends GenericRoom{
 	public CompassRoom(String name, String description) {
 		super(name, description);
 		roomInventory = new RoomInventory(
-				new Vace("Example Vace",
-						"This is a vace with a color!\n", "green"));
+				new Vace(name + " Vace", "green"));
 	}
 	
 	/**
@@ -85,7 +84,7 @@ public class CompassRoom extends GenericRoom{
 		return roomInventory;
 	}
 	
-	public ArrayList<AbstractItem> getRoomItems() {
+	public ArrayList<AbstractItem> getRoomInventoryList() {
 		return roomInventory.getInventoryList();
 	}
 	

@@ -14,6 +14,10 @@ public class Vace extends AbstractItem {
 		itemName = name;
 	}
 	
+	public Vace(String name, String color) {
+		this(name, "", color);
+	}
+	
 	public String getColor() {
 		return color;
 	}
@@ -32,13 +36,14 @@ public class Vace extends AbstractItem {
 			command == "look " + itemName) {
 			getDescription();
 		} else if (command == "break " + itemName && isBroken == false) {
-			breakVace();
+			breakItem();
 		} else {
 			System.out.println("Invalid command: " + command);
 		}
 	}
 	
-	public void breakVace() {
+	@Override
+	public void breakItem() {
 		isBroken = true;
 		setDescription("This vace is broken");
 	}
@@ -46,6 +51,6 @@ public class Vace extends AbstractItem {
 	@Override
 	public void useItem() {
 		// TODO: Should this do anything else?
-		breakVace();
+		breakItem();
 	}
 }

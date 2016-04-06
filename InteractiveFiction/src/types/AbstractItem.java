@@ -12,5 +12,6 @@ public abstract class AbstractItem {
 	
 	public String getDescription() { return itemDescription; }
 	public String getName() { return itemName; }
-	abstract void useItem();
+	public abstract void useItem();
+	public abstract void breakItem();
 }

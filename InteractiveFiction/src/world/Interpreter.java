@@ -3,9 +3,11 @@ package world;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import character.Interact;
 import character.Inventory;
 import character.Movement;
 import rooms.CompassRoom;
+import rooms.GenericRoom;
 import rooms.RoomInventory;
 import types.AbstractItem;
 import types.Directions;
@@ -35,13 +37,16 @@ public class Interpreter {
 		startingRoom.twoSidedLink(CompassDirections.West, westRoom);
 		startingRoom.twoSidedLink(CompassDirections.South, southRoom);
 
-		Movement player = new Movement(startingRoom);
-		Inventory playerInventory = new Inventory(null);
+		Inventory playerInventory = new Inventory();
 		Directions directionHelper = new Directions();
+		Movement player = new Movement(startingRoom);
+		Interact playerInteractor = new Interact(playerInventory);
 		boolean playing = true;
 		while(playing) {
-			System.out.print("[" + player.getCurrentRoomName() + "] > ");
+			System.out.print("[" + player.getCurrentRoom().getRoomName() + "] > ");
 			String command = playerInput.nextLine().toLowerCase();
+			Inventory currentRoomInventory = player.getCurrentRoomInventory();
+			GenericRoom currentRoom = player.getCurrentRoom();
 			if(directionHelper.isCompassDirection(command)) {
 				CompassDirections direction = directionHelper.StringToDirection(command);
 				if (player.canMove(direction)) {
@@ -51,64 +56,138 @@ public class Interpreter {
 				}
 			} else {
 				switch(command) {
+				case "q":
 				case "quit":
 					playing = false;
 					playerInput.close();
 					System.out.println("Quit. Goodbye");
 					break;
+				case "h":
 				case "help":
 					System.out.println("Help? What help?");
 					break;
+				case "l":
 				case "look":
-					String description = player.getCurrentRoom().getRoomDescription();
+					String description = player.getCurrentRoomDescription();
 					System.out.println("---[DESCRIPTION]---");
 					System.out.println(description);
-					System.out.println("-------------");
-					System.out.println("---[ITEMS]---");
-					ArrayList<AbstractItem> roomItems =
-						player.getCurrentRoom()
-						.getRoomInventory()
-						.getInventoryList();
-					
-					for(AbstractItem item : roomItems) {
-							System.out.println("[" + item.getName() + "]"); 
-							System.out.println(item.getDescription());
-					}
-					System.out.println("-------------");
+					System.out.println("-------------\n");
+					printItems(currentRoomInventory);
 					break;
 				case "i":
 				case "inventory":
-					System.out.println(playerInventory.getInventory());
+					printItems(playerInventory.getInventory());
 					break;
-				case "rename":
-				case "rename room":
-					System.out.println("Type a new name for the room.");
-					String newName = playerInput.nextLine();
-					player.getCurrentRoom().setRoomName(newName);
-					break;
-				case "add vace":
-					System.out.println("Type color of vace");
-					String color = playerInput.nextLine();
-					player.getCurrentRoom().addItem(
-							new Vace("Debug Vace", "Hello World!\n", color));
-					break;
+				case "take":
+				{
+					printItems(currentRoom);
+					String itemName = askForInput("Take what?", playerInput);
+					if (currentRoomInventory.hasItemByName(itemName)) {
+						AbstractItem item = currentRoomInventory.getItemByName(itemName);
+						playerInteractor.takeItem(currentRoom, item);
+						System.out.println("Took the " + itemName);
+					} else {
+						System.out.println("Can't find " + itemName);
+					}
+				}
+				break;
+				case "take all":
+				{
+					ArrayList<AbstractItem> inventoryList = currentRoomInventory.getInventoryList();
+					
+					if (currentRoomInventory.numberOfItems() == 0) {
+						System.out.println("No items to take.");
+					} else {
+						while(currentRoomInventory.numberOfItems() != 0) {
+							AbstractItem item = inventoryList.get(0);
+							playerInventory.takeItem(item, currentRoomInventory);
+							System.out.println("Took: " + item.getName());
+						} 
+					}
+				}
+				break;
+				case "break":
+				{
+					printItems(currentRoom);
+					String itemName = askForInput("Break what?", playerInput);
+					if (currentRoomInventory.hasItemByName(itemName)) {
+						AbstractItem item = currentRoomInventory.getItemByName(itemName);
+						playerInteractor.breakItem(item);
+					}
+				}
+				break;
 				case "break all":
-					ArrayList<AbstractItem> breakItems = player.getCurrentRoom()
-					.getRoomInventory()
-					.getInventoryList();
-
+				{
+					ArrayList<AbstractItem> breakItems = currentRoomInventory.getInventoryList();
 					for(AbstractItem item : breakItems) {
-						if (item instanceof Vace) {
-							((Vace) item).breakVace();
-							System.out.println("Broke: " + item.getName());
-						}
+						playerInteractor.breakItem(item);
+						System.out.println("Broke: " + item.getName());
+					}
+				}
+				break;
+				case "use":
+				{
+					if (playerInventory.numberOfItems() != 0) {
+						printItems(playerInventory);
+						String itemName = askForInput("Use what?", playerInput);
+						if (playerInventory.hasItemByName(itemName)) {
+							AbstractItem item = playerInventory.getItemByName(itemName);
+							playerInteractor.useItem(item);
+						} else {
+							System.out.println("Can't find " + itemName);
+						} 
 					}
 					break;
+				}
+				case "add":
+				case "add vace":
+				{
+					System.out.println("Type color of vace");
+					String color = playerInput.nextLine();
+					currentRoom.addItem(new Vace("Debug Vace", color));
+				}
+				break;
+
+				case "rename":
+				case "rename room":
+				{
+					System.out.println("Type a new name for the room.");
+					String newName = playerInput.nextLine();
+					currentRoom.setRoomName(newName);
+				}
+				break;
 				default:
 					System.out.println("Invalid Command: [" + command +"]");
-
 				}
 			} 
 		}
+	}
+
+	public static void printItems(GenericRoom room) {
+		ArrayList<AbstractItem> inventoryList = room.getRoomInventory().getInventoryList();
+		printItems(inventoryList);
+	}
+
+	public static void printItems(Inventory inventory) {
+		ArrayList<AbstractItem> inventoryList = inventory.getInventoryList();
+		printItems(inventoryList);
+	}
+
+	public static void printItems(ArrayList<AbstractItem> inventoryList) {
+		System.out.println("---[ITEMS]---");
+		if (inventoryList.size() != 0) {
+			for (AbstractItem item : inventoryList) {
+				System.out.println("[" + item.getName() + "]");
+				System.out.println(item.getDescription());
+			} 
+		} else {
+			System.out.println("No items.");
+		}
+		System.out.println("-------------");		
+	}
+
+	public static String askForInput(String question, Scanner player) {
+		System.out.println(question);
+		return player.nextLine();
 	}
 }

@@ -50,7 +50,7 @@ public class GenericRoom {
 		return roomDescription;
 	}
 	
-	public ArrayList<AbstractItem> getRoomItems() {
+	public ArrayList<AbstractItem> getRoomInventoryList() {
 		return roomInventory.getInventoryList();
 	}
 	
