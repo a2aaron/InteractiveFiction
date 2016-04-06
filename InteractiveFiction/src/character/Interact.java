@@ -1,8 +1,8 @@
 package character;
 
+import items.AbstractItem;
+import items.BreakableItem;
 import rooms.GenericRoom;
-import types.AbstractItem;
-import types.Vace;
 
 public class Interact {
 	Inventory playerInventory;
@@ -23,7 +23,7 @@ public class Interact {
 		playerInventory.takeItem(item, currentRoom.getRoomInventory());
 	}
 	
-	public void breakItem(AbstractItem item) {
+	public void breakItem(BreakableItem item) {
 		item.breakItem();
 	}
 }

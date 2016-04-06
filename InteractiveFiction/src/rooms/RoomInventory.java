@@ -3,7 +3,7 @@ package rooms;
 import java.util.ArrayList;
 
 import character.Inventory;
-import types.AbstractItem;
+import items.AbstractItem;
 
 public class RoomInventory extends Inventory {
 	

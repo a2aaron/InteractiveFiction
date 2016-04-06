@@ -2,7 +2,7 @@ package character;
 
 import java.util.ArrayList;
 
-import types.AbstractItem;
+import items.AbstractItem;
 
 public class Inventory {
 	ArrayList<AbstractItem> inventoryList = new ArrayList<AbstractItem>();

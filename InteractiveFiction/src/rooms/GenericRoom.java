@@ -2,7 +2,7 @@ package rooms;
 
 import java.util.ArrayList;
 
-import types.AbstractItem;
+import items.AbstractItem;
 import types.Directions.CompassDirections;
 
 public class GenericRoom {

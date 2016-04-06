@@ -6,13 +6,14 @@ import java.util.Scanner;
 import character.Interact;
 import character.Inventory;
 import character.Movement;
+import items.AbstractItem;
+import items.BreakableItem;
+import items.Vace;
 import rooms.CompassRoom;
 import rooms.GenericRoom;
 import rooms.RoomInventory;
-import types.AbstractItem;
 import types.Directions;
 import types.Directions.CompassDirections;
-import types.Vace;
 
 public class Interpreter {
 	public Interpreter() {
@@ -112,7 +113,9 @@ public class Interpreter {
 					String itemName = askForInput("Break what?", playerInput);
 					if (currentRoomInventory.hasItemByName(itemName)) {
 						AbstractItem item = currentRoomInventory.getItemByName(itemName);
-						playerInteractor.breakItem(item);
+						if (item instanceof BreakableItem) {
+							playerInteractor.breakItem((BreakableItem) item);
+						}
 					}
 				}
 				break;
@@ -120,8 +123,10 @@ public class Interpreter {
 				{
 					ArrayList<AbstractItem> breakItems = currentRoomInventory.getInventoryList();
 					for(AbstractItem item : breakItems) {
-						playerInteractor.breakItem(item);
-						System.out.println("Broke: " + item.getName());
+						if (item instanceof BreakableItem) {
+							playerInteractor.breakItem((BreakableItem) item);
+							System.out.println("Broke: " + item.getName());
+						}
 					}
 				}
 				break;

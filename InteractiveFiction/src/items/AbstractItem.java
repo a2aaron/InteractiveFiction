@@ -1,4 +1,4 @@
-package types;
+package items;
 
 public abstract class AbstractItem {
 	String itemName;
@@ -13,5 +13,4 @@ public abstract class AbstractItem {
 	public String getDescription() { return itemDescription; }
 	public String getName() { return itemName; }
 	public abstract void useItem();
-	public abstract void breakItem();
 }

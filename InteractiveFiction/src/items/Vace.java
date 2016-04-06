@@ -1,7 +1,6 @@
-package types;
+package items;
 
-public class Vace extends AbstractItem {
-
+public class Vace extends BreakableItem {
 	boolean isBroken = false;
 	String color;
 	String itemDescription;
@@ -21,15 +20,7 @@ public class Vace extends AbstractItem {
 	public String getColor() {
 		return color;
 	}
-	
-	public String getDescription() {
-		return itemDescription;
-	}
-
-	public void setDescription(String newDescription) {
-		itemDescription = newDescription;
-	}
-	
+		
 	public void useItem(String command) {
 		command = command.toLowerCase();
 		if (command == "examine " + itemName ||
@@ -51,6 +42,15 @@ public class Vace extends AbstractItem {
 	@Override
 	public void useItem() {
 		// TODO: Should this do anything else?
-		breakItem();
+		breakItem();		
 	}
+
+	public String getDescription() {
+		return itemDescription;
+	}
+	
+	public void setDescription(String newDescription) {
+		itemDescription = newDescription;
+	}
+
 }

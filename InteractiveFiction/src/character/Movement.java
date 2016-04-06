@@ -2,8 +2,8 @@ package character;
 
 import java.util.ArrayList;
 
+import items.AbstractItem;
 import rooms.CompassRoom;
-import types.AbstractItem;
 import types.Directions;
 import types.Directions.CompassDirections;
 

@@ -4,8 +4,8 @@ import types.Directions.CompassDirections;
 
 import java.util.ArrayList;
 
-import types.AbstractItem;
-import types.Vace;
+import items.AbstractItem;
+import items.Vace;
 
 public class CompassRoom extends GenericRoom{
 	/**
