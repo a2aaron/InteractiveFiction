@@ -2,14 +2,13 @@ package rooms;
 
 import types.Directions.CompassDirections;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import items.AbstractItem;
 import items.Vace;
 
-public class CompassRoom extends GenericRoom{
+public class CompassRoom extends GenericRoom {
 	/**
-	 * TODO: Make CompassRoom a subclass of a generic room class
 	 * CompassRoom has four exits, north, south, east, and west.
 	 * These exits should be other rooms. Note that CompassRooms do not
 	 * have to have Eucledian geometry.
@@ -36,8 +35,8 @@ public class CompassRoom extends GenericRoom{
 
 	public CompassRoom(String name, String description) {
 		super(name, description);
-		roomInventory = new RoomInventory(
-				new Vace(name + " Vace", "green"));
+		roomInventory = new RoomInventory();
+		addItem(new Vace(name + " Vace", "green"));
 	}
 	
 	/**
@@ -84,7 +83,7 @@ public class CompassRoom extends GenericRoom{
 		return roomInventory;
 	}
 	
-	public ArrayList<AbstractItem> getRoomInventoryList() {
+	public CopyOnWriteArrayList<AbstractItem> getRoomInventoryList() {
 		return roomInventory.getInventoryList();
 	}
 	

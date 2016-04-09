@@ -1,16 +1,15 @@
 package items;
 
 public abstract class AbstractItem {
-	String itemName;
-	String itemDescription;
+	String name;
+	String description;
 	
 	public AbstractItem(String name, String description) {
-		itemName = name;
-		itemDescription = description;
+		this.name = name;
+		this.description = description;
 	}
 	
-	
-	public String getDescription() { return itemDescription; }
-	public String getName() { return itemName; }
+	public String getDescription() { return description; }
+	public String getName() { return name; }
 	public abstract void useItem();
 }

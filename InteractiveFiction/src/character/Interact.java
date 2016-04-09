@@ -1,8 +1,10 @@
 package character;
 
 import items.AbstractItem;
-import items.BreakableItem;
+import items.IBreakableItem;
+import items.ITakeableItem;
 import rooms.GenericRoom;
+import rooms.RoomInventory;
 
 public class Interact {
 	Inventory playerInventory;
@@ -19,11 +21,32 @@ public class Interact {
 		item.useItem();
 	}
 	
-	public void takeItem(GenericRoom currentRoom, AbstractItem item) {
-		playerInventory.takeItem(item, currentRoom.getRoomInventory());
+	public void takeItem(AbstractItem item, RoomInventory inventory) {
+		playerInventory.takeItem(item, inventory);
 	}
 	
-	public void breakItem(BreakableItem item) {
+	public void takeItem(AbstractItem item, GenericRoom room) {
+		playerInventory.takeItem(item, room.getRoomInventory());
+	}
+
+	public boolean canTakeItem(AbstractItem item) {
+		if (item instanceof ITakeableItem) {
+			if (((ITakeableItem) item).isTakeable()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void breakItem(IBreakableItem item) {
 		item.breakItem();
+	}
+	
+	public void tryBreakItem(AbstractItem item) {
+		if (item instanceof IBreakableItem) {
+			if (!((IBreakableItem) item).isBroken()) {
+				((IBreakableItem) item).breakItem();
+			}
+		}
 	}
 }

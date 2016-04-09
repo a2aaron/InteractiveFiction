@@ -1,6 +1,6 @@
 package rooms;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import items.AbstractItem;
 import types.Directions.CompassDirections;
@@ -9,8 +9,8 @@ public class GenericRoom {
 	String roomName;
 	String roomDescription;
 	RoomInventory roomInventory;
-	ArrayList<CompassDirections> exits = new ArrayList<CompassDirections>();
-	ArrayList<CompassDirections> entrances = new ArrayList<CompassDirections>();
+	CopyOnWriteArrayList<CompassDirections> exits = new CopyOnWriteArrayList<CompassDirections>();
+	CopyOnWriteArrayList<CompassDirections> entrances = new CopyOnWriteArrayList<CompassDirections>();
 	
 	public GenericRoom() {
 		
@@ -50,7 +50,7 @@ public class GenericRoom {
 		return roomDescription;
 	}
 	
-	public ArrayList<AbstractItem> getRoomInventoryList() {
+	public CopyOnWriteArrayList<AbstractItem> getRoomInventoryList() {
 		return roomInventory.getInventoryList();
 	}
 	

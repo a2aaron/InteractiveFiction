@@ -1,11 +1,11 @@
 package character;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import items.AbstractItem;
 
 public class Inventory {
-	ArrayList<AbstractItem> inventoryList = new ArrayList<AbstractItem>();
+	CopyOnWriteArrayList<AbstractItem> inventoryList = new CopyOnWriteArrayList<AbstractItem>();
 	
 	public Inventory(AbstractItem item) {
 		inventoryList.add(item);
@@ -13,7 +13,7 @@ public class Inventory {
 	
 	public Inventory() {  }
 
-	public ArrayList<AbstractItem> getInventory() {
+	public CopyOnWriteArrayList<AbstractItem> getInventory() {
 		return inventoryList;
 	}
 	
@@ -63,7 +63,7 @@ public class Inventory {
 		takeFrom.removeItem(item);
 	}
 	
-	public ArrayList<AbstractItem> getInventoryList() {
+	public CopyOnWriteArrayList<AbstractItem> getInventoryList() {
 		return inventoryList;
 	}
 	

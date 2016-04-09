@@ -1,6 +1,7 @@
 package character;
 
-import java.util.ArrayList;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import items.AbstractItem;
 import rooms.CompassRoom;
@@ -53,7 +54,7 @@ public class Movement {
 		return currentRoom.getRoomInventory();
 	}
 	
-	public ArrayList<AbstractItem> getCurrentRoomInventoryList() {
+	public CopyOnWriteArrayList<AbstractItem> getCurrentRoomInventoryList() {
 		return currentRoom.getRoomInventoryList();
 	}
 }

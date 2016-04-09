@@ -13,4 +13,8 @@ public class RoomInventory extends Inventory {
 		super(item);
 		roomList.add(item);
 	}
+
+	public RoomInventory() {
+		super();
+	}
 }

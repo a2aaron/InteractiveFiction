@@ -1,13 +1,14 @@
 package world;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import character.Interact;
 import character.Inventory;
 import character.Movement;
 import items.AbstractItem;
-import items.BreakableItem;
+import items.IBreakableItem;
 import items.Vace;
 import rooms.CompassRoom;
 import rooms.GenericRoom;
@@ -37,11 +38,14 @@ public class Interpreter {
 		startingRoom.twoSidedLink(CompassDirections.East, eastRoom);
 		startingRoom.twoSidedLink(CompassDirections.West, westRoom);
 		startingRoom.twoSidedLink(CompassDirections.South, southRoom);
-
+		
+		startingRoom.addItem(new Vace("TEST", "HELP"));
+		
 		Inventory playerInventory = new Inventory();
 		Directions directionHelper = new Directions();
 		Movement player = new Movement(startingRoom);
 		Interact playerInteractor = new Interact(playerInventory);
+		
 		boolean playing = true;
 		while(playing) {
 			System.out.print("[" + player.getCurrentRoom().getRoomName() + "] > ");
@@ -85,8 +89,10 @@ public class Interpreter {
 					String itemName = askForInput("Take what?", playerInput);
 					if (currentRoomInventory.hasItemByName(itemName)) {
 						AbstractItem item = currentRoomInventory.getItemByName(itemName);
-						playerInteractor.takeItem(currentRoom, item);
-						System.out.println("Took the " + itemName);
+						if(playerInteractor.canTakeItem(item)) {
+							playerInteractor.takeItem(item, currentRoom);
+							System.out.println("Took the " + itemName);
+						}
 					} else {
 						System.out.println("Can't find " + itemName);
 					}
@@ -94,37 +100,38 @@ public class Interpreter {
 				break;
 				case "take all":
 				{
-					ArrayList<AbstractItem> inventoryList = currentRoomInventory.getInventoryList();
-					
-					if (currentRoomInventory.numberOfItems() == 0) {
-						System.out.println("No items to take.");
+					CopyOnWriteArrayList<AbstractItem> inventoryList = currentRoomInventory.getInventoryList();
+					if (currentRoomInventory.numberOfItems() != 0) {
+						Iterator<AbstractItem> iter = inventoryList.iterator(); 
+						while (iter.hasNext()) {
+							AbstractItem item = iter.next();
+							if (playerInteractor.canTakeItem(item)) {
+								playerInteractor.takeItem(item, currentRoom);
+								System.out.println("Took: " + item.getName());
+							}
+						}
 					} else {
-						while(currentRoomInventory.numberOfItems() != 0) {
-							AbstractItem item = inventoryList.get(0);
-							playerInventory.takeItem(item, currentRoomInventory);
-							System.out.println("Took: " + item.getName());
-						} 
+						System.out.println("No items to take.");
 					}
+					break;
+
 				}
-				break;
 				case "break":
 				{
 					printItems(currentRoom);
 					String itemName = askForInput("Break what?", playerInput);
 					if (currentRoomInventory.hasItemByName(itemName)) {
 						AbstractItem item = currentRoomInventory.getItemByName(itemName);
-						if (item instanceof BreakableItem) {
-							playerInteractor.breakItem((BreakableItem) item);
-						}
+						playerInteractor.tryBreakItem(item);
 					}
 				}
 				break;
 				case "break all":
 				{
-					ArrayList<AbstractItem> breakItems = currentRoomInventory.getInventoryList();
+					CopyOnWriteArrayList<AbstractItem> breakItems = currentRoomInventory.getInventoryList();
 					for(AbstractItem item : breakItems) {
-						if (item instanceof BreakableItem) {
-							playerInteractor.breakItem((BreakableItem) item);
+						if (item instanceof IBreakableItem) {
+							playerInteractor.tryBreakItem(item);
 							System.out.println("Broke: " + item.getName());
 						}
 					}
@@ -169,16 +176,16 @@ public class Interpreter {
 	}
 
 	public static void printItems(GenericRoom room) {
-		ArrayList<AbstractItem> inventoryList = room.getRoomInventory().getInventoryList();
+		CopyOnWriteArrayList<AbstractItem> inventoryList = room.getRoomInventory().getInventoryList();
 		printItems(inventoryList);
 	}
 
 	public static void printItems(Inventory inventory) {
-		ArrayList<AbstractItem> inventoryList = inventory.getInventoryList();
+		CopyOnWriteArrayList<AbstractItem> inventoryList = inventory.getInventoryList();
 		printItems(inventoryList);
 	}
 
-	public static void printItems(ArrayList<AbstractItem> inventoryList) {
+	public static void printItems(CopyOnWriteArrayList<AbstractItem> inventoryList) {
 		System.out.println("---[ITEMS]---");
 		if (inventoryList.size() != 0) {
 			for (AbstractItem item : inventoryList) {
