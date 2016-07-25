@@ -9,7 +9,7 @@ public class GenericRoom {
 	String roomName;
 	String roomDescription;
 	String extendedRoomDescription;
-	RoomInventory roomInventory;
+	RoomInventory roomInventory = new RoomInventory();
 	CopyOnWriteArrayList<CompassDirections> exits = new CopyOnWriteArrayList<CompassDirections>();
 	CopyOnWriteArrayList<CompassDirections> entrances = new CopyOnWriteArrayList<CompassDirections>();
 	
