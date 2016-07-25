@@ -9,7 +9,9 @@ import character.Inventory;
 import character.Movement;
 import items.AbstractItem;
 import items.IBreakableItem;
+import items.Lever;
 import items.Vace;
+import items.Lever.LeverPosition;
 import rooms.CompassRoom;
 import rooms.GenericRoom;
 import rooms.RoomInventory;
@@ -40,6 +42,7 @@ public class Interpreter {
 		startingRoom.twoSidedLink(CompassDirections.South, southRoom);
 		
 		startingRoom.addItem(new Vace("TEST", "HELP"));
+		startingRoom.addItem(new Lever("Lever", "This is a lever!", LeverPosition.Up));
 		
 		Inventory playerInventory = new Inventory();
 		Directions directionHelper = new Directions();
