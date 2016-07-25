@@ -56,6 +56,8 @@ public class Interpreter {
 				CompassDirections direction = directionHelper.StringToDirection(command);
 				if (player.canMove(direction)) {
 					player.move(direction);
+					currentRoom = player.getCurrentRoom();
+					System.out.println(currentRoom.getRoomDescription());
 				} else {
 					System.out.println("Can't move there.");
 				}
@@ -73,7 +75,7 @@ public class Interpreter {
 					break;
 				case "l":
 				case "look":
-					String description = player.getCurrentRoomDescription();
+					String description = currentRoom.getExtendedRoomDescription();
 					System.out.println("---[DESCRIPTION]---");
 					System.out.println(description);
 					System.out.println("-------------\n");

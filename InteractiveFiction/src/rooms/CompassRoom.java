@@ -15,6 +15,7 @@ public class CompassRoom extends GenericRoom {
 	 */
 	String roomName;
 	String roomDescription;
+	String extendedRoomDescrption;
 	// TODO: Change to entrances and exits.
 	CompassRoom northExit, eastExit, southExit, westExit = null;
 	RoomInventory roomInventory;
@@ -37,6 +38,8 @@ public class CompassRoom extends GenericRoom {
 		super(name, description);
 		roomInventory = new RoomInventory();
 		addItem(new Vace(name + " Vace", "green"));
+		roomDescription = "You are in the " + name + ".\n";
+		extendedRoomDescription = description;
 	}
 	
 	/**

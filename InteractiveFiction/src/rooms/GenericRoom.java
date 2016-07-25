@@ -8,6 +8,7 @@ import types.Directions.CompassDirections;
 public class GenericRoom {
 	String roomName;
 	String roomDescription;
+	String extendedRoomDescription;
 	RoomInventory roomInventory;
 	CopyOnWriteArrayList<CompassDirections> exits = new CopyOnWriteArrayList<CompassDirections>();
 	CopyOnWriteArrayList<CompassDirections> entrances = new CopyOnWriteArrayList<CompassDirections>();
@@ -48,6 +49,10 @@ public class GenericRoom {
 	
 	public String getRoomDescription() {
 		return roomDescription;
+	}
+	
+	public String getExtendedRoomDescription() {
+	    return extendedRoomDescription;
 	}
 	
 	public CopyOnWriteArrayList<AbstractItem> getRoomInventoryList() {
