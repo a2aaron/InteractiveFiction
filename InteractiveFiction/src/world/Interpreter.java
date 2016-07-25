@@ -92,6 +92,8 @@ public class Interpreter {
 						if(playerInteractor.canTakeItem(item)) {
 							playerInteractor.takeItem(item, currentRoom);
 							System.out.println("Took the " + itemName);
+						} else {
+						    System.out.println("Can't take the " + itemName);
 						}
 					} else {
 						System.out.println("Can't find " + itemName);
@@ -122,32 +124,45 @@ public class Interpreter {
 					String itemName = askForInput("Break what?", playerInput);
 					if (currentRoomInventory.hasItemByName(itemName)) {
 						AbstractItem item = currentRoomInventory.getItemByName(itemName);
-						playerInteractor.tryBreakItem(item);
+						if (item instanceof IBreakableItem) {
+						    if(((IBreakableItem) item).isBroken()) {
+						        System.out.println(itemName + " is already broken!");
+						    } else {
+						        playerInteractor.tryBreakItem(item);
+						    }
+						} else {
+						    System.out.println("Can't break the " + itemName);
+						};
 					}
 				}
 				break;
 				case "break all":
 				{
 					CopyOnWriteArrayList<AbstractItem> breakItems = currentRoomInventory.getInventoryList();
+					boolean allBroken = true; //Check if any item was broken
 					for(AbstractItem item : breakItems) {
-						if (item instanceof IBreakableItem) {
-							playerInteractor.tryBreakItem(item);
-							System.out.println("Broke: " + item.getName());
+						if (item instanceof IBreakableItem && playerInteractor.tryBreakItem(item)) {
+						    allBroken = false;
 						}
+					}
+					if (allBroken) {
+					    System.out.println("You already broke everything you could!");
 					}
 				}
 				break;
 				case "use":
 				{
-					if (playerInventory.numberOfItems() != 0) {
-						printItems(playerInventory);
-						String itemName = askForInput("Use what?", playerInput);
-						if (playerInventory.hasItemByName(itemName)) {
-							AbstractItem item = playerInventory.getItemByName(itemName);
-							playerInteractor.useItem(item);
-						} else {
-							System.out.println("Can't find " + itemName);
-						} 
+				    printItems(playerInventory);
+				    printItems(currentRoomInventory);
+				    String itemName = askForInput("Use what?", playerInput);
+					if (playerInventory.hasItemByName(itemName)) {
+						AbstractItem item = playerInventory.getItemByName(itemName);
+						playerInteractor.useItem(item);
+					} else if (currentRoomInventory.hasItemByName(itemName)) {
+					    AbstractItem item = currentRoomInventory.getItemByName(itemName);
+					    item.useItem();
+					} else {
+					    System.out.println("Can't find that item");
 					}
 					break;
 				}
@@ -186,7 +201,7 @@ public class Interpreter {
 	}
 
 	public static void printItems(CopyOnWriteArrayList<AbstractItem> inventoryList) {
-		System.out.println("---[ITEMS]---");
+	    System.out.println("---[ITEMS]---");
 		if (inventoryList.size() != 0) {
 			for (AbstractItem item : inventoryList) {
 				System.out.println("[" + item.getName() + "]");

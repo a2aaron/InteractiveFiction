@@ -26,12 +26,17 @@ public class Inventory {
 	}
 	
 	public boolean hasItemByName(String itemName) {
+	    if (numberOfItems() == 0) {
+	        return false;
+	    }
+
 		for(int i = 0; i < inventoryList.size(); i++) {
 			AbstractItem item = inventoryList.get(i);
 			if (item.getName().equals(itemName)) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 	

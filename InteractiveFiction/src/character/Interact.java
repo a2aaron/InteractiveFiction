@@ -41,12 +41,18 @@ public class Interact {
 	public void breakItem(IBreakableItem item) {
 		item.breakItem();
 	}
-	
-	public void tryBreakItem(AbstractItem item) {
+	/**
+	 * 
+	 * @param item
+	 * @return true if it succeeds, false if it does not
+	 */
+	public boolean tryBreakItem(AbstractItem item) {
 		if (item instanceof IBreakableItem) {
 			if (!((IBreakableItem) item).isBroken()) {
 				((IBreakableItem) item).breakItem();
+				return true;
 			}
 		}
+		return false;
 	}
 }

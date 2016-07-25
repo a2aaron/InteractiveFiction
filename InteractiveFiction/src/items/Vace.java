@@ -34,6 +34,7 @@ public class Vace extends AbstractItem implements IBreakableItem, ITakeableItem 
 	
 	public void breakItem() {
 		isBroken = true;
+		System.out.println("You break the " + name + ".");
 		setDescription("This vace is broken");
 	}
 
