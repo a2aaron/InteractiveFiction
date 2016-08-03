@@ -9,45 +9,66 @@ import character.Inventory;
 import character.Movement;
 import items.AbstractItem;
 import items.IBreakableItem;
+import items.IItemUseableOn;
+import items.Key;
 import items.Lever;
 import items.Vace;
+import items.Door.DoorState;
 import items.Lever.LeverPosition;
+import items.LockedDoor;
 import rooms.CompassRoom;
 import rooms.GenericRoom;
+import rooms.LockedDoorRoom;
 import rooms.RoomInventory;
 import types.Directions;
 import types.Directions.CompassDirections;
 
 public class Interpreter {
+	static Scanner playerInput;
+	static Inventory playerInventory;
+	static Directions directionHelper;
+	static Movement player;
+	static Interact playerInteractor;
+	
 	public Interpreter() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
-		Scanner playerInput = new Scanner(System.in);
-
 		CompassRoom startingRoom = new CompassRoom(
 				"Starting Room", "This is the room you start in!");
+		startingRoom.addItem(new Vace("TEST", "HELP"));
+		startingRoom.addItem(new Lever("Lever", "This is a lever!", LeverPosition.Up));
+		
 		CompassRoom northRoom = new CompassRoom(
 				"North Room","It's the north pole!");
 		CompassRoom eastRoom = new CompassRoom(
 				"East Room", "Easter.");
 		CompassRoom westRoom = new CompassRoom(
 				"West Room", "Wester.");
-		CompassRoom southRoom = new CompassRoom(
-				"South Room", "A southern farm.");
+		
+		Key key = new Key("Key", "It's a key");
+		LockedDoor lockedDoor = new LockedDoor("Locked Door", "Locked Door Description", 
+				DoorState.Closed, key);
+
+		LockedDoorRoom southRoom = new LockedDoorRoom(
+				"South Room", "A southern farm.", lockedDoor, CompassDirections.South);
+		southRoom.addItem(key);
+		southRoom.addItem(lockedDoor);
+
+		CompassRoom lockedRoom = new CompassRoom("Locked Room", "Locks");
+		southRoom.twoSidedLink(CompassDirections.South, lockedRoom);
+		
 		startingRoom.twoSidedLink(CompassDirections.North, northRoom);
 		startingRoom.twoSidedLink(CompassDirections.East, eastRoom);
 		startingRoom.twoSidedLink(CompassDirections.West, westRoom);
 		startingRoom.twoSidedLink(CompassDirections.South, southRoom);
 		
-		startingRoom.addItem(new Vace("TEST", "HELP"));
-		startingRoom.addItem(new Lever("Lever", "This is a lever!", LeverPosition.Up));
-		
-		Inventory playerInventory = new Inventory();
-		Directions directionHelper = new Directions();
-		Movement player = new Movement(startingRoom);
-		Interact playerInteractor = new Interact(playerInventory);
+		playerInput = new Scanner(System.in);
+		playerInventory = new Inventory();
+		directionHelper = new Directions();
+		player = new Movement(startingRoom);
+		playerInteractor = new Interact(playerInventory);
 		
 		boolean playing = true;
 		while(playing) {
@@ -160,12 +181,21 @@ public class Interpreter {
 				    printItems(playerInventory);
 				    printItems(currentRoomInventory);
 				    String itemName = askForInput("Use what?", playerInput);
+				    // Search player inventory, then room inventory for the item to use.
 					if (playerInventory.hasItemByName(itemName)) {
 						AbstractItem item = playerInventory.getItemByName(itemName);
-						playerInteractor.useItem(item);
+						if (item instanceof IItemUseableOn) { // Item can be used on something else
+							tryUseItemUseableOn(currentRoomInventory, item);
+						} else {
+							playerInteractor.useItem(item);
+						}
 					} else if (currentRoomInventory.hasItemByName(itemName)) {
 					    AbstractItem item = currentRoomInventory.getItemByName(itemName);
-					    item.useItem();
+						if (item instanceof IItemUseableOn) { // Item can be used on something else
+							tryUseItemUseableOn(currentRoomInventory, item);
+						} else {
+							item.useItem();
+						}
 					} else {
 					    System.out.println("Can't find that item");
 					}
@@ -195,6 +225,22 @@ public class Interpreter {
 		}
 	}
 
+	public static void tryUseItemUseableOn(Inventory currentRoomInventory, AbstractItem itemToUse) {
+		if (itemToUse instanceof IItemUseableOn) { // Item can be used on something else
+			String itemUsedOnName = askForInput("Use " + itemToUse.getName() + " on what?", playerInput);
+			// Search player inventory, then search room inventory for the item to be used on. 
+			if (playerInventory.hasItemByName(itemUsedOnName)) {
+				AbstractItem itemUsedOn = playerInventory.getItemByName(itemUsedOnName);
+				((IItemUseableOn) itemToUse).useItemOn(itemUsedOn);
+			} else if (currentRoomInventory.hasItemByName(itemUsedOnName)) {
+				AbstractItem itemUsedOn = currentRoomInventory.getItemByName(itemUsedOnName);
+				((IItemUseableOn) itemToUse).useItemOn(itemUsedOn);
+			} else {
+				System.out.println("Can't find that item.");
+			}
+		}
+	}
+	
 	public static void printItems(GenericRoom room) {
 		CopyOnWriteArrayList<AbstractItem> inventoryList = room.getRoomInventory().getInventoryList();
 		printItems(inventoryList);

@@ -12,4 +12,12 @@ public abstract class AbstractItem {
 	public String getDescription() { return description; }
 	public String getName() { return name; }
 	public abstract void useItem();
+	
+	public void setName(String itemName) {
+		this.name = itemName;
+	}
+	
+	public void setDescription(String itemDescription) {
+		this.description = itemDescription;
+	}
 }
