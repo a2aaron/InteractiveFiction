@@ -70,6 +70,7 @@ public class Interpreter {
 		player = new Movement(startingRoom);
 		playerInteractor = new Interact(playerInventory);
 		
+		
 		boolean playing = true;
 		while(playing) {
 			System.out.print("[" + player.getCurrentRoom().getRoomName() + "] > ");
@@ -221,7 +222,7 @@ public class Interpreter {
 				default:
 					System.out.println("Invalid Command: [" + command +"]");
 				}
-			} 
+			}
 		}
 	}
 
