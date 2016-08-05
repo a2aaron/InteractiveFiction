@@ -1,34 +1,74 @@
 package character;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import items.AbstractItem;
 import items.IBreakableItem;
 import items.IItemUseableOn;
 import items.ITakeableItem;
 import rooms.CompassRoom;
-import rooms.GenericRoom;
-import rooms.RoomInventory;
 import types.Action;
+import types.ItemAction;
 import world.Parser;
 
 public class Interact {
 	//public enum Action {quit, inventory, use, take, destroy,
 	//					useOn, examineRoom, examineObject, move};
-	
+
 	PlayerState playerState;
 	Parser playerParser;
 	boolean playing = true;
-	
+
 	public Interact(PlayerState playerState) {
 		this.playerState = playerState;
 	}
-	
+
 	public void doAction(Action action) {
 		Inventory playerInventory = playerState.getPlayerInventory();
 		Inventory currentRoomInventory = playerState.getCurrentRoomInventory();
 
-		if (action != null) {	
+		if (action == null) {
+			System.out.println("Invalid Command");
+			return;
+		}
+		
+		if (action instanceof ItemAction) {
+			if (action.getDirectObject() == null) {
+				System.out.println("Can't find that item");
+			} else {
+				AbstractItem directObject = (AbstractItem) action.getDirectObject();
+				switch(action.getVerb()) {
+				case examineObject:
+					System.out.println(directObject.getDescription());
+					break;
+				case use:
+					directObject.useItem();
+					break;
+				case take:
+					if (directObject instanceof ITakeableItem) {
+						playerInventory.takeItem(directObject, currentRoomInventory);
+						System.out.println("Took the " + directObject.getName());
+					} else {
+						System.out.println("Can't take the " + directObject.getName());
+					}
+					break;
+				case destroy:
+					if (directObject instanceof IBreakableItem) {
+						((IBreakableItem) action.getDirectObject()).breakItem();
+						System.out.println("Broke the " + directObject.getName());
+					} else {
+						System.out.println("Can't break the " + directObject.getName());
+					}
+					break;
+				case useOn:
+					if (directObject instanceof IItemUseableOn) {
+						AbstractItem indirectObject = (AbstractItem) action.getIndirectObject();
+						((IItemUseableOn) directObject).useItemOn(indirectObject);
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		} else {
 			switch(action.getVerb()) {
 			case quit:
 				playing = false;
@@ -55,58 +95,9 @@ public class Interact {
 				System.out.println(playerState.getCurrentRoom().getRoomDescription());
 				break;
 			}
-			case destroy:
-				if (action.getDirectObject() instanceof IBreakableItem) {
-					((IBreakableItem) action.getDirectObject()).breakItem();
-				}
-				break;
-			case examineObject:
-			{
-				if (action.getDirectObject() == null) {
-					System.out.println("Can't find that item");
-				} else if (action.getDirectObject() instanceof AbstractItem) {
-					String description = ((AbstractItem) action.getDirectObject()).getDescription();
-					System.out.println(description);
-				}
-				break;
-			}
-			case take:
-			{
-				Object directObject = action.getDirectObject();
-				if (directObject == null) {
-					System.out.println("Can't find that item");
-				} else if (directObject instanceof ITakeableItem) {
-					playerInventory.takeItem((AbstractItem) directObject, currentRoomInventory);
-				} else {
-					System.out.println("Can't take that item");
-				}
-				break;
-			}
-			case use:
-			{
-				if (action.getDirectObject() == null) {
-					System.out.println("Can't find that item");
-				} else if (action.getDirectObject() instanceof AbstractItem) {
-					((AbstractItem) action.getDirectObject()).useItem();
-				}
-				break;
-			}
-			case useOn:
-			{
-				if (action.getDirectObject() == null) {
-					System.out.println("Can't find that item");
-				} else if (action.getDirectObject() instanceof IItemUseableOn) {
-					IItemUseableOn directObject = (IItemUseableOn) action.getDirectObject();
-					AbstractItem indirectObject = (AbstractItem) action.getIndirectObject();
-					directObject.useItemOn(indirectObject);
-				}
-				break;
-			}
 			default:
 				break;
 			}
-		} else {
-			System.out.println("Invalid Command");
 		}
 	}
 

@@ -9,6 +9,7 @@ import character.PlayerState;
 import items.AbstractItem;
 import items.IItemUseableOn;
 import types.Directions;
+import types.ItemAction;
 import types.Action;
 import types.Action.MovementAdverb;
 import types.Action.Verb;
@@ -45,7 +46,7 @@ public class Parser {
 			System.out.println("Which item?");
 			String itemName = nextPlayerInput();
 			AbstractItem item = playerState.getCurrentRoomInventory().getItemByName(itemName);
-			return new Action(Verb.take, item); // item could be null!
+			return new ItemAction(Verb.take, item); // item could be null!
 		}
 		case "break":
 		case "destroy":
@@ -94,11 +95,11 @@ public class Parser {
 		AbstractItem itemPlayer = playerState.getPlayerInventory().getItemByName(itemName);
 		AbstractItem itemRoom = playerState.getCurrentRoomInventory().getItemByName(itemName);
 		if (itemPlayer != null) {
-			return new Action(verb, itemPlayer);
+			return new ItemAction(verb, itemPlayer);
 		} else if (itemRoom != null) {
-			return new Action(verb, itemRoom);
+			return new ItemAction(verb, itemRoom);
 		} else {
-			return new Action(verb); //directObject (the item) will be null
+			return new ItemAction(verb); //directObject (the item) will be null
 		}
 	}
 	

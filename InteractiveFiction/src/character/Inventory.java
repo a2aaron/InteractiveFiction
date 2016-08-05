@@ -31,6 +31,7 @@ public class Inventory {
 		}
 		for(int i = 0; i < inventoryList.size(); i++) {
 			AbstractItem item = inventoryList.get(i);
+			//System.out.println(item.getName().toLowerCase() + " | " + itemName); 
 			if (item.getName().toLowerCase().equals(itemName)) {
 				return item;
 			}
@@ -66,6 +67,8 @@ public class Inventory {
 				System.out.println("[" + item.getName() + "]");
 				System.out.println(item.getDescription());
 			} 
+		} else {
+			System.out.println("No items!");
 		}
 	}
 	
