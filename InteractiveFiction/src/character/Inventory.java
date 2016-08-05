@@ -24,26 +24,14 @@ public class Inventory {
 	public int numberOfItems() {
 		return inventoryList.size();
 	}
-	
-	public boolean hasItemByName(String itemName) {
-	    if (numberOfItems() == 0) {
-	        return false;
-	    }
 
-		for(int i = 0; i < inventoryList.size(); i++) {
-			AbstractItem item = inventoryList.get(i);
-			if (item.getName().equals(itemName)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-	
 	public AbstractItem getItemByName(String itemName) {
+		if (inventoryList.size() == 0) {
+			System.out.println("No items!");
+		}
 		for(int i = 0; i < inventoryList.size(); i++) {
 			AbstractItem item = inventoryList.get(i);
-			if (item.getName().equals(itemName)) {
+			if (item.getName().toLowerCase().equals(itemName)) {
 				return item;
 			}
 		}
@@ -70,6 +58,15 @@ public class Inventory {
 	
 	public CopyOnWriteArrayList<AbstractItem> getInventoryList() {
 		return inventoryList;
+	}
+	
+	public void printItems() {
+		if (inventoryList.size() != 0) {
+			for (AbstractItem item : inventoryList) {
+				System.out.println("[" + item.getName() + "]");
+				System.out.println(item.getDescription());
+			} 
+		}
 	}
 	
 }

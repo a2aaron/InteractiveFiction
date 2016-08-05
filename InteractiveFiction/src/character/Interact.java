@@ -4,96 +4,113 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import items.AbstractItem;
 import items.IBreakableItem;
+import items.IItemUseableOn;
 import items.ITakeableItem;
+import rooms.CompassRoom;
 import rooms.GenericRoom;
 import rooms.RoomInventory;
+import types.Action;
 import world.Parser;
 
 public class Interact {
-	public enum Action {quit, inventory, use, take, destroy,
-						useOn, examineRoom, examineObject};
+	//public enum Action {quit, inventory, use, take, destroy,
+	//					useOn, examineRoom, examineObject, move};
 	
-	Inventory playerInventory;
-	GenericRoom currentRoom;
+	PlayerState playerState;
 	Parser playerParser;
+	boolean playing = true;
 	
-	public Interact(Inventory playerInventory) {
-		this.playerInventory = playerInventory;
+	public Interact(PlayerState playerState) {
+		this.playerState = playerState;
 	}
 	
 	public void doAction(Action action) {
-		switch(action) {
-		case take:
-			takeItem(playerParser.askForItem(currentRoom.getRoomInventory()), currentRoom);
-		case use:
-			
-		}
-	}
-	
-	public AbstractItem findItemInInventories(AbstractItem item, Inventory...inventories) {
-		for (Inventory inventory : inventories) {
-			if(inventory.hasItem(item)) {
-				return item;
+		Inventory playerInventory = playerState.getPlayerInventory();
+		Inventory currentRoomInventory = playerState.getCurrentRoomInventory();
+
+		if (action != null) {	
+			switch(action.getVerb()) {
+			case quit:
+				playing = false;
+				break;
+			case examineRoom:
+			{
+				String description = playerState.getCurrentRoom().getExtendedRoomDescription();
+				System.out.println("---[DESCRIPTION]---");
+				System.out.println(description);
+				System.out.println("-------------\n");
+				playerState.getCurrentRoomInventory().printItems();
+				break;
 			}
+			case inventory:
+				playerState.getPlayerInventory().printItems();
+				break;
+			case move:
+			{
+				CompassRoom currentRoom = ((CompassRoom) playerState.getCurrentRoom());
+				CompassRoom newRoom = currentRoom.getExitRoom(action.getDirection());
+				if (newRoom != null) {
+					playerState.setCurrentRoom(newRoom);
+				}
+				System.out.println(playerState.getCurrentRoom().getRoomDescription());
+				break;
+			}
+			case destroy:
+				if (action.getDirectObject() instanceof IBreakableItem) {
+					((IBreakableItem) action.getDirectObject()).breakItem();
+				}
+				break;
+			case examineObject:
+			{
+				if (action.getDirectObject() == null) {
+					System.out.println("Can't find that item");
+				} else if (action.getDirectObject() instanceof AbstractItem) {
+					String description = ((AbstractItem) action.getDirectObject()).getDescription();
+					System.out.println(description);
+				}
+				break;
+			}
+			case take:
+			{
+				Object directObject = action.getDirectObject();
+				if (directObject == null) {
+					System.out.println("Can't find that item");
+				} else if (directObject instanceof ITakeableItem) {
+					playerInventory.takeItem((AbstractItem) directObject, currentRoomInventory);
+				} else {
+					System.out.println("Can't take that item");
+				}
+				break;
+			}
+			case use:
+			{
+				if (action.getDirectObject() == null) {
+					System.out.println("Can't find that item");
+				} else if (action.getDirectObject() instanceof AbstractItem) {
+					((AbstractItem) action.getDirectObject()).useItem();
+				}
+				break;
+			}
+			case useOn:
+			{
+				if (action.getDirectObject() == null) {
+					System.out.println("Can't find that item");
+				} else if (action.getDirectObject() instanceof IItemUseableOn) {
+					IItemUseableOn directObject = (IItemUseableOn) action.getDirectObject();
+					AbstractItem indirectObject = (AbstractItem) action.getIndirectObject();
+					directObject.useItemOn(indirectObject);
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		} else {
+			System.out.println("Invalid Command");
 		}
-		
-		return null;
-	}
-	
-	public String examine(AbstractItem item) {
-		return item.getDescription(); 
-	}
-	
-	public void useItem(AbstractItem item) {
-		item.useItem();
-	}
-	
-	public void takeItem(AbstractItem item, RoomInventory inventory) {
-		playerInventory.takeItem(item, inventory);
-	}
-	
-	public void takeItem(AbstractItem item, GenericRoom room) {
-		playerInventory.takeItem(item, room.getRoomInventory());
 	}
 
-	public boolean canTakeItem(AbstractItem item) {
-		if (item instanceof ITakeableItem) {
-			if (((ITakeableItem) item).isTakeable()) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public void breakItem(IBreakableItem item) {
-		item.breakItem();
-	}
-	
-	/**
-	 * 
-	 * @param item
-	 * @return true if it succeeds, false if it does not
-	 */
-	public boolean tryBreakItem(AbstractItem item) {
-		if (item instanceof IBreakableItem) {
-			if (!((IBreakableItem) item).isBroken()) {
-				((IBreakableItem) item).breakItem();
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static void printItems(CopyOnWriteArrayList<AbstractItem> inventoryList) {
-	    System.out.println("---[ITEMS]---");
-		if (inventoryList.size() != 0) {
-			for (AbstractItem item : inventoryList) {
-				System.out.println("[" + item.getName() + "]");
-				System.out.println(item.getDescription());
-			} 
-		} else {
-			System.out.println("No items.");
-		}
-		System.out.println("-------------");		
+	public boolean isPlaying() {
+		return playing;
 	}
 }

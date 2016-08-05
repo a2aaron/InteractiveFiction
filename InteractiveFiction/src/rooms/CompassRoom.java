@@ -1,5 +1,6 @@
 package rooms;
 
+import types.Action.MovementAdverb;
 import types.Directions.CompassDirections;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -67,15 +68,15 @@ public class CompassRoom extends GenericRoom {
 		room.linkRoomTo(direction.getOpposite(direction), this);
 	}
 
-	public CompassRoom getExitRoom(CompassDirections direction) {
+	public CompassRoom getExitRoom(MovementAdverb direction) {
 		switch(direction) {
-		case North:
+		case north:
 			return northExit;
-		case East:
+		case east:
 			return eastExit;
-		case South:
+		case south:
 			return southExit;
-		case West:
+		case west:
 			return westExit;
 		default:
 			return null;

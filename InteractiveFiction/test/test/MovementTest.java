@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import character.Movement;
 import rooms.CompassRoom;
+import types.Action.MovementAdverb;
 import types.Directions.CompassDirections;
 
 
@@ -24,13 +25,13 @@ public class MovementTest {
 		Movement player = new Movement(westRoom);
 		// Should be able to move west.
 		assertEquals(westRoom, player.getCurrentRoom());
-		assertEquals(true, player.canMove(CompassDirections.West));
-		assertEquals(false, player.canMove(CompassDirections.East));
+		assertEquals(true, player.canMove(MovementAdverb.west));
+		assertEquals(false, player.canMove(MovementAdverb.east));
 		// Move west into eastRoom.
-		player.move(CompassDirections.West);
+		player.move(MovementAdverb.west);
 		// Should be able to move east.
 		assertEquals(eastRoom, player.getCurrentRoom());
-		assertSame(false, player.canMove(CompassDirections.West));
-		assertSame(true, player.canMove(CompassDirections.East));
+		assertSame(false, player.canMove(MovementAdverb.west));
+		assertSame(true, player.canMove(MovementAdverb.east));
 	}
 }

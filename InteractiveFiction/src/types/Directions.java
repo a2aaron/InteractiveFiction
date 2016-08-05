@@ -1,5 +1,7 @@
 package types;
 
+import types.Action.MovementAdverb;
+
 public class Directions {
 	/* TODO: These are directions, however a class
 	 * which handles links (direction, starting room, destination room)
@@ -40,19 +42,7 @@ public class Directions {
 		}
 		
 	}
-	
-	public boolean isCompassDirection(CompassDirections direction) {
-		switch(direction) {
-		case North:
-		case South:
-		case East:
-		case West:
-			return true;
-		default:
-			return false;
-		}
-	}
-	
+
 	public boolean isCompassDirection(String direction) {
 		switch(direction) {
 		case "north":

@@ -5,6 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import items.AbstractItem;
 import rooms.CompassRoom;
+import types.Action.MovementAdverb;
 import types.Directions;
 import types.Directions.CompassDirections;
 
@@ -18,19 +19,15 @@ public class Movement {
 	 * Returns true on success and
 	 * false on failure to move.
 	 */
-	public boolean canMove(CompassDirections direction) {
-		if (directionHelper.isCompassDirection(direction)) {
-			if (currentRoom.getExitRoom(direction) == null) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
+	public boolean canMove(MovementAdverb direction) {
+		if (currentRoom.getExitRoom(direction) == null) {
 			return false;
+		} else {
+			return true;
 		}
 	}
 
-	public void move(CompassDirections directions) {
+	public void move(MovementAdverb directions) {
 		if (canMove(directions) == true) {
 			currentRoom = currentRoom.getExitRoom(directions);
 		} else {
