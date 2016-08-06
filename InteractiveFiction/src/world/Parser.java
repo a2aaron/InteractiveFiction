@@ -2,7 +2,6 @@ package world;
 
 import java.util.Scanner;
 
-import character.Inventory;
 import character.PlayerState;
 import items.AbstractItem;
 import types.Action;
@@ -46,7 +45,7 @@ public class Parser {
 			playerState.getCurrentRoomInventory().printItems();
 			System.out.println("-------------");
 			System.out.println("Which item?");
-			String itemName = nextPlayerInput();
+			String itemName = nextInput();
 			return new ItemAction(Verb.stringToVerb(input), playerState.searchPlayerAndRoomInventory(itemName));
 		}
 		// Item as Direct Object (Room Only)
@@ -56,7 +55,7 @@ public class Parser {
 			playerState.getCurrentRoomInventory().printItems();
 			System.out.println("Which item?");
 			System.out.println("-------------");
-			String itemName = nextPlayerInput();
+			String itemName = nextInput();
 			AbstractItem item = playerState.getCurrentRoomInventory().getItemByName(itemName);
 			return new ItemAction(Verb.take, item); // item could be null!
 		}
@@ -69,9 +68,9 @@ public class Parser {
 			playerState.getCurrentRoomInventory().printItems();
 			System.out.println("-------------");
 			System.out.println("Use which item?");
-			AbstractItem itemUse = playerState.searchPlayerAndRoomInventory(nextPlayerInput());
+			AbstractItem itemUse = playerState.searchPlayerAndRoomInventory(nextInput());
 			System.out.println("Use item on what?");
-			AbstractItem itemUseOn = playerState.searchPlayerAndRoomInventory(nextPlayerInput());
+			AbstractItem itemUseOn = playerState.searchPlayerAndRoomInventory(nextInput());
 			return new ItemAction(Verb.useOn, itemUse, itemUseOn);
 		}
 		// Movement Verbs
@@ -89,7 +88,7 @@ public class Parser {
 		}
 	}
 	
-	public String nextPlayerInput() {
+	public String nextInput() {
 		return playerInput.nextLine().toLowerCase();
 	}
 }

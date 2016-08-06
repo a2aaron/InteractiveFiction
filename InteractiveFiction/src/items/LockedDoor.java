@@ -1,29 +1,25 @@
 package items;
 
 public class LockedDoor extends Door {
-	public enum LockState {Locked, Unlocked};
+	public enum LockState {locked, unlocked};
 	
-	public DoorState doorState;
-	public LockState lockState = LockState.Locked;
+	public LockState lockState = LockState.locked;
 	public Key key; // Key which unlocks the door.
 	public String name;
-	public String description;
+
 	
-	public LockedDoor(String name, String description, DoorState initialState, Key key) {
-		super(name, description, initialState);
+	public LockedDoor(String name, Key key) {
+		super(name, "This door is locked and is closed.", DoorState.closed);
 		this.name = name;
-		this.description = description;
 		this.key = key;
-		doorState = initialState;
-		setDescription("This door is " + lockState.toString() + " and is " + doorState.toString() + ".");
 	}
 	
 	public void unlockDoor(AbstractItem item) {
 		if (item instanceof Key) {
 			if (item == key) {
-				lockState = LockState.Unlocked;
+				lockState = LockState.unlocked;
 				System.out.println("You unlock the door");
-				setDescription("This door is unlocked. It is currently " + doorState.toString() + ".");
+				updateDescription();
 			} else {
 			System.out.println("The key does not fit.");
 			}
@@ -33,13 +29,17 @@ public class LockedDoor extends Door {
 	}
 	
 	public void useItem() {
-		if (lockState == LockState.Locked) {
+		if (lockState == LockState.locked) {
 			System.out.println("This door is locked. Find the key");
 		} else {
 			super.useItem(); // Normal door opening logic
 		}
-		
-		setDescription("This door is " + lockState.toString() + " and is " + doorState.toString() + ".");
+		updateDescription();
+	}
+	
+	private void updateDescription() {
+		setDescription("This door is " + lockState.toString() + 
+				" . It is currently " + doorState.toString() + ".");
 	}
 	
 	public LockState getLockState() {

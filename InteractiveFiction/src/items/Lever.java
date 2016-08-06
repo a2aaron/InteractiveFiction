@@ -1,23 +1,28 @@
 package items;
 
 public class Lever extends AbstractItem {
-    public enum LeverPosition {Up, Down};
+    public enum LeverPosition {up, down};
     LeverPosition leverPosition;
 
     public Lever(String name, String description, LeverPosition initialPosition) {
         super(name, description);
         leverPosition = initialPosition;
     }
+    
+    public Lever(String name, LeverPosition initialPosition) {
+    	super(name, "A lever in the " + initialPosition.toString() + " position.");
+    	leverPosition = initialPosition;
+    }
 
     @Override
     public void useItem() {
-        if (leverPosition == LeverPosition.Up) {
-            leverPosition = LeverPosition.Down;
-            System.out.println("You move the lever to the down position.");
+        if (leverPosition == LeverPosition.up) {
+            leverPosition = LeverPosition.down;
         } else {
-            leverPosition = LeverPosition.Up;
-            System.out.println("You move the lever to the up position.");
+            leverPosition = LeverPosition.up;     
         }
+        System.out.println("You move the lever to the " + leverPosition.toString() + " position.");
+        super.setDescription("A lever in the " + leverPosition.toString() + " position.");
     }
     
     public LeverPosition getLeverPosition() {

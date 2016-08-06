@@ -1,7 +1,7 @@
 package items;
 
 public class Door extends AbstractItem {
-	public enum DoorState {Open, Closed};
+	public enum DoorState {open, closed};
 	public DoorState doorState;
 	
     public Door(String name, String description, DoorState initialState) {
@@ -11,11 +11,11 @@ public class Door extends AbstractItem {
 
 	@Override
 	public void useItem() {
-        if (doorState == DoorState.Closed) {
-        	doorState = DoorState.Open;
+        if (doorState == DoorState.closed) {
+        	doorState = DoorState.open;
             System.out.println("You open the door.");
         } else {
-        	doorState = DoorState.Closed;
+        	doorState = DoorState.closed;
             System.out.println("You close the door.");
         }
 	}

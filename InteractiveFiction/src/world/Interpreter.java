@@ -30,7 +30,7 @@ public class Interpreter {
 		CompassRoom startingRoom = new CompassRoom(
 				"Starting Room", "This is the room you start in!");
 		startingRoom.addItem(new Vace("TEST", "HELP"));
-		startingRoom.addItem(new Lever("Lever", "This is a lever!", LeverPosition.Up));
+		startingRoom.addItem(new Lever("Lever", LeverPosition.up));
 		
 		CompassRoom northRoom = new CompassRoom(
 				"North Room","It's the north pole!");
@@ -40,8 +40,7 @@ public class Interpreter {
 				"West Room", "Wester.");
 		
 		Key key = new Key("Key", "It's a key");
-		LockedDoor lockedDoor = new LockedDoor("Locked Door", "Locked Door Description", 
-				DoorState.Closed, key);
+		LockedDoor lockedDoor = new LockedDoor("Locked Door", key);
 
 		LockedDoorRoom southRoom = new LockedDoorRoom(
 				"South Room", "A southern farm.", lockedDoor, MovementAdverb.south);
