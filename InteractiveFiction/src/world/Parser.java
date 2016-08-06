@@ -41,17 +41,21 @@ public class Parser {
 		case "lookat":
 		case "look at":
 		{
+			System.out.println("---[ITEMS]---");
 			playerState.getPlayerInventory().printItems();
 			playerState.getCurrentRoomInventory().printItems();
+			System.out.println("-------------");
 			System.out.println("Which item?");
 			String itemName = nextPlayerInput();
-			return makeItemActionFromItemName(Verb.stringToVerb(input), itemName);
+			return new ItemAction(Verb.stringToVerb(input), playerState.searchPlayerAndRoomInventory(itemName));
 		}
 		// Item as Direct Object (Room Only)
 		case "take":
 		{
+			System.out.println("---[ITEMS]---");
 			playerState.getCurrentRoomInventory().printItems();
 			System.out.println("Which item?");
+			System.out.println("-------------");
 			String itemName = nextPlayerInput();
 			AbstractItem item = playerState.getCurrentRoomInventory().getItemByName(itemName);
 			return new ItemAction(Verb.take, item); // item could be null!
@@ -60,8 +64,10 @@ public class Parser {
 		case "useon":
 		case "use on":
 		{
+			System.out.println("---[ITEMS]---");
 			playerState.getPlayerInventory().printItems();
 			playerState.getCurrentRoomInventory().printItems();
+			System.out.println("-------------");
 			System.out.println("Use which item?");
 			AbstractItem itemUse = playerState.searchPlayerAndRoomInventory(nextPlayerInput());
 			System.out.println("Use item on what?");
@@ -81,16 +87,6 @@ public class Parser {
 		default:
 			return null;
 		}
-	}
-
-	/* 
-	 * Takes a verb and a string of an item and searches the player inventory
-	 * and current room inventory and returns an action consisting of the verb
-	 * and the item as the direct object. Used for "take", "use", and other 
-	 * verbs which need a single direct object item.
-	 */
-	public ItemAction makeItemActionFromItemName(Verb verb, String itemName) {
-		return new ItemAction(verb, playerState.searchPlayerAndRoomInventory(itemName));
 	}
 	
 	public String nextPlayerInput() {

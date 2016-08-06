@@ -78,12 +78,18 @@ public class Interact {
 				String description = playerState.getCurrentRoom().getExtendedRoomDescription();
 				System.out.println("---[DESCRIPTION]---");
 				System.out.println(description);
-				System.out.println("-------------\n");
+				System.out.println("\n");
+				System.out.println("---[ITEMS]---");
 				playerState.getCurrentRoomInventory().printItems();
+				System.out.println("-------------");
 				break;
 			}
 			case inventory:
-				playerState.getPlayerInventory().printItems();
+				if (playerState.getPlayerInventory().numberOfItems() == 0) {
+					System.out.println("No items!");
+				} else {
+					 playerState.getPlayerInventory().printItems();		
+				}
 				break;
 			case move:
 			{
