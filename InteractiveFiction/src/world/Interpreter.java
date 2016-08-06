@@ -1,15 +1,16 @@
 package world;
 
 import java.util.Scanner;
+
 import character.Interact;
 import character.Inventory;
 import character.PlayerState;
+import items.Door.DoorState;
 import items.Key;
 import items.Lever;
-import items.Vace;
-import items.Door.DoorState;
 import items.Lever.LeverPosition;
 import items.LockedDoor;
+import items.Vace;
 import rooms.CompassRoom;
 import rooms.LockedDoorRoom;
 import types.Action;

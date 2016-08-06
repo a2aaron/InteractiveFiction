@@ -2,17 +2,14 @@ package world;
 
 import java.util.Scanner;
 
-import character.Interact;
 import character.Inventory;
-import character.Movement;
 import character.PlayerState;
 import items.AbstractItem;
-import items.IItemUseableOn;
-import types.Directions;
-import types.ItemAction;
 import types.Action;
 import types.Action.MovementAdverb;
 import types.Action.Verb;
+import types.Directions;
+import types.ItemAction;
 
 public class Parser {
 	
@@ -26,20 +23,31 @@ public class Parser {
 	
 	public Action parseInput(String input) {
 		switch (input.toLowerCase()) {
+		// No Direct Object
 		case "q":
 		case "quit":
-			return new Action(Verb.quit);
 		case "i":
+		case "inv":
 		case "inventory":
-			return new Action(Verb.inventory);
+			return new Action(Verb.stringToVerb(input));
+		// Current Room as Direct Object
+		case "l":
+		case "look":
+			return new Action(Verb.examineRoom, playerState.getCurrentRoom());
+		// Item as Direct Object (Room and Player)
 		case "use":
+		case "break":
+		case "destroy":
+		case "lookat":
+		case "look at":
 		{
 			playerState.getPlayerInventory().printItems();
 			playerState.getCurrentRoomInventory().printItems();
 			System.out.println("Which item?");
 			String itemName = nextPlayerInput();
-			return createActionWithDirectObjectItem(Verb.use, itemName);
+			return makeItemActionFromItemName(Verb.stringToVerb(input), itemName);
 		}
+		// Item as Direct Object (Room Only)
 		case "take":
 		{
 			playerState.getCurrentRoomInventory().printItems();
@@ -48,38 +56,16 @@ public class Parser {
 			AbstractItem item = playerState.getCurrentRoomInventory().getItemByName(itemName);
 			return new ItemAction(Verb.take, item); // item could be null!
 		}
-		case "break":
-		case "destroy":
-		{
-			playerState.getPlayerInventory().printItems();
-			playerState.getCurrentRoomInventory().printItems();
-			System.out.println("Which item?");
-			String itemName = nextPlayerInput();
-			return createActionWithDirectObjectItem(Verb.destroy, itemName);
-		}
-		case "l":
-		case "look":
-			Action action = new Action(Verb.examineRoom, playerState.getCurrentRoom());
-			return action;
-		case "lookat":
-		case "look at":
-			playerState.getPlayerInventory().printItems();
-			playerState.getCurrentRoomInventory().printItems();
-			System.out.println("Which item?");
-			String itemName = nextPlayerInput();
-			return createActionWithDirectObjectItem(Verb.examineObject, itemName);
+		// Movement Verbs
 		case "n":
 		case "north":
-			return new Action(Verb.move, MovementAdverb.north);
 		case "s":
 		case "south":
-			return new Action(Verb.move, MovementAdverb.south);
 		case "w":
 		case "west":
-			return new Action(Verb.move, MovementAdverb.west);
 		case "e":
 		case "east":
-			return new Action(Verb.move, MovementAdverb.east);
+			return new Action(Verb.move, MovementAdverb.stringToAdverb(input));
 		default:
 			return null;
 		}
@@ -91,7 +77,7 @@ public class Parser {
 	 * and the item as the direct object. Used for "take", "use", and other 
 	 * verbs which need a single direct object item.
 	 */
-	public Action createActionWithDirectObjectItem(Verb verb, String itemName) {
+	public ItemAction makeItemActionFromItemName(Verb verb, String itemName) {
 		AbstractItem itemPlayer = playerState.getPlayerInventory().getItemByName(itemName);
 		AbstractItem itemRoom = playerState.getCurrentRoomInventory().getItemByName(itemName);
 		if (itemPlayer != null) {
@@ -103,10 +89,7 @@ public class Parser {
 		}
 	}
 	
-	public AbstractItem askForItem(Inventory inventory) {
-		String itemName = playerInput.nextLine();
-		return inventory.getItemByName(itemName);
-	}
+
 	
 	public String nextPlayerInput() {
 		return playerInput.nextLine().toLowerCase();

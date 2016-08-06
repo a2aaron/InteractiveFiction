@@ -23,8 +23,62 @@ import rooms.GenericRoom;
  */
 public class Action {
 	public enum Verb {quit, inventory, use, take, destroy,
-		useOn, examineRoom, examineObject, move};
-	public enum MovementAdverb {north, east, south, west};
+		useOn, examineRoom, examineObject, move;
+	
+		public static Verb stringToVerb(String verb) {
+			switch (verb.toLowerCase()) {
+			case "q":
+			case "quit":
+				return Verb.quit;
+			case "i":
+			case "inv":
+			case "inventory":
+				return Verb.inventory;
+			case "l":
+			case "look":
+				return Verb.examineRoom;
+			case "lookat":
+			case "look at":
+				return Verb.examineObject;
+			case "move":
+				return Verb.move;
+			case "use":
+				return Verb.use;
+			case "take":
+				return Verb.take;
+			case "break":
+			case "destroy":
+				return Verb.destroy;
+			case "useon":
+			case "use on":
+				return Verb.useOn;
+			default:
+				return null;
+			}
+		}
+	};
+	public enum MovementAdverb {north, east, south, west;
+	
+		public static MovementAdverb stringToAdverb(String direction) {
+			switch (direction) {
+			case "n":
+			case "north":
+				return MovementAdverb.north;
+			case "s":
+			case "south":
+				return MovementAdverb.south;
+			case "w":
+			case "west":
+				return MovementAdverb.west;
+			case "e":
+			case "east":
+				return MovementAdverb.east;
+			default:
+				return null;
+		}
+	}
+		
+	};
 	public Verb verb;
 	public MovementAdverb direction;
 	public Object directObject; // The object used in the action
@@ -77,34 +131,4 @@ public class Action {
 	public Object getIndirectObject() {
 		return indirectObject;
 	}
-	
-	
 }
-/*
- * set up game world
- * 
- * game interaction loop
- * 
- * 1. get input
- * 2. parse input, return an action
- *  a. an action consists of two things
- *     - the actor (usually the player)
- *     - a verb (use, take, examine)
- *     - an object with the verb (the direct object)
- *     - optional: a second object which has an action done to it (the indirect object)
- *         - this takes the form of "use X on Y" or "do X to the Y using Z"
- * 3. do the action
- * 	  - you need to know the state of the actor (inventory, current hp, etc)
- *    - the state of the direct object (locked, unlocked, what items are in the room)
- *    - the state of any indirect objects
- * 
- *- game state is
- *- player inv
- *- current room state
- *	- inv
- *	- state of objects
- * 
- *
- * 
- * 
- */
