@@ -1,9 +1,8 @@
 package rooms;
 
 import items.Door.DoorState;
-import types.Action.MovementAdverb;
-import types.Directions.CompassDirections;
 import items.LockedDoor;
+import types.Action.MovementAdverb;
 
 public class LockedDoorRoom extends CompassRoom {
 	LockedDoor lockedDoor;

@@ -1,7 +1,5 @@
 package types;
 
-import types.Action.MovementAdverb;
-
 public class Directions {
 	/* TODO: These are directions, however a class
 	 * which handles links (direction, starting room, destination room)

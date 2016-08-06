@@ -1,12 +1,11 @@
 package rooms;
 
-import types.Action.MovementAdverb;
-import types.Directions.CompassDirections;
-
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import items.AbstractItem;
 import items.Vace;
+import types.Action.MovementAdverb;
+import types.Directions.CompassDirections;
 
 public class CompassRoom extends GenericRoom {
 	/**

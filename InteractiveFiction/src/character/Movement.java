@@ -7,7 +7,6 @@ import items.AbstractItem;
 import rooms.CompassRoom;
 import types.Action.MovementAdverb;
 import types.Directions;
-import types.Directions.CompassDirections;
 
 public class Movement {
 	Directions directionHelper = new Directions();
