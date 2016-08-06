@@ -56,6 +56,18 @@ public class Parser {
 			AbstractItem item = playerState.getCurrentRoomInventory().getItemByName(itemName);
 			return new ItemAction(Verb.take, item); // item could be null!
 		}
+		// Two items, Direct and Indirect (Room and/or Player)
+		case "useon":
+		case "use on":
+		{
+			playerState.getPlayerInventory().printItems();
+			playerState.getCurrentRoomInventory().printItems();
+			System.out.println("Use which item?");
+			AbstractItem itemUse = playerState.searchPlayerAndRoomInventory(nextPlayerInput());
+			System.out.println("Use item on what?");
+			AbstractItem itemUseOn = playerState.searchPlayerAndRoomInventory(nextPlayerInput());
+			return new ItemAction(Verb.useOn, itemUse, itemUseOn);
+		}
 		// Movement Verbs
 		case "n":
 		case "north":
@@ -78,18 +90,8 @@ public class Parser {
 	 * verbs which need a single direct object item.
 	 */
 	public ItemAction makeItemActionFromItemName(Verb verb, String itemName) {
-		AbstractItem itemPlayer = playerState.getPlayerInventory().getItemByName(itemName);
-		AbstractItem itemRoom = playerState.getCurrentRoomInventory().getItemByName(itemName);
-		if (itemPlayer != null) {
-			return new ItemAction(verb, itemPlayer);
-		} else if (itemRoom != null) {
-			return new ItemAction(verb, itemRoom);
-		} else {
-			return new ItemAction(verb); //directObject (the item) will be null
-		}
+		return new ItemAction(verb, playerState.searchPlayerAndRoomInventory(itemName));
 	}
-	
-
 	
 	public String nextPlayerInput() {
 		return playerInput.nextLine().toLowerCase();
