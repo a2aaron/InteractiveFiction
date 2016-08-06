@@ -1,5 +1,7 @@
 package types;
 
+import java.util.Arrays;
+
 import items.AbstractItem;
 import rooms.GenericRoom;
 
@@ -40,8 +42,6 @@ public class Action {
 			case "lookat":
 			case "look at":
 				return Verb.examineObject;
-			case "move":
-				return Verb.move;
 			case "use":
 				return Verb.use;
 			case "take":
@@ -52,6 +52,9 @@ public class Action {
 			case "useon":
 			case "use on":
 				return Verb.useOn;
+			case "go":
+			case "move":
+				return Verb.move;
 			default:
 				return null;
 			}

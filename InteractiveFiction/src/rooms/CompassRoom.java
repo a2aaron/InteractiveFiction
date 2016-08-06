@@ -70,12 +70,24 @@ public class CompassRoom extends GenericRoom {
 	public CompassRoom getExitRoom(MovementAdverb direction) {
 		switch(direction) {
 		case north:
+			if (northExit == null) {
+				System.out.println("Can't move there.");
+			}
 			return northExit;
 		case east:
+			if (eastExit == null) {
+				System.out.println("Can't move there.");
+			}
 			return eastExit;
 		case south:
+			if (southExit == null) {
+				System.out.println("Can't move there.");
+			}
 			return southExit;
 		case west:
+			if (westExit == null) {
+				System.out.println("Can't move there.");
+			}
 			return westExit;
 		default:
 			return null;

@@ -30,6 +30,10 @@ public class Interact {
 			return;
 		}
 		
+		if (action.getVerb() == null) {
+			throw new RuntimeException("Verb was null");
+		}
+		
 		if (action instanceof ItemAction) {
 			if (action.getDirectObject() == null) {
 				System.out.println("Can't find that item");
@@ -59,9 +63,17 @@ public class Interact {
 					}
 					break;
 				case useOn:
+					AbstractItem indirectObject = (AbstractItem) action.getIndirectObject();
+					
+					if (indirectObject == null) {
+						System.out.println("Can't find your second item!");
+						break;
+					}
+					
 					if (directObject instanceof IItemUseableOn) {
-						AbstractItem indirectObject = (AbstractItem) action.getIndirectObject();
 						((IItemUseableOn) directObject).useItemOn(indirectObject);
+					} else {
+						System.out.println("Can't use items this way!");
 					}
 					break;
 				default:
@@ -98,7 +110,6 @@ public class Interact {
 				if (newRoom != null) {
 					playerState.setCurrentRoom(newRoom);
 				}
-				System.out.println(playerState.getCurrentRoom().getRoomDescription());
 				break;
 			}
 			default:

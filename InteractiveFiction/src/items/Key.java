@@ -20,7 +20,7 @@ public class Key extends AbstractItem implements ITakeableItem, IItemUseableOn {
 
 	@Override
 	public void useItem() {
-		//TODO: what should this do?
+		System.out.println("You can't just use the key, you have to use it on something!");
 	}
 
 	@Override

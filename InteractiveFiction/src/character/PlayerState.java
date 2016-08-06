@@ -48,6 +48,10 @@ public class PlayerState {
 			return null;
 		}
 	}
+	
+	public Inventory getPlayerAndRoomInventory() {
+		return new Inventory(playerInventory, currentRoom.getRoomInventory());
+	}
 }
 
 

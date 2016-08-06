@@ -13,6 +13,12 @@ public class Inventory {
 	
 	public Inventory() {  }
 
+	public Inventory(Inventory... inventories) {
+		for (Inventory inventory : inventories) {
+			inventoryList.addAll(inventory.getInventoryList());
+		}
+	}
+
 	public CopyOnWriteArrayList<AbstractItem> getInventory() {
 		return inventoryList;
 	}
@@ -29,7 +35,7 @@ public class Inventory {
 		for(int i = 0; i < inventoryList.size(); i++) {
 			AbstractItem item = inventoryList.get(i);
 			//System.out.println(item.getName().toLowerCase() + " | " + itemName); 
-			if (item.getName().toLowerCase().equals(itemName)) {
+			if (item.getName().toLowerCase().equals(itemName.toLowerCase())) {
 				return item;
 			}
 		}

@@ -1,91 +1,169 @@
 package world;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
+import character.Inventory;
 import character.PlayerState;
 import items.AbstractItem;
 import types.Action;
 import types.Action.MovementAdverb;
 import types.Action.Verb;
-import types.Directions;
 import types.ItemAction;
 
 public class Parser {
 	
 	PlayerState playerState;
 	Scanner playerInput = new Scanner(System.in);
-	Directions directionHelper = new Directions();
+	
 	
 	public Parser(PlayerState playerState) {
 		this.playerState = playerState;
 	}
 	
 	public Action parseInput(String input) {
-		switch (input.toLowerCase()) {
+		// Assumed that the format is "[verb] [directObject] [indirectObject]"
+		String[] splitInput = input.toLowerCase().split(" ");
+		
+		// Only one should be not null
+		Verb verb = Verb.stringToVerb(splitInput[0]);
+		MovementAdverb direction = MovementAdverb.stringToAdverb(splitInput[0]);
+		
+		// Drop first element
+		splitInput = Arrays.copyOfRange(splitInput, 1, splitInput.length);
+		
+		// I'm lazy and don't want to type as much
+		Inventory playerAndRoom = playerState.getPlayerAndRoomInventory();
+		
+		if (verb == null) {
+			// Matches "north", "south", etc
+			if (direction != null) {
+				return new Action(Verb.move, direction);
+			}
+			// Complete gibberish
+			else {
+				return null;
+			}
+		}
+		
+		
+		switch (verb) {
 		// No Direct Object
-		case "q":
-		case "quit":
-		case "i":
-		case "inv":
-		case "inventory":
-			return new Action(Verb.stringToVerb(input));
+		case quit:
+		case inventory:
+			return new Action(verb);
 		// Current Room as Direct Object
-		case "l":
-		case "look":
-			return new Action(Verb.examineRoom, playerState.getCurrentRoom());
+		case examineRoom:
+			return new Action(verb, playerState.getCurrentRoom());
 		// Item as Direct Object (Room and Player)
-		case "use":
-		case "break":
-		case "destroy":
-		case "lookat":
-		case "look at":
+		case use:
+		case destroy:
+		case examineObject:
 		{
-			System.out.println("---[ITEMS]---");
-			playerState.getPlayerInventory().printItems();
-			playerState.getCurrentRoomInventory().printItems();
-			System.out.println("-------------");
-			System.out.println("Which item?");
-			String itemName = nextInput();
-			return new ItemAction(Verb.stringToVerb(input), playerState.searchPlayerAndRoomInventory(itemName));
+			AbstractItem item = scanStringForItem(splitInput, playerAndRoom);
+			return new ItemAction(verb, item);
 		}
 		// Item as Direct Object (Room Only)
-		case "take":
+		case take:
 		{
-			System.out.println("---[ITEMS]---");
-			playerState.getCurrentRoomInventory().printItems();
-			System.out.println("Which item?");
-			System.out.println("-------------");
-			String itemName = nextInput();
-			AbstractItem item = playerState.getCurrentRoomInventory().getItemByName(itemName);
-			return new ItemAction(Verb.take, item); // item could be null!
+			AbstractItem item = scanStringForItem(splitInput, playerState.getCurrentRoomInventory());
+			return new ItemAction(verb, item);
 		}
 		// Two items, Direct and Indirect (Room and/or Player)
-		case "useon":
-		case "use on":
+		case useOn:
 		{
-			System.out.println("---[ITEMS]---");
-			playerState.getPlayerInventory().printItems();
-			playerState.getCurrentRoomInventory().printItems();
-			System.out.println("-------------");
-			System.out.println("Use which item?");
-			AbstractItem itemUse = playerState.searchPlayerAndRoomInventory(nextInput());
-			System.out.println("Use item on what?");
-			AbstractItem itemUseOn = playerState.searchPlayerAndRoomInventory(nextInput());
-			return new ItemAction(Verb.useOn, itemUse, itemUseOn);
+			try {
+				AbstractItem itemUse = scanStringForItem(splitInput, playerAndRoom);
+				
+				// Drop the words of the first item
+				int lastIndex = getFirstIndexOfNextItem(splitInput, playerAndRoom);
+				// No item found
+				if (lastIndex == -1) {
+					return new ItemAction(verb, null, null);
+				}
+				// Item found but no next word
+				else if (lastIndex == -2){
+					return new ItemAction(verb, itemUse, null);
+				}
+				splitInput = Arrays.copyOfRange(splitInput, lastIndex, splitInput.length);
+				AbstractItem itemUseOn = scanStringForItem(splitInput, playerAndRoom);
+				return new ItemAction(verb, itemUse, itemUseOn);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				return new ItemAction(verb, null, null);
+			}
 		}
 		// Movement Verbs
-		case "n":
-		case "north":
-		case "s":
-		case "south":
-		case "w":
-		case "west":
-		case "e":
-		case "east":
-			return new Action(Verb.move, MovementAdverb.stringToAdverb(input));
+		case move:
+			return new Action(verb, direction);
+		// Invalid
 		default:
 			return null;
 		}
+	}
+	
+	public AbstractItem scanStringForItem(String string, Inventory inventory) {
+		return scanStringForItem(string.split(" "), inventory);
+	}
+	
+	/* *
+	 * This funciton searches for the first item in an array and returns
+	 * the item.
+	 * Thus, "take small vace" should return a vace whose name is "small vace"
+	 * 
+	 * 
+	 */
+	
+	public AbstractItem scanStringForItem(String[] splitString, Inventory inventory) {
+		// This for loop searches [1, 2, 3] as so:
+		// [1], [1, 2], [1, 2, 3]
+		// [2], [2, 3]
+		// [3]
+		// This matches the first and shortest possible instance of an item
+		for (int i = 0; i <= splitString.length; i++) { 
+			for (int itemLength = 1; itemLength <= splitString.length - i; itemLength++) {
+				// From a slice of the array, join the elements with spaces in between and search for the item
+				String itemName = String.join(" ", Arrays.copyOfRange(splitString, i, i+itemLength));
+				AbstractItem item = inventory.getItemByName(itemName);
+				if (item != null) {
+					return item;
+				}
+			}
+		}
+		return null;
+	}
+	/* *
+	 * This function searches for the first item in an array and
+	 * returns the index that is just after the last word of the item.
+	 * 
+	 * Thus, "small vace from shelf" should return 3, which is the index of
+	 * the first word that is NOT the item
+	 * 
+	 * Returns -1 on failure due to no item found.
+	 * Returns -2 on failure due to no next index
+	 * (for example, "small vace" returns -2 because there is no next word)
+	 * 
+	 */
+	public Integer getFirstIndexOfNextItem(String[] splitString, Inventory inventory) {
+		// This for loop searches [1, 2, 3] as so:
+		// [1], [1, 2], [1, 2, 3]
+		// [2], [2, 3]
+		// [3]
+		// This matches the first and shortest possible instance of an item
+		for (int i = 0; i <= splitString.length; i++) { 
+			for (int itemLength = 1; itemLength <= splitString.length - i; itemLength++) {
+				// From a slice of the array, join the elements with spaces in between and search for the item
+				String itemName = String.join(" ", Arrays.copyOfRange(splitString, i, i+itemLength));
+				AbstractItem item = inventory.getItemByName(itemName);
+				if (item != null) {
+					if (i + itemLength > splitString.length) {
+						return -2;
+					} else {
+						return i + itemLength;
+					}
+				}
+			}
+		}
+		return -1;
 	}
 	
 	public String nextInput() {
