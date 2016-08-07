@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import rooms.CompassRoom;
 import types.Action.MovementAdverb;
-import types.Directions.CompassDirections;
 
 public class RoomLinkerTest {
 	
@@ -15,7 +14,7 @@ public class RoomLinkerTest {
 	public void oneWayLinkTest() {
 		CompassRoom exitRoom = new CompassRoom("exitRoom");
 		CompassRoom noExit = new CompassRoom("noExit");
-		exitRoom.linkRoomTo(CompassDirections.North, noExit);
+		exitRoom.linkRoomTo(MovementAdverb.north, noExit);
 		assertEquals("exitRoom should link to noExit.",
 				noExit, exitRoom.getExitRoom(MovementAdverb.north));
 		assertEquals("noExit should not link to exit room",
@@ -32,14 +31,14 @@ public class RoomLinkerTest {
 		assertEquals("southRoom is unlinked and should not have any exit.",
 				null, southRoom.getExitRoom(MovementAdverb.north));
 		
-		northRoom.linkRoomTo(CompassDirections.South, southRoom);
+		northRoom.linkRoomTo(MovementAdverb.south, southRoom);
 		assertEquals("northRoom should link to southRoom.",
 				southRoom, northRoom.getExitRoom(MovementAdverb.south));
 		
 		assertEquals("southRoom is still unlinked and should not have any exit.",
 				null, southRoom.getExitRoom(MovementAdverb.north));
 
-		southRoom.linkRoomTo(CompassDirections.North, northRoom);
+		southRoom.linkRoomTo(MovementAdverb.north, northRoom);
 		assertEquals("southRoom should link to southRoom.",
 				northRoom, southRoom.getExitRoom(MovementAdverb.north));		
 		
@@ -51,8 +50,8 @@ public class RoomLinkerTest {
 		CompassRoom eastRoom = new CompassRoom("eastRoom");
 		CompassRoom westRoom = new CompassRoom("westRoom");
 		// Link rooms.
-		westRoom.linkRoomTo(CompassDirections.East, eastRoom); // [west] -> [east]
-		eastRoom.linkRoomTo(CompassDirections.West, westRoom); // [west] <- [east]
+		westRoom.linkRoomTo(MovementAdverb.east, eastRoom); // [west] -> [east]
+		eastRoom.linkRoomTo(MovementAdverb.west, westRoom); // [west] <- [east]
 		
 		assertEquals("westRoom should link east to eastRoom.",
 				eastRoom, westRoom.getExitRoom(MovementAdverb.east));
@@ -68,7 +67,7 @@ public class RoomLinkerTest {
 	public void twoWayLinkTest() {
 		CompassRoom northRoom = new CompassRoom("Has south exit.");
 		CompassRoom southRoom = new CompassRoom("Has north exit.");
-		northRoom.twoSidedLink(CompassDirections.South, southRoom);
+		northRoom.twoSidedLink(MovementAdverb.south, southRoom);
 
 		assertEquals("northRoom should link to southRoom.",
 				southRoom, northRoom.getExitRoom(MovementAdverb.south));

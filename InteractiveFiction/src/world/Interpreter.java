@@ -5,7 +5,6 @@ import java.util.Scanner;
 import character.Interact;
 import character.Inventory;
 import character.PlayerState;
-import items.Door.DoorState;
 import items.Key;
 import items.Lever;
 import items.Lever.LeverPosition;
@@ -15,7 +14,6 @@ import rooms.CompassRoom;
 import rooms.LockedDoorRoom;
 import types.Action;
 import types.Action.MovementAdverb;
-import types.Directions.CompassDirections;
 
 public class Interpreter {
 	static PlayerState playerState;
@@ -48,12 +46,12 @@ public class Interpreter {
 		southRoom.addItem(lockedDoor);
 
 		CompassRoom lockedRoom = new CompassRoom("Locked Room", "Locks");
-		southRoom.twoSidedLink(CompassDirections.South, lockedRoom);
+		southRoom.twoSidedLink(MovementAdverb.south, lockedRoom);
 		
-		startingRoom.twoSidedLink(CompassDirections.North, northRoom);
-		startingRoom.twoSidedLink(CompassDirections.East, eastRoom);
-		startingRoom.twoSidedLink(CompassDirections.West, westRoom);
-		startingRoom.twoSidedLink(CompassDirections.South, southRoom);
+		startingRoom.twoSidedLink(MovementAdverb.north, northRoom);
+		startingRoom.twoSidedLink(MovementAdverb.east, eastRoom);
+		startingRoom.twoSidedLink(MovementAdverb.west, westRoom);
+		startingRoom.twoSidedLink(MovementAdverb.south, southRoom);
 		
 		playerInput = new Scanner(System.in);
 		playerState = new PlayerState(new Inventory(), startingRoom);

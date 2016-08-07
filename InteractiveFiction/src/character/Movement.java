@@ -6,10 +6,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import items.AbstractItem;
 import rooms.CompassRoom;
 import types.Action.MovementAdverb;
-import types.Directions;
 
 public class Movement {
-	Directions directionHelper = new Directions();
 	CompassRoom currentRoom;
 	public Movement(CompassRoom room) {
 		this.currentRoom = room;

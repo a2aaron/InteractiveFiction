@@ -3,15 +3,15 @@ package rooms;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import items.AbstractItem;
-import types.Directions.CompassDirections;
+import types.Action.MovementAdverb;
 
 public class GenericRoom {
 	String roomName;
 	String roomDescription;
 	String extendedRoomDescription;
 	RoomInventory roomInventory = new RoomInventory();
-	CopyOnWriteArrayList<CompassDirections> exits = new CopyOnWriteArrayList<CompassDirections>();
-	CopyOnWriteArrayList<CompassDirections> entrances = new CopyOnWriteArrayList<CompassDirections>();
+	CopyOnWriteArrayList<MovementAdverb> exits = new CopyOnWriteArrayList<MovementAdverb>();
+	CopyOnWriteArrayList<MovementAdverb> entrances = new CopyOnWriteArrayList<MovementAdverb>();
 	
 	public GenericRoom() {
 		
@@ -30,17 +30,17 @@ public class GenericRoom {
 		roomInventory.addItem(item);
 	}
 	
-	public void addExit(CompassDirections exit) {
+	public void addExit(MovementAdverb exit) {
 		exits.add(exit);
 	}
 	
-	public void addEntrance(CompassDirections entrance) {
+	public void addEntrance(MovementAdverb entrance) {
 		exits.add(entrance);
 	}
 	
-	public void linkRoomTo(CompassDirections direction, GenericRoom room) {
+	public void linkRoomTo(MovementAdverb direction, GenericRoom room) {
 		exits.add(direction);
-		entrances.add(direction.getOpposite(direction));
+		entrances.add(MovementAdverb.getOpposite(direction));
 	}
 	
 	public String getRoomName() {

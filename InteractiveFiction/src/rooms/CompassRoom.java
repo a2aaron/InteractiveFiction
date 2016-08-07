@@ -5,7 +5,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import items.AbstractItem;
 import items.Vace;
 import types.Action.MovementAdverb;
-import types.Directions.CompassDirections;
 
 public class CompassRoom extends GenericRoom {
 	/**
@@ -45,26 +44,26 @@ public class CompassRoom extends GenericRoom {
 	/**
 	 * Link a room from this room to another room 
 	 * */
-	public void linkRoomTo(CompassDirections direction, CompassRoom room) {
+	public void linkRoomTo(MovementAdverb direction, CompassRoom room) {
 		switch(direction) {
-		case North:
+		case north:
 			northExit = room;
 			break;
-		case East:
+		case east:
 			eastExit = room;
 			break;
-		case South:
+		case south:
 			southExit = room;
 			break;
-		case West:
+		case west:
 			westExit = room;
 			break;
 		}
 	}
 
-	public void twoSidedLink(CompassDirections direction, CompassRoom room) {
+	public void twoSidedLink(MovementAdverb direction, CompassRoom room) {
 		linkRoomTo(direction, room);
-		room.linkRoomTo(direction.getOpposite(direction), this);
+		room.linkRoomTo(MovementAdverb.getOpposite(direction), this);
 	}
 
 	public CompassRoom getExitRoom(MovementAdverb direction) {

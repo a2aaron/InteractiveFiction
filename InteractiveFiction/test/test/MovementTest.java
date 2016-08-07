@@ -8,7 +8,6 @@ import org.junit.Test;
 import character.Movement;
 import rooms.CompassRoom;
 import types.Action.MovementAdverb;
-import types.Directions.CompassDirections;
 
 
 public class MovementTest {
@@ -19,8 +18,8 @@ public class MovementTest {
 		CompassRoom westRoom = new CompassRoom("This room has a west exit");
 		CompassRoom eastRoom = new CompassRoom("This room has a east exit");
 		// Link rooms.
-		westRoom.linkRoomTo(CompassDirections.West, eastRoom);
-		eastRoom.linkRoomTo(CompassDirections.East, westRoom);
+		westRoom.linkRoomTo(MovementAdverb.west, eastRoom);
+		eastRoom.linkRoomTo(MovementAdverb.east, westRoom);
 		// Initialize player in west exit room.
 		Movement player = new Movement(westRoom);
 		// Should be able to move west.

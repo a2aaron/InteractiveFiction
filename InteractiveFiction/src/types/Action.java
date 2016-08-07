@@ -1,7 +1,5 @@
 package types;
 
-import java.util.Arrays;
-
 import items.AbstractItem;
 import rooms.GenericRoom;
 
@@ -78,9 +76,23 @@ public class Action {
 				return MovementAdverb.east;
 			default:
 				return null;
+			}
 		}
-	}
-		
+			
+		public static MovementAdverb getOpposite(MovementAdverb direction) {
+			switch (direction) {
+			case north:
+				return south;
+			case east:
+				return west;
+			case south:
+				return north;
+			case west:
+				return east;
+			default:
+				return null;
+			}
+		}
 	};
 	public Verb verb;
 	public MovementAdverb direction;
