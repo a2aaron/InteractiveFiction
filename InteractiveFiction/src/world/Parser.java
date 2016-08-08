@@ -17,13 +17,24 @@ public class Parser {
 	Scanner playerInput = new Scanner(System.in);
 	
 	
+	public Parser() {
+		this.playerState = new PlayerState();
+	}
+	
 	public Parser(PlayerState playerState) {
 		this.playerState = playerState;
 	}
 	
 	public Action parseInput(String input) {
+		// Split the input string into an array of words
+		// "   take red ball   " -> ["take", "red", "ball"]
 		// Assumed that the format is "[verb] [directObject] [indirectObject]"
-		String[] splitInput = input.toLowerCase().split(" ");
+		String[] splitInput = input.trim().toLowerCase().split(" ");
+
+		// Handles "", " ", and other pure white space
+		if (splitInput.length == 0) {
+			return null;
+		}
 		
 		// Only one should be not null
 		Verb verb = Verb.stringToVerb(splitInput[0]);
@@ -31,10 +42,7 @@ public class Parser {
 		
 		// Drop first element
 		splitInput = Arrays.copyOfRange(splitInput, 1, splitInput.length);
-		
-		// I'm lazy and don't want to type as much
-		Inventory playerAndRoom = playerState.getPlayerAndRoomInventory();
-		
+				
 		if (verb == null) {
 			// Matches "north", "south", etc
 			if (direction != null) {
@@ -46,7 +54,9 @@ public class Parser {
 			}
 		}
 		
-		
+		// I'm lazy and don't want to type as much
+		Inventory playerAndRoom = playerState.getPlayerAndRoomInventory();
+
 		switch (verb) {
 		// No Direct Object
 		case quit:
@@ -94,6 +104,7 @@ public class Parser {
 		}
 		// Movement Verbs
 		case move:
+			direction = MovementAdverb.stringToAdverb(splitInput[0]);
 			return new Action(verb, direction);
 		// Invalid
 		default:

@@ -12,23 +12,23 @@ public class CompassRoom extends GenericRoom {
 	 * These exits should be other rooms. Note that CompassRooms do not
 	 * have to have Eucledian geometry.
 	 */
-	String roomName;
-	String roomDescription;
 	String extendedRoomDescrption;
 	// TODO: Change to entrances and exits.
 	CompassRoom northExit, eastExit, southExit, westExit = null;
-	RoomInventory roomInventory;
 	
 
 	public CompassRoom(String name, String description, CompassRoom n, CompassRoom e, CompassRoom s, CompassRoom w) {
 		super(name, description);
-		this.roomName = name;
 		this.northExit = n;
 		this.eastExit = e;
 		this.southExit = s;
 		this.westExit = w;
 	}
 
+	public CompassRoom() {
+		super();
+	}
+	
 	public CompassRoom(String name) {
 		super(name, null);
 	}
@@ -91,17 +91,5 @@ public class CompassRoom extends GenericRoom {
 		default:
 			return null;
 		}
-	}
-	
-	public RoomInventory getRoomInventory() {
-		return roomInventory;
-	}
-	
-	public CopyOnWriteArrayList<AbstractItem> getRoomInventoryList() {
-		return roomInventory.getInventoryList();
-	}
-	
-	public void addItem(AbstractItem item) {
-		roomInventory.addItem(item);
 	}
 }

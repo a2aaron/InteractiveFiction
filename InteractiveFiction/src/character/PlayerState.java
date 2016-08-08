@@ -10,6 +10,16 @@ public class PlayerState {
 	Inventory playerInventory;
 	GenericRoom currentRoom;
 	
+	public PlayerState() {
+		this.playerInventory = new Inventory();
+		this.currentRoom = new GenericRoom();
+	}
+	
+	public PlayerState(CompassRoom currentRoom) {
+		this.playerInventory = new Inventory();
+		this.currentRoom = currentRoom;
+	}
+	
 	public PlayerState(Inventory playerInventory, CompassRoom currentRoom) {
 		this.playerInventory = playerInventory;
 		this.currentRoom = currentRoom;
