@@ -1,7 +1,6 @@
 package character;
 
 import items.AbstractItem;
-import rooms.CompassRoom;
 import rooms.GenericRoom;
 import rooms.RoomInventory;
 
@@ -15,14 +14,14 @@ public class PlayerState {
 		this.currentRoom = new GenericRoom();
 	}
 	
-	public PlayerState(CompassRoom currentRoom) {
+	public PlayerState(GenericRoom currentRoom) {
 		this.playerInventory = new Inventory();
 		this.currentRoom = currentRoom;
 	}
 	
-	public PlayerState(Inventory playerInventory, CompassRoom currentRoom) {
+	public PlayerState(Inventory playerInventory, GenericRoom genericRoom) {
 		this.playerInventory = playerInventory;
-		this.currentRoom = currentRoom;
+		this.currentRoom = genericRoom;
 	}
 	
 	public int getPlayerEnergy() {

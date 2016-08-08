@@ -1,13 +1,13 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
 import character.Inventory;
 import character.PlayerState;
 import items.Vace;
-import rooms.CompassRoom;
 import rooms.GenericRoom;
 import types.Action;
 import types.Action.MovementAdverb;
@@ -40,15 +40,15 @@ public class ParserTest {
 	@Test
 	public void testItemActionRoomAndPlayer() {
 		Inventory playerInventory = new Inventory();
-		CompassRoom compassRoom = new CompassRoom();
+		GenericRoom GenericRoom = new GenericRoom();
 		
 		Vace vacePlayer = new Vace("vacePlayer", "vacePlayerdescription");
 		Vace vaceRoom = new Vace("vaceRoom", "vaceRoomdescription");
 		
 		playerInventory.addItem(vacePlayer);
-		compassRoom.addItem(vaceRoom);
+		GenericRoom.addItem(vaceRoom);
 		
-		PlayerState playerState = new PlayerState(playerInventory, compassRoom);
+		PlayerState playerState = new PlayerState(playerInventory, GenericRoom);
 		Parser parser = new Parser(playerState);
 		
 		Action itemAction1 = parser.parseInput("use vacePlayer");		
@@ -66,15 +66,15 @@ public class ParserTest {
 	@Test
 	public void testItemActionRoomOnly() {
 		Inventory playerInventory = new Inventory();
-		CompassRoom compassRoom = new CompassRoom();
+		GenericRoom GenericRoom = new GenericRoom();
 		
 		Vace vacePlayer = new Vace("vacePlayer", "vacePlayerdescription");
 		Vace vaceRoom = new Vace("vaceRoom", "vaceRoomdescription");
 		
 		playerInventory.addItem(vacePlayer);
-		compassRoom.addItem(vaceRoom);
+		GenericRoom.addItem(vaceRoom);
 		
-		PlayerState playerState = new PlayerState(playerInventory, compassRoom);
+		PlayerState playerState = new PlayerState(playerInventory, GenericRoom);
 		Parser parser = new Parser(playerState);
 		
 		// Should not be possible because this is in the player inventory
@@ -94,15 +94,15 @@ public class ParserTest {
 	@Test
 	public void testItemActionIndirectObject() {
 		Inventory playerInventory = new Inventory();
-		CompassRoom compassRoom = new CompassRoom();
+		GenericRoom GenericRoom = new GenericRoom();
 		
 		Vace vacePlayer = new Vace("vace player", "vacePlayerdescription");
 		Vace vaceRoom = new Vace("vace room", "vaceRoomdescription");
 		
 		playerInventory.addItem(vacePlayer);
-		compassRoom.addItem(vaceRoom);
+		GenericRoom.addItem(vaceRoom);
 		
-		PlayerState playerState = new PlayerState(playerInventory, compassRoom);
+		PlayerState playerState = new PlayerState(playerInventory, GenericRoom);
 		Parser parser = new Parser(playerState);
 		
 		Action useOn = parser.parseInput("useon vace player vace room");
@@ -114,7 +114,7 @@ public class ParserTest {
 	
 	@Test
 	public void testExamineRoom() {
-		CompassRoom room = new CompassRoom();
+		GenericRoom room = new GenericRoom();
 		Parser parser = new Parser(new PlayerState(room));
 		
 		Action examineRoom = parser.parseInput("look");
@@ -136,15 +136,15 @@ public class ParserTest {
 	@Test
 	public void testCantFindItem() {
 		Inventory playerInventory = new Inventory();
-		CompassRoom compassRoom = new CompassRoom();
+		GenericRoom GenericRoom = new GenericRoom();
 		
 		Vace vacePlayer = new Vace("vace player", "vacePlayerdescription");
 		Vace vaceRoom = new Vace("vaceRoom", "vaceRoomdescription");
 		
 		playerInventory.addItem(vacePlayer);
-		compassRoom.addItem(vaceRoom);
+		GenericRoom.addItem(vaceRoom);
 		
-		PlayerState playerState = new PlayerState(playerInventory, compassRoom);
+		PlayerState playerState = new PlayerState(playerInventory, GenericRoom);
 		Parser parser = new Parser(playerState);
 		
 		String[] nullDirectObject = {"use", "break ", "take nothing", "useOn nothing nothing", "useOn"};
