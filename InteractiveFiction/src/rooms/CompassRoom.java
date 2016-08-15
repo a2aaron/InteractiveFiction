@@ -11,16 +11,8 @@ public class CompassRoom extends GenericRoom {
 	 */
 	String extendedRoomDescrption;
 	// TODO: Change to entrances and exits.
-	CompassRoom northExit, eastExit, southExit, westExit = null;
-	
-
-	public CompassRoom(String name, String description, CompassRoom n, CompassRoom e, CompassRoom s, CompassRoom w) {
-		super(name, description);
-		this.northExit = n;
-		this.eastExit = e;
-		this.southExit = s;
-		this.westExit = w;
-	}
+//	CompassRoom northExit, eastExit, southExit, westExit = null;
+	CompassExit exit = new CompassExit();
 
 	public CompassRoom() {
 		super();
@@ -33,60 +25,41 @@ public class CompassRoom extends GenericRoom {
 	public CompassRoom(String name, String description) {
 		super(name, description);
 		roomInventory = new RoomInventory();
+		// [DEBUG]
 		addItem(new Vace(name + " Vace", "green"));
 		roomDescription = "You are in the " + name + ".\n";
 		extendedRoomDescription = description;
 	}
 	
-	/**
-	 * Link a room from this room to another room 
-	 * */
-	public void linkRoomTo(MovementAdverb direction, CompassRoom room) {
-		switch(direction) {
-		case north:
-			northExit = room;
-			break;
-		case east:
-			eastExit = room;
-			break;
-		case south:
-			southExit = room;
-			break;
-		case west:
-			westExit = room;
-			break;
-		}
+	public GenericRoom getExitRoom(MovementAdverb direction) {
+		return exit.getExitRoom(direction);
+//		switch(direction) {
+//		case north:
+//			if (northExit == null) {
+//				System.out.println("Can't move there.");
+//			}
+//			return northExit;
+//		case east:
+//			if (eastExit == null) {
+//				System.out.println("Can't move there.");
+//			}
+//			return eastExit;
+//		case south:
+//			if (southExit == null) {
+//				System.out.println("Can't move there.");
+//			}
+//			return southExit;
+//		case west:
+//			if (westExit == null) {
+//				System.out.println("Can't move there.");
+//			}
+//			return westExit;
+//		default:
+//			return null;
+//		}
 	}
-
-	public void twoSidedLink(MovementAdverb direction, CompassRoom room) {
-		linkRoomTo(direction, room);
-		room.linkRoomTo(MovementAdverb.getOpposite(direction), this);
-	}
-
-	public CompassRoom getExitRoom(MovementAdverb direction) {
-		switch(direction) {
-		case north:
-			if (northExit == null) {
-				System.out.println("Can't move there.");
-			}
-			return northExit;
-		case east:
-			if (eastExit == null) {
-				System.out.println("Can't move there.");
-			}
-			return eastExit;
-		case south:
-			if (southExit == null) {
-				System.out.println("Can't move there.");
-			}
-			return southExit;
-		case west:
-			if (westExit == null) {
-				System.out.println("Can't move there.");
-			}
-			return westExit;
-		default:
-			return null;
-		}
+	
+	public CompassExit getExit() {
+		return exit;
 	}
 }

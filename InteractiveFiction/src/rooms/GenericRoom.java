@@ -1,6 +1,7 @@
 package rooms;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import items.AbstractItem;
 import types.Action.MovementAdverb;
@@ -10,8 +11,7 @@ public class GenericRoom {
 	String roomDescription;
 	String extendedRoomDescription;
 	RoomInventory roomInventory = new RoomInventory();
-	CopyOnWriteArrayList<MovementAdverb> exits = new CopyOnWriteArrayList<MovementAdverb>();
-	CopyOnWriteArrayList<MovementAdverb> entrances = new CopyOnWriteArrayList<MovementAdverb>();
+	Exit exits = new Exit();
 	
 	public GenericRoom() {
 		
@@ -30,17 +30,8 @@ public class GenericRoom {
 		roomInventory.addItem(item);
 	}
 	
-	public void addExit(MovementAdverb exit) {
-		exits.add(exit);
-	}
-	
-	public void addEntrance(MovementAdverb entrance) {
-		exits.add(entrance);
-	}
-	
-	public void linkRoomTo(MovementAdverb direction, GenericRoom room) {
-		exits.add(direction);
-		entrances.add(MovementAdverb.getOpposite(direction));
+	public void addExit(GenericRoom exit) {
+		exits.addExit(exit);
 	}
 	
 	public String getRoomName() {
@@ -63,6 +54,10 @@ public class GenericRoom {
 		return roomInventory;
 	}
 
+	public Exit getExits() {
+		return exits;
+	}
+	
 	public void setRoomName(String newName) {
 		roomName = newName;
 	}

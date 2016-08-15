@@ -5,6 +5,7 @@ import items.IBreakableItem;
 import items.IItemUseableOn;
 import items.ITakeableItem;
 import rooms.CompassRoom;
+import rooms.GenericRoom;
 import types.Action;
 import types.ItemAction;
 import world.Parser;
@@ -106,7 +107,7 @@ public class Interact {
 			case move:
 			{
 				CompassRoom currentRoom = ((CompassRoom) playerState.getCurrentRoom());
-				CompassRoom newRoom = currentRoom.getExitRoom(action.getDirection());
+				GenericRoom newRoom = currentRoom.getExitRoom(action.getDirection());
 				if (newRoom != null) {
 					playerState.setCurrentRoom(newRoom);
 				}

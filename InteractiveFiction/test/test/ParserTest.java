@@ -21,7 +21,8 @@ public class ParserTest {
 		Action north = parser.parseInput("move north");
 		
 		assertSame(north.getVerb(), Verb.move);
-		System.out.println(north.getDirection().toString());
+//		System.out.println(north.getDirection().toString());
+		System.out.println("Nothing");
 		assertSame(north.getDirection(), MovementAdverb.north);
 		assertSame(north.getDirectObject(), null);
 		assertSame(north.getIndirectObject(), null);

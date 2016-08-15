@@ -20,6 +20,10 @@ public class Vace extends AbstractItem implements IBreakableItem, ITakeableItem 
 		this(name, "", color);
 	}
 	
+	public Vace() {
+		this("", "", "");
+	}
+	
 	public void useItem(String command) { // TODO: actually use this
 		command = command.toLowerCase();
 		if (command == "examine " + name ||

@@ -47,7 +47,7 @@ public class InteractTest {
 		printedStatements.reset();
 
 		// Should output "can't find your second item"
-		interact.doAction(new ItemAction(Verb.useOn, new Vace("", ""), null));
+		interact.doAction(new ItemAction(Verb.useOn, new Vace(), null));
 		assertNotNull(printedStatements);
 		printedStatements.reset();
 	}

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertSame;
 import org.junit.Test;
 
 import character.Movement;
+import rooms.CompassExit;
 import rooms.CompassRoom;
 import types.Action.MovementAdverb;
 
@@ -18,8 +19,8 @@ public class MovementTest {
 		CompassRoom westRoom = new CompassRoom("This room has a west exit");
 		CompassRoom eastRoom = new CompassRoom("This room has a east exit");
 		// Link rooms.
-		westRoom.linkRoomTo(MovementAdverb.west, eastRoom);
-		eastRoom.linkRoomTo(MovementAdverb.east, westRoom);
+		CompassExit.oneWayLink(MovementAdverb.west, westRoom, eastRoom);
+		CompassExit.oneWayLink(MovementAdverb.east, eastRoom, westRoom);
 		// Initialize player in west exit room.
 		Movement player = new Movement(westRoom);
 		// Should be able to move west.

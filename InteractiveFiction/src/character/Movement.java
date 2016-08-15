@@ -26,7 +26,7 @@ public class Movement {
 
 	public void move(MovementAdverb directions) {
 		if (canMove(directions) == true) {
-			currentRoom = currentRoom.getExitRoom(directions);
+			currentRoom = (CompassRoom) currentRoom.getExitRoom(directions);
 		} else {
 			// Can't move, just ignore.
 		}

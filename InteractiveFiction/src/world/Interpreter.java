@@ -10,6 +10,7 @@ import items.Lever;
 import items.Lever.LeverPosition;
 import items.LockedDoor;
 import items.Vace;
+import rooms.CompassExit;
 import rooms.CompassRoom;
 import rooms.LockedDoorRoom;
 import types.Action;
@@ -46,12 +47,17 @@ public class Interpreter {
 		southRoom.addItem(lockedDoor);
 
 		CompassRoom lockedRoom = new CompassRoom("Locked Room", "Locks");
-		southRoom.twoSidedLink(MovementAdverb.south, lockedRoom);
+		CompassExit.twoWayLink(MovementAdverb.south, southRoom, lockedRoom);
 		
-		startingRoom.twoSidedLink(MovementAdverb.north, northRoom);
-		startingRoom.twoSidedLink(MovementAdverb.east, eastRoom);
-		startingRoom.twoSidedLink(MovementAdverb.west, westRoom);
-		startingRoom.twoSidedLink(MovementAdverb.south, southRoom);
+		CompassExit.twoWayLink(MovementAdverb.north, startingRoom, northRoom);
+		CompassExit.twoWayLink(MovementAdverb.east, startingRoom, eastRoom);
+		CompassExit.twoWayLink(MovementAdverb.west, startingRoom, westRoom);
+		CompassExit.twoWayLink(MovementAdverb.south, startingRoom, southRoom);
+		
+//		startingRoom.twoSidedLink(MovementAdverb.north, northRoom);
+//		startingRoom.twoSidedLink(MovementAdverb.east, eastRoom);
+//		startingRoom.twoSidedLink(MovementAdverb.west, westRoom);
+//		startingRoom.twoSidedLink(MovementAdverb.south, southRoom);
 		
 		playerInput = new Scanner(System.in);
 		playerState = new PlayerState(new Inventory(), startingRoom);

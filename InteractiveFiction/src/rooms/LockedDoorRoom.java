@@ -16,7 +16,7 @@ public class LockedDoorRoom extends CompassRoom {
 		roomInventory.addItem(lockedDoor);
 	}
 	
-	public CompassRoom getExitRoom(MovementAdverb direction) {
+	public GenericRoom getExitRoom(MovementAdverb direction) {
 		if (direction == lockedDoorDirection && lockedDoor.getDoorState() == DoorState.closed) {
 			System.out.println("The door is closed! Open it!");
 			return null;
