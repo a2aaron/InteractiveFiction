@@ -1,5 +1,10 @@
 ITEM LIST
 
+useon - indicates that this item can be used on another item
+used on - indicates that this item should be used by another item
+locked - this item's function can't be used until an item is used on it
+key - this item unlocks another item
+
 Tile Wheel
     used on (Tile)
     door
@@ -20,3 +25,65 @@ Pearl Clock
         locked
     used on (Pearl)
 
+Lever
+    useable
+        one time
+        permant
+
+Generator
+    use on
+    key
+
+Generator Switch
+    locked (Fuse Box)
+
+
+
+
+
+
+Bell Puzzle
+    - 4 Bells
+    - Cubes
+    - Hidden Square
+
+Pipe Puzzle
+    Wheel
+        - Wheel
+        - Wheel Pipe
+    Pistons
+        - 3 Pistons
+        - Piston Box
+        - Fragile Pipe
+    Chimes
+        - Pearl
+        - Pearl Chimes
+
+Switch Puzzle
+    - Switches
+    - Generator
+
+Electrical Puzzle
+    Lockbox
+        - Ancient Coin
+        - Locked Box + Key Pad
+    Fuse
+        - Fuse
+        - Fuse Box
+    Radio
+        - Radio
+        - Drawer
+    Generator
+        - Spoon
+        - Lever
+        - Eletrical Unstable
+        - Bolted Square
+    Wisdom Gem
+        - Locked Lever
+        - Trapdoor Ladder
+        - Wisdom Gem
+
+Tile Wheel
+    - Wheel
+    - Four Tiles
+    - Elevator

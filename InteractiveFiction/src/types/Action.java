@@ -58,22 +58,26 @@ public class Action {
 			}
 		}
 	};
-	public enum MovementAdverb {north, east, south, west;
+	public enum MovementAdverb {UP, RIGHT, DOWN, LEFT;
 	
 		public static MovementAdverb stringToAdverb(String direction) {
-			switch (direction) {
+			switch (direction.toLowerCase()) {
 			case "n":
 			case "north":
-				return MovementAdverb.north;
+			case "up":
+				return MovementAdverb.UP;
 			case "s":
 			case "south":
-				return MovementAdverb.south;
+			case "down":
+				return MovementAdverb.DOWN;
 			case "w":
 			case "west":
-				return MovementAdverb.west;
+			case "left":
+				return MovementAdverb.LEFT;
 			case "e":
 			case "east":
-				return MovementAdverb.east;
+			case "right":
+				return MovementAdverb.RIGHT;
 			default:
 				return null;
 			}
@@ -81,14 +85,14 @@ public class Action {
 			
 		public static MovementAdverb getOpposite(MovementAdverb direction) {
 			switch (direction) {
-			case north:
-				return south;
-			case east:
-				return west;
-			case south:
-				return north;
-			case west:
-				return east;
+			case UP:
+				return DOWN;
+			case RIGHT:
+				return LEFT;
+			case DOWN:
+				return UP;
+			case LEFT:
+				return RIGHT;
 			default:
 				return null;
 			}

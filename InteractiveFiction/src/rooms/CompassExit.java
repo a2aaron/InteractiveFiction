@@ -1,59 +1,42 @@
 package rooms;
 
+import java.util.EnumMap;
+
+import org.json.JSONObject;
+
 import types.Action.MovementAdverb;
 
-public class CompassExit extends Exit {
+public class CompassExit {
 
-	//CopyOnWriteArraySet<>
+	EnumMap<MovementAdverb, GenericRoom> exits = new EnumMap<MovementAdverb, GenericRoom>(MovementAdverb.class);
 	
-	GenericRoom northExit;
-	GenericRoom eastExit;
-	GenericRoom southExit;
-	GenericRoom westExit;
+	public CompassExit() {   }
 	
-	public CompassExit() {
-		super();
+	public CompassExit(JSONObject exit) {
+		for (String key : exit.keySet()) {
+			// Note that this will ignore the "roomName" key even if it exists.
+			if (MovementAdverb.stringToAdverb(key) != null) {
+				addExit(MovementAdverb.stringToAdverb(key), exit.getString(key));
+			}
+		}
 	}
 	
 	public void addExit(MovementAdverb direction, GenericRoom room) {
-		switch(direction) {
-		case east:
-			eastExit = room;
-			break;
-		case north:
-			northExit = room;
-			break;
-		case south:
-			southExit = room;
-			break;
-		case west:
-			westExit = room;
-			break;
-		default:
-			break;
-		}
+		exits.put(direction, room);
 	}
 	
-	public GenericRoom getExitRoom(MovementAdverb direction) {
-		switch(direction) {
-		case north:
-			return northExit;
-		case east:
-			return eastExit;
-		case south:
-			return southExit;
-		case west:
-			return westExit;
-		default:
-			return null;
-		}
+	public void addExit(MovementAdverb direction, String roomName) {
+		exits.put(direction, new GenericRoom(roomName, ""));
+	}
+	
+	public GenericRoom get(MovementAdverb direction) {
+		return exits.get(direction);
 	}
 	
 	public void linkRoomTo(MovementAdverb direction, GenericRoom room) {
 		addExit(direction, room);
 	}
 	 
-	
 	public static void twoWayLink(MovementAdverb fromDirection, CompassRoom from, CompassRoom to) {
 		from.getExit().addExit(fromDirection, to);
 		to.getExit().addExit(MovementAdverb.getOpposite(fromDirection), from);

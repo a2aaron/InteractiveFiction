@@ -42,17 +42,17 @@ public class Interpreter {
 		LockedDoor lockedDoor = new LockedDoor("Locked Door", key);
 
 		LockedDoorRoom southRoom = new LockedDoorRoom(
-				"South Room", "A southern farm.", lockedDoor, MovementAdverb.south);
+				"South Room", "A southern farm.", lockedDoor, MovementAdverb.DOWN);
 		southRoom.addItem(key);
 		southRoom.addItem(lockedDoor);
 
 		CompassRoom lockedRoom = new CompassRoom("Locked Room", "Locks");
-		CompassExit.twoWayLink(MovementAdverb.south, southRoom, lockedRoom);
+		CompassExit.twoWayLink(MovementAdverb.DOWN, southRoom, lockedRoom);
 		
-		CompassExit.twoWayLink(MovementAdverb.north, startingRoom, northRoom);
-		CompassExit.twoWayLink(MovementAdverb.east, startingRoom, eastRoom);
-		CompassExit.twoWayLink(MovementAdverb.west, startingRoom, westRoom);
-		CompassExit.twoWayLink(MovementAdverb.south, startingRoom, southRoom);
+		CompassExit.twoWayLink(MovementAdverb.UP, startingRoom, northRoom);
+		CompassExit.twoWayLink(MovementAdverb.RIGHT, startingRoom, eastRoom);
+		CompassExit.twoWayLink(MovementAdverb.LEFT, startingRoom, westRoom);
+		CompassExit.twoWayLink(MovementAdverb.DOWN, startingRoom, southRoom);
 		
 //		startingRoom.twoSidedLink(MovementAdverb.north, northRoom);
 //		startingRoom.twoSidedLink(MovementAdverb.east, eastRoom);

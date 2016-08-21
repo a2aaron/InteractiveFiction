@@ -1,0 +1,7 @@
+{
+    "roomName": "tileWheel",
+    "left": "wheelPipe",
+    "right": "intersection",
+    "down": "lighthouse",
+    "exit": "elevator",
+}

@@ -19,19 +19,19 @@ public class MovementTest {
 		CompassRoom westRoom = new CompassRoom("This room has a west exit");
 		CompassRoom eastRoom = new CompassRoom("This room has a east exit");
 		// Link rooms.
-		CompassExit.oneWayLink(MovementAdverb.west, westRoom, eastRoom);
-		CompassExit.oneWayLink(MovementAdverb.east, eastRoom, westRoom);
+		CompassExit.oneWayLink(MovementAdverb.LEFT, westRoom, eastRoom);
+		CompassExit.oneWayLink(MovementAdverb.RIGHT, eastRoom, westRoom);
 		// Initialize player in west exit room.
 		Movement player = new Movement(westRoom);
 		// Should be able to move west.
 		assertEquals(westRoom, player.getCurrentRoom());
-		assertEquals(true, player.canMove(MovementAdverb.west));
-		assertEquals(false, player.canMove(MovementAdverb.east));
+		assertEquals(true, player.canMove(MovementAdverb.LEFT));
+		assertEquals(false, player.canMove(MovementAdverb.RIGHT));
 		// Move west into eastRoom.
-		player.move(MovementAdverb.west);
+		player.move(MovementAdverb.LEFT);
 		// Should be able to move east.
 		assertEquals(eastRoom, player.getCurrentRoom());
-		assertSame(false, player.canMove(MovementAdverb.west));
-		assertSame(true, player.canMove(MovementAdverb.east));
+		assertSame(false, player.canMove(MovementAdverb.LEFT));
+		assertSame(true, player.canMove(MovementAdverb.RIGHT));
 	}
 }

@@ -1,0 +1,132 @@
+{
+    "nameList": [
+        "tileWheel",
+        "wisdomGem",
+        "wheelPipe",
+        "chimeClock",
+        "wheelLever",
+        "intersection"
+        "trapDoorLever",
+        "generator",
+        "lighthouse",
+        "pressurePuzzle",
+        "ancientCoin",
+        "horizontalPipe",
+        "fuseBox",
+        "radio",
+        "tileGenerator",
+        "weakPipe",
+        "diaryLever",
+        "pressureSolution",
+        "bells",
+        "lockbox",
+        "elevator",
+        "outside"
+    ],
+
+    "exitList": [
+        {
+            "roomName": "tileWheel",
+            "left": "wheelPipe",
+            "right": "intersection",
+            "down": "lighthouse",
+            "exit": "elevator",
+        },
+        {
+            "roomName": "wheelPipe",
+            "right": "tileWheel",
+            "left": "chimeClock"
+        },
+        {
+            "roomName": "chimeClock",
+            "up": "wheelLever",
+            "right": "wheelPipe",
+        },
+        {
+            "roomName": "wheelLever",
+            "down": "chimeClock"
+        },
+        {
+            "roomName": "intersection",
+            "left": "tileWheel",
+            "right": "generator",
+            "up": "trapDoorLever"
+        }
+        {
+            "roomName": "trapDoorLever",
+            "up": "wisdomGem",
+            "down": "intersection"
+        },
+        {
+            "roomName": "wisdomGem",
+            "down": "trapDoorLever"
+        },
+        {
+            "roomName": "generator",
+            "left": "intersection"
+        },
+        {
+            "roomName": "lighthouse",
+            "left": "pressurePuzzle",
+            "right": "horizontalPipe",
+            "up": "tileWheel",
+            "down": "diaryLever"
+        },
+        {
+            "roomName": "pressurePuzzle",
+            "right": "lighthouse",
+            "down": "ancientCoin"
+        },
+        {
+            "roomName": "ancientCoin",
+            "up": "pressurePuzzle"
+        },
+        {
+            "roomName": "horizontalPipe",
+            "left": "lighthouse",
+            "down": "fuseBox"
+        },
+        {
+            "roomName": "fuseBox",
+            "up": "horizontalPipe",
+            "right": "radio"
+        },
+        {
+            "roomName": "radio",
+            "left": "fuseBox",
+            "down": "weakPipe",
+            "up": "tileGenerator"
+        },
+        {
+            "roomName": "tileGenerator",
+            "down": "radio"
+        },
+        {
+            "roomName": "weakPipe",
+            "up": "radio"
+        },
+        {
+            "roomName": "diaryLever",
+            "up": "lighthouse",
+            "down": "pressureSolution"
+        },
+        {
+            "roomName": "pressureSolution",
+            "up": "diaryLever",
+            "left": "lockbox",
+            "right": "bells"
+        },
+        {
+            "roomName": "bells",
+            "left": "pressureSolution"
+        },
+        {
+            "roomName": "lockbox",
+            "right": "pressureSolution"
+        },
+        {
+            "roomName": "elevator",
+            "forward": "outside"
+        }
+    ]
+}

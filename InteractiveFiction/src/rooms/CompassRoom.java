@@ -32,7 +32,7 @@ public class CompassRoom extends GenericRoom {
 	}
 	
 	public GenericRoom getExitRoom(MovementAdverb direction) {
-		return exit.getExitRoom(direction);
+		return exit.get(direction);
 //		switch(direction) {
 //		case north:
 //			if (northExit == null) {

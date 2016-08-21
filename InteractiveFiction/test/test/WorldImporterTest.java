@@ -41,7 +41,7 @@ public class WorldImporterTest {
 		assertTrue(item.getName() != null);
 		assertTrue(item.getDescription() != null);
 
-		((Vace) item).breakItem();;
+		((Vace) item).breakItem();
 		
 		assertTrue(((Vace) item).isBroken());
 	}
@@ -82,4 +82,6 @@ public class WorldImporterTest {
 		}
 		return new GenericRoom(roomName, roomDescription, roomInventory, exits);
 	}
+
+	
 }
