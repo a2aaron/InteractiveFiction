@@ -1,0 +1,21 @@
+{
+    "roomName": "Test Room",
+    "roomDescription": "This is a test room",
+    "items": [
+        {
+            "itemClass": "items.Vace",
+            "itemName": "Test Vace",
+            "itemDescription": "This is a test vace"
+        },
+        {
+            "itemClass": "items.Vace",
+            "itemName": "Another Test Vace",
+            "itemDescription": "This is a second test vace"
+        }
+    ],
+    "exits": [
+        {
+            "North Room": "north",
+        }
+    ]
+}

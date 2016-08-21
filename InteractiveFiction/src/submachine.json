@@ -1,0 +1,17 @@
+{
+    "roomList": [
+        {
+            "startingRoom": true,
+            "roomName": "Metal Diamond Room",
+            "roomDescription": "An odd metal device hums quietly on the wall. The yellow walls are lit by an unknown light source.",
+            "items": [
+                {
+                    "itemClass": "Vace",
+                    "itemName": "Strange Metal Device",
+                    "itemDescription": "This device is a circular piece of metal with a diamond cut into four triangles. The triangles seem like they can hold a missing piece. It hums quietly."
+                }
+            ],
+            "exits": []
+        }
+    ]
+}

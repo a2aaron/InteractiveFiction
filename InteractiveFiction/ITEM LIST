@@ -1,0 +1,22 @@
+ITEM LIST
+
+Tile Wheel
+    used on (Tile)
+    door
+        locked (Tile)
+
+Wheel Pipe
+    used on
+    useable
+        locked (Wheel)
+
+Wheel
+    useon (Wheel Pipe)
+    takeable
+    key
+
+Pearl Clock
+    has inventory (Tile)
+        locked
+    used on (Pearl)
+
