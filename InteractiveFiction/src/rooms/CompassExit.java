@@ -6,13 +6,14 @@ import org.json.JSONObject;
 
 import types.Action.MovementAdverb;
 
-public class CompassExit {
-
-	EnumMap<MovementAdverb, GenericRoom> exits = new EnumMap<MovementAdverb, GenericRoom>(MovementAdverb.class);
+public class CompassExit extends Exit<MovementAdverb, GenericRoom> {
 	
-	public CompassExit() {   }
+	public CompassExit() {
+		exits = new EnumMap<MovementAdverb, GenericRoom>(MovementAdverb.class);
+	}
 	
 	public CompassExit(JSONObject exit) {
+		exits = new EnumMap<MovementAdverb, GenericRoom>(MovementAdverb.class);
 		for (String key : exit.keySet()) {
 			// Note that this will ignore the "roomName" key even if it exists.
 			if (MovementAdverb.stringToAdverb(key) != null) {
@@ -20,17 +21,9 @@ public class CompassExit {
 			}
 		}
 	}
-	
-	public void addExit(MovementAdverb direction, GenericRoom room) {
-		exits.put(direction, room);
-	}
-	
+		
 	public void addExit(MovementAdverb direction, String roomName) {
 		exits.put(direction, new GenericRoom(roomName, ""));
-	}
-	
-	public GenericRoom get(MovementAdverb direction) {
-		return exits.get(direction);
 	}
 	
 	public void linkRoomTo(MovementAdverb direction, GenericRoom room) {

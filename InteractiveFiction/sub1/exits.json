@@ -5,7 +5,7 @@
         "wheelPipe",
         "chimeClock",
         "wheelLever",
-        "intersection"
+        "intersection",
         "trapDoorLever",
         "generator",
         "lighthouse",
@@ -51,7 +51,7 @@
             "left": "tileWheel",
             "right": "generator",
             "up": "trapDoorLever"
-        }
+        },
         {
             "roomName": "trapDoorLever",
             "up": "wisdomGem",

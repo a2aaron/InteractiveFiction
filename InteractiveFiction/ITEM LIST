@@ -4,6 +4,9 @@ useon - indicates that this item can be used on another item
 used on - indicates that this item should be used by another item
 locked - this item's function can't be used until an item is used on it
 key - this item unlocks another item
+door - this item is unlocked by another item
+useable - this item does something when used by the player
+
 
 Tile Wheel
     used on (Tile)

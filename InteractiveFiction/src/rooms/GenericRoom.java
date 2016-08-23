@@ -1,12 +1,8 @@
 package rooms;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import items.AbstractItem;
@@ -17,7 +13,7 @@ public class GenericRoom {
 	String roomDescription = "";
 	String extendedRoomDescription = "";
 	RoomInventory roomInventory = new RoomInventory();
-	Exit exits = new Exit();
+	Exit<MovementAdverb, GenericRoom> exits = new CompassExit();
 	
 	public GenericRoom() {
 		
@@ -31,21 +27,14 @@ public class GenericRoom {
 	public GenericRoom(RoomInventory items) {
 		roomInventory = items;
 	}
-	//fucking terrible idea
-	public GenericRoom(JSONObject room) throws ClassNotFoundException, JSONException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	
+	public GenericRoom(JSONObject room) throws Exception {
 		roomName = room.getString("roomName");
 		roomDescription = room.getString("roomDescription");
-		JSONArray itemList = room.getJSONArray("items");
-		for (int i = 0; i < itemList.length(); i++) {
-			JSONObject item = itemList.getJSONObject(i);
-			String itemName = item.getString("itemName");
-			String itemDescription = item.getString("itemName");
-			Constructor construct = Class.forName(item.getString("itemClass")).getConstructor(String.class);
-			addItem((AbstractItem) construct.newInstance(itemName, itemDescription));
-		}
+		exits = new CompassExit(room.getJSONObject("exits"));
 	}
 	
-	public GenericRoom(String roomName, String roomDescription, RoomInventory roomInventory, Exit exits) {
+	public GenericRoom(String roomName, String roomDescription, RoomInventory roomInventory, CompassExit exits) {
 		this.roomName = roomName;
 		this.roomDescription = roomDescription;
 		this.roomInventory = roomInventory;
@@ -55,11 +44,7 @@ public class GenericRoom {
 	public void addItem(AbstractItem item) {
 		roomInventory.addItem(item);
 	}
-	
-	public void addExit(GenericRoom exit) {
-		exits.addExit(exit);
-	}
-	
+
 	public String getRoomName() {
 		return roomName;
 	}
@@ -80,7 +65,7 @@ public class GenericRoom {
 		return roomInventory;
 	}
 
-	public Exit getExits() {
+	public Exit<MovementAdverb, GenericRoom> getExits() {
 		return exits;
 	}
 	

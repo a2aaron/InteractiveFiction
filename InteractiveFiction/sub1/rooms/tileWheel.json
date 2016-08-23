@@ -1,0 +1,7 @@
+{
+    "roomName": "Room with Strange Device",
+    "roomDescription": "This room have a strange metal device that can hold four metal triangles.",
+    "itemList": [
+        "tileWheel"
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "itemName": "Pipe with Hole",
+    "itemDescription": "A metal pipe that has a hole fit for a wheel",
+    "usedOn": {
+        "item": "wheel",
+        "newItemName": "Wheel Pipe",
+        "newItemDescription": "A metal pipe outfited with a wheel"
+    }
+}

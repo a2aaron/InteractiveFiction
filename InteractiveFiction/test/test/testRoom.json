@@ -13,9 +13,7 @@
             "itemDescription": "This is a second test vace"
         }
     ],
-    "exits": [
-        {
-            "North Room": "north",
-        }
-    ]
+    "exits": {
+            "north": "North Room"
+    }
 }

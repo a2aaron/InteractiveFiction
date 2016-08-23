@@ -1,12 +1,13 @@
 package items;
 
+import org.json.JSONObject;
+
 import character.Inventory;
 
 public class Vace extends AbstractItem implements IBreakableItem, ITakeableItem {
 	boolean isBroken = false;
 	boolean isTakeable = true;
 	String color;
-	String description;
 	//String name;
 	
 	public Vace(String name, String description, String color) {
@@ -24,6 +25,10 @@ public class Vace extends AbstractItem implements IBreakableItem, ITakeableItem 
 		this("", "", "");
 	}
 	
+	public Vace(JSONObject item) throws Exception {
+		super(item);
+	}
+
 	public void useItem(String command) { // TODO: actually use this
 		command = command.toLowerCase();
 		if (command == "examine " + name ||
@@ -62,14 +67,6 @@ public class Vace extends AbstractItem implements IBreakableItem, ITakeableItem 
 		return isBroken;
 	}
 	
-	public String getDescription() {
-		return description;
-	}
-	
-	public void setDescription(String itemDescription) {
-		this.description = itemDescription;
-	}
-
 	public String getColor() {
 		return color;
 	}

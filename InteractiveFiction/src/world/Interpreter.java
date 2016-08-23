@@ -1,6 +1,15 @@
 package world;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import character.Interact;
 import character.Inventory;
@@ -12,6 +21,7 @@ import items.LockedDoor;
 import items.Vace;
 import rooms.CompassExit;
 import rooms.CompassRoom;
+import rooms.GenericRoom;
 import rooms.LockedDoorRoom;
 import types.Action;
 import types.Action.MovementAdverb;
@@ -26,38 +36,58 @@ public class Interpreter {
 	}
 
 	public static void main(String[] args) {
-		CompassRoom startingRoom = new CompassRoom(
-				"Starting Room", "This is the room you start in!");
-		startingRoom.addItem(new Vace("TEST", "HELP"));
-		startingRoom.addItem(new Lever("Lever", LeverPosition.up));
+//		CompassRoom startingRoom = new CompassRoom(
+//				"Starting Room", "This is the room you start in!");
+//		startingRoom.addItem(new Vace("TEST", "HELP"));
+//		startingRoom.addItem(new Lever("Lever", LeverPosition.up));
+//		
+//		CompassRoom northRoom = new CompassRoom(
+//				"North Room","It's the north pole!");
+//		CompassRoom eastRoom = new CompassRoom(
+//				"East Room", "Easter.");
+//		CompassRoom westRoom = new CompassRoom(
+//				"West Room", "Wester.");
+//		
+//		Key key = new Key("Key", "It's a key");
+//		LockedDoor lockedDoor = new LockedDoor("Locked Door", key);
+//
+//		LockedDoorRoom southRoom = new LockedDoorRoom(
+//				"South Room", "A southern farm.", lockedDoor, MovementAdverb.DOWN);
+//		southRoom.addItem(key);
+//		southRoom.addItem(lockedDoor);
+//
+//		CompassRoom lockedRoom = new CompassRoom("Locked Room", "Locks");
+//		CompassExit.twoWayLink(MovementAdverb.DOWN, southRoom, lockedRoom);
+//		
+//		CompassExit.twoWayLink(MovementAdverb.UP, startingRoom, northRoom);
+//		CompassExit.twoWayLink(MovementAdverb.RIGHT, startingRoom, eastRoom);
+//		CompassExit.twoWayLink(MovementAdverb.LEFT, startingRoom, westRoom);
+//		CompassExit.twoWayLink(MovementAdverb.DOWN, startingRoom, southRoom);
+//		
+////		startingRoom.twoSidedLink(MovementAdverb.north, northRoom);
+////		startingRoom.twoSidedLink(MovementAdverb.east, eastRoom);
+////		startingRoom.twoSidedLink(MovementAdverb.west, westRoom);
+////		startingRoom.twoSidedLink(MovementAdverb.south, southRoom);
+//		
+		File file = new File("sub1/exits.json");
+		JSONObject exits = null;
+		try {
+			exits = new JSONObject(new JSONTokener(new FileInputStream(file)));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JSONArray nameList = exits.getJSONArray("nameList");
+		CopyOnWriteArraySet<GenericRoom> rooms = new CopyOnWriteArraySet<GenericRoom>();
 		
-		CompassRoom northRoom = new CompassRoom(
-				"North Room","It's the north pole!");
-		CompassRoom eastRoom = new CompassRoom(
-				"East Room", "Easter.");
-		CompassRoom westRoom = new CompassRoom(
-				"West Room", "Wester.");
-		
-		Key key = new Key("Key", "It's a key");
-		LockedDoor lockedDoor = new LockedDoor("Locked Door", key);
-
-		LockedDoorRoom southRoom = new LockedDoorRoom(
-				"South Room", "A southern farm.", lockedDoor, MovementAdverb.DOWN);
-		southRoom.addItem(key);
-		southRoom.addItem(lockedDoor);
-
-		CompassRoom lockedRoom = new CompassRoom("Locked Room", "Locks");
-		CompassExit.twoWayLink(MovementAdverb.DOWN, southRoom, lockedRoom);
-		
-		CompassExit.twoWayLink(MovementAdverb.UP, startingRoom, northRoom);
-		CompassExit.twoWayLink(MovementAdverb.RIGHT, startingRoom, eastRoom);
-		CompassExit.twoWayLink(MovementAdverb.LEFT, startingRoom, westRoom);
-		CompassExit.twoWayLink(MovementAdverb.DOWN, startingRoom, southRoom);
-		
-//		startingRoom.twoSidedLink(MovementAdverb.north, northRoom);
-//		startingRoom.twoSidedLink(MovementAdverb.east, eastRoom);
-//		startingRoom.twoSidedLink(MovementAdverb.west, westRoom);
-//		startingRoom.twoSidedLink(MovementAdverb.south, southRoom);
+		GenericRoom startingRoom = null;
+		for (int i = 0; i < nameList.length(); i++) {
+			GenericRoom room = new GenericRoom(nameList.getString(i), "");
+			rooms.add(room);
+			if (nameList.getString(i).equals("tileWheel")) {
+				startingRoom = room; 
+			}
+		}
 		
 		playerInput = new Scanner(System.in);
 		playerState = new PlayerState(new Inventory(), startingRoom);

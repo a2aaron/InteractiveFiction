@@ -1,29 +1,27 @@
 package rooms;
 
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.EnumMap;
 
-public class Exit {
+public abstract class Exit<K extends Enum<K>, RoomType> {
 	
-	CopyOnWriteArraySet<GenericRoom> exits;
+	EnumMap<K, GenericRoom> exits;
 	
-	public Exit(CopyOnWriteArraySet<GenericRoom> exits) {
+	public Exit(EnumMap<K, GenericRoom> exits) {
 		this.exits = exits;
 	}
 	
-	public Exit() {
-		this.exits = new CopyOnWriteArraySet<GenericRoom>();
-	}
+	public Exit() {   }
 	
-	public CopyOnWriteArraySet<GenericRoom> getExitSet() {
+	public EnumMap<K, GenericRoom> getExitSet() {
 		return exits;
 	}
 	
 	public boolean hasExit(GenericRoom room) {
-		return exits.contains(room);
+		return exits.containsValue(room);
 	}
 	
 	public GenericRoom getExitByName(String name) {
-		for (GenericRoom room : exits) {
+		for (GenericRoom room : exits.values()) {
 			if (name.toLowerCase() == room.getRoomName().toLowerCase()) {
 				return room;
 			}
@@ -32,16 +30,11 @@ public class Exit {
 		return null;
 	}
 	
-	public void addExit(GenericRoom room) {
-		exits.add(room);
+	public void addExit(K e, GenericRoom room) {
+		exits.put(e, room);
 	}
 	
-	public static void twoWayLink(GenericRoom room1, GenericRoom room2) {
-		room1.getExits().addExit(room2);
-		room1.getExits().addExit(room1);
-	}
-	
-	public static void oneWayLink(GenericRoom from, GenericRoom to) {
-		from.getExits().addExit(to);
+	public GenericRoom get(K e) {
+		return exits.get(e);
 	}
 }

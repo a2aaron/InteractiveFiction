@@ -106,8 +106,8 @@ public class Interact {
 				break;
 			case move:
 			{
-				CompassRoom currentRoom = ((CompassRoom) playerState.getCurrentRoom());
-				GenericRoom newRoom = currentRoom.getExitRoom(action.getDirection());
+				GenericRoom currentRoom = playerState.getCurrentRoom();
+				GenericRoom newRoom = currentRoom.getExits().get(action.getDirection());
 				if (newRoom != null) {
 					playerState.setCurrentRoom(newRoom);
 				}
