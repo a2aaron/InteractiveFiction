@@ -3,6 +3,7 @@ package rooms;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import items.AbstractItem;
@@ -28,10 +29,16 @@ public class GenericRoom {
 		roomInventory = items;
 	}
 	
-	public GenericRoom(JSONObject room) throws Exception {
+	public GenericRoom(JSONObject room) throws JSONException {
 		roomName = room.getString("roomName");
 		roomDescription = room.getString("roomDescription");
-		exits = new CompassExit(room.getJSONObject("exits"));
+		extendedRoomDescription = roomDescription;
+		try {
+			exits = new CompassExit(room.getJSONObject("exits"));
+		} catch (JSONException e) {
+			System.err.println("No exits object found for " + roomName + ", creating empty exit instead");
+			exits = new CompassExit();
+		}
 	}
 	
 	public GenericRoom(String roomName, String roomDescription, RoomInventory roomInventory, CompassExit exits) {
@@ -75,5 +82,9 @@ public class GenericRoom {
 	
 	public void setRoomDescription(String newDescription) {
 		roomDescription = newDescription;
+	}
+	
+	public void appendRoomDescription(String text) {
+		roomDescription += text;
 	}
 }

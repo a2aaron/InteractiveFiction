@@ -3,6 +3,7 @@ package world;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -78,14 +79,43 @@ public class Interpreter {
 			e.printStackTrace();
 		}
 		JSONArray nameList = exits.getJSONArray("nameList");
-		CopyOnWriteArraySet<GenericRoom> rooms = new CopyOnWriteArraySet<GenericRoom>();
+		HashMap<String, GenericRoom> rooms = new HashMap<String, GenericRoom>();
 		
 		GenericRoom startingRoom = null;
 		for (int i = 0; i < nameList.length(); i++) {
-			GenericRoom room = new GenericRoom(nameList.getString(i), "");
-			rooms.add(room);
+			String internalRoomName = nameList.getString(i);
+			File roomFile = new File("sub1/rooms/" + internalRoomName + ".json");
+			GenericRoom room = null;
+			try {
+				JSONObject roomData = JSONObjectFromFile(roomFile);
+				room = new GenericRoom(roomData);
+			} catch (FileNotFoundException e) {
+				System.out.println(roomFile.getName() + " missing. Creating blank room instead");
+				room = new GenericRoom(internalRoomName, "");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} finally {
+				
+			}
+			
+			rooms.put(internalRoomName, room);
 			if (nameList.getString(i).equals("tileWheel")) {
 				startingRoom = room; 
+			}
+		}
+		
+		JSONArray exitList = exits.getJSONArray("exitList");
+		for (int i = 0; i < exitList.length(); i++) {
+			JSONObject exit = exitList.getJSONObject(i);
+			String roomName = exit.getString("roomName");
+			for (String key : exit.keySet()) {
+				MovementAdverb direction = MovementAdverb.stringToAdverb(key);
+				if (direction != null) {
+					GenericRoom currentRoom = rooms.get(roomName); 
+					GenericRoom exitRoom = rooms.get(exit.getString(key));
+					currentRoom.getExits().addExit(direction, exitRoom);
+					currentRoom.appendRoomDescription(key + "\n");
+				}
 			}
 		}
 		
@@ -105,5 +135,9 @@ public class Interpreter {
 		
 		System.out.println("Goodbye");
 		playerInput.close();
+	}
+	
+	public static JSONObject JSONObjectFromFile(File file) throws JSONException, FileNotFoundException  {
+		return new JSONObject(new JSONTokener(new FileInputStream(file)));
 	}
 }
