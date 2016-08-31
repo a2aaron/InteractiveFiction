@@ -19,17 +19,12 @@ public class GenericRoom {
 	RoomInventory roomInventory = new RoomInventory();
 	Exit<MovementAdverb, GenericRoom> exits = new CompassExit();
 	
-	public GenericRoom() {
-		
-	}
-	
-	public GenericRoom(String name, String description) {
-		roomName = name;
-		roomDescription = description;
-	} 
-	
-	public GenericRoom(RoomInventory items) {
-		roomInventory = items;
+	public GenericRoom(String roomName, String roomDescription, String extendedRoomDescription, RoomInventory roomInventory, CompassExit exits) {
+		this.roomName = roomName;
+		this.roomDescription = roomDescription;
+		this.extendedRoomDescription = extendedRoomDescription;
+		this.roomInventory = roomInventory;
+		this.exits = exits;
 	}
 	
 	public GenericRoom(String roomName, String roomDescription, RoomInventory roomInventory, CompassExit exits) {
@@ -37,6 +32,15 @@ public class GenericRoom {
 		this.roomDescription = roomDescription;
 		this.roomInventory = roomInventory;
 		this.exits = exits;
+	}
+
+	public GenericRoom(String name, String description) {
+		roomName = name;
+		roomDescription = description;
+	} 
+	
+	public GenericRoom() {
+		
 	}
 
 	public void addItem(GenericItem item) {
@@ -55,10 +59,6 @@ public class GenericRoom {
 	    return extendedRoomDescription;
 	}
 	
-	public CopyOnWriteArrayList<GenericItem> getRoomInventoryList() {
-		return roomInventory.getInventoryList();
-	}
-	
 	public RoomInventory getRoomInventory() {
 		return roomInventory;
 	}
@@ -73,6 +73,10 @@ public class GenericRoom {
 	
 	public void setRoomDescription(String newDescription) {
 		roomDescription = newDescription;
+	}
+	
+	public void setExtendedRoomDescription(String newDescription) {
+		extendedRoomDescription = newDescription;
 	}
 	
 	public void appendRoomDescription(String text) {

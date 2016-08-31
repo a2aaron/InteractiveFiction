@@ -47,8 +47,4 @@ public class Movement {
 	public Inventory getCurrentRoomInventory() {
 		return currentRoom.getRoomInventory();
 	}
-	
-	public CopyOnWriteArrayList<GenericItem> getCurrentRoomInventoryList() {
-		return currentRoom.getRoomInventoryList();
-	}
 }
