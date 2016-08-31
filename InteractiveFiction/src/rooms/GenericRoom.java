@@ -1,13 +1,16 @@
 package rooms;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import items.AbstractItem;
+import items.GenericItem;
 import types.Action.MovementAdverb;
+import world.Interpreter;
 
 public class GenericRoom {
 	String roomName = "";
@@ -29,18 +32,6 @@ public class GenericRoom {
 		roomInventory = items;
 	}
 	
-	public GenericRoom(JSONObject room) throws JSONException {
-		roomName = room.getString("roomName");
-		roomDescription = room.getString("roomDescription");
-		extendedRoomDescription = roomDescription;
-		try {
-			exits = new CompassExit(room.getJSONObject("exits"));
-		} catch (JSONException e) {
-			System.err.println("No exits object found for " + roomName + ", creating empty exit instead");
-			exits = new CompassExit();
-		}
-	}
-	
 	public GenericRoom(String roomName, String roomDescription, RoomInventory roomInventory, CompassExit exits) {
 		this.roomName = roomName;
 		this.roomDescription = roomDescription;
@@ -48,7 +39,7 @@ public class GenericRoom {
 		this.exits = exits;
 	}
 
-	public void addItem(AbstractItem item) {
+	public void addItem(GenericItem item) {
 		roomInventory.addItem(item);
 	}
 
@@ -64,7 +55,7 @@ public class GenericRoom {
 	    return extendedRoomDescription;
 	}
 	
-	public CopyOnWriteArrayList<AbstractItem> getRoomInventoryList() {
+	public CopyOnWriteArrayList<GenericItem> getRoomInventoryList() {
 		return roomInventory.getInventoryList();
 	}
 	
@@ -86,5 +77,9 @@ public class GenericRoom {
 	
 	public void appendRoomDescription(String text) {
 		roomDescription += text;
+	}
+	
+	public void appendExtendedRoomDescription(String text) {
+		extendedRoomDescription += text;
 	}
 }

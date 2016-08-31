@@ -2,12 +2,12 @@ package character;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import items.AbstractItem;
+import items.GenericItem;
 
 public class Inventory {
-	CopyOnWriteArrayList<AbstractItem> inventoryList = new CopyOnWriteArrayList<AbstractItem>();
+	CopyOnWriteArrayList<GenericItem> inventoryList = new CopyOnWriteArrayList<GenericItem>();
 	
-	public Inventory(AbstractItem item) {
+	public Inventory(GenericItem item) {
 		inventoryList.add(item);
 	}
 	
@@ -19,11 +19,11 @@ public class Inventory {
 		}
 	}
 
-	public CopyOnWriteArrayList<AbstractItem> getInventory() {
+	public CopyOnWriteArrayList<GenericItem> getInventory() {
 		return inventoryList;
 	}
 	
-	public boolean hasItem(AbstractItem item) {
+	public boolean hasItem(GenericItem item) {
 		return inventoryList.contains(item);
 	}
 	
@@ -31,9 +31,9 @@ public class Inventory {
 		return inventoryList.size();
 	}
 
-	public AbstractItem getItemByName(String itemName) {
+	public GenericItem getItemByName(String itemName) {
 		for(int i = 0; i < inventoryList.size(); i++) {
-			AbstractItem item = inventoryList.get(i);
+			GenericItem item = inventoryList.get(i);
 			//System.out.println(item.getName().toLowerCase() + " | " + itemName); 
 			if (item.getName().toLowerCase().equals(itemName.toLowerCase())) {
 				return item;
@@ -42,31 +42,31 @@ public class Inventory {
 		return null;
 	}
 	
-	public void removeItem(AbstractItem item) {
+	public void removeItem(GenericItem item) {
 		inventoryList.remove(item);
 	}
 	
-	public void addItem(AbstractItem item) {
+	public void addItem(GenericItem item) {
 		inventoryList.add(item);
 	}
 	
-	public void moveItem(AbstractItem item, Inventory destination) {
+	public void moveItem(GenericItem item, Inventory destination) {
 		removeItem(item);
 		destination.addItem(item);
 	}
 	
-	public void takeItem(AbstractItem item, Inventory takeFrom) {
+	public void takeItem(GenericItem item, Inventory takeFrom) {
 		addItem(item);
 		takeFrom.removeItem(item);
 	}
 	
-	public CopyOnWriteArrayList<AbstractItem> getInventoryList() {
+	public CopyOnWriteArrayList<GenericItem> getInventoryList() {
 		return inventoryList;
 	}
 	
 	public void printItems() {
 		if (inventoryList.size() != 0) {
-			for (AbstractItem item : inventoryList) {
+			for (GenericItem item : inventoryList) {
 				System.out.println("[" + item.getName() + "]");
 				System.out.println(item.getDescription());
 			} 

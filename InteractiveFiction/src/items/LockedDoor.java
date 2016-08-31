@@ -14,7 +14,7 @@ public class LockedDoor extends Door {
 		this.key = key;
 	}
 	
-	public void unlockDoor(AbstractItem item) {
+	public void unlockDoor(GenericItem item) {
 		if (item instanceof Key) {
 			if (item == key) {
 				lockState = LockState.unlocked;

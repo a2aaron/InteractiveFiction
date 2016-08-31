@@ -1,6 +1,6 @@
 package character;
 
-import items.AbstractItem;
+import items.GenericItem;
 import rooms.GenericRoom;
 import rooms.RoomInventory;
 
@@ -48,7 +48,7 @@ public class PlayerState {
 		this.currentRoom  = currentRoom;
 	}
 	
-	public AbstractItem searchPlayerAndRoomInventory(String itemName) {
+	public GenericItem searchPlayerAndRoomInventory(String itemName) {
 		if (playerInventory.getItemByName(itemName) != null) {
 			return playerInventory.getItemByName(itemName);
 		} else if (currentRoom.getRoomInventory().getItemByName(itemName) != null) {

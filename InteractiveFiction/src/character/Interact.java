@@ -1,6 +1,6 @@
 package character;
 
-import items.AbstractItem;
+import items.GenericItem;
 import items.IBreakableItem;
 import items.IItemUseableOn;
 import items.ITakeableItem;
@@ -39,7 +39,7 @@ public class Interact {
 			if (action.getDirectObject() == null) {
 				System.out.println("Can't find that item");
 			} else {
-				AbstractItem directObject = (AbstractItem) action.getDirectObject();
+				GenericItem directObject = (GenericItem) action.getDirectObject();
 				switch(action.getVerb()) {
 				case examineObject:
 					System.out.println(directObject.getDescription());
@@ -64,7 +64,7 @@ public class Interact {
 					}
 					break;
 				case useOn:
-					AbstractItem indirectObject = (AbstractItem) action.getIndirectObject();
+					GenericItem indirectObject = (GenericItem) action.getIndirectObject();
 					
 					if (indirectObject == null) {
 						System.out.println("Can't find your second item!");
@@ -111,6 +111,7 @@ public class Interact {
 				if (newRoom != null) {
 					playerState.setCurrentRoom(newRoom);
 				}
+				System.out.println(playerState.getCurrentRoom().getExtendedRoomDescription());
 				break;
 			}
 			default:

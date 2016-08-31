@@ -1,25 +1,26 @@
 package items;
 
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class AbstractItem {
+public class GenericItem {
 	String name;
 	String description;
 	
-	public AbstractItem(String name, String description) {
+	public GenericItem(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
 	
-	public AbstractItem(JSONObject item) throws Exception {
+	public GenericItem(JSONObject item) throws JSONException {
 		name = item.getString("itemName");
 		description = item.getString("itemDescription");
 	}
 	
 	public String getDescription() { return description; }
 	public String getName() { return name; }
-	public abstract void useItem();
+	public void useItem() {   };
 	
 	public void setName(String itemName) {
 		this.name = itemName;

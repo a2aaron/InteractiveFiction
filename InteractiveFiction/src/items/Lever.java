@@ -1,6 +1,6 @@
 package items;
 
-public class Lever extends AbstractItem {
+public class Lever extends GenericItem {
     public enum LeverPosition {up, down};
     LeverPosition leverPosition;
 

@@ -1,0 +1,8 @@
+{
+    "roomName": "Radio",
+    "roomDescription": "",
+    "itemList": [
+        "radio.json",
+        "spoon.json"
+    ]
+}

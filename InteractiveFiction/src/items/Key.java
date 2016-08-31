@@ -2,7 +2,7 @@ package items;
 
 import character.Inventory;
 
-public class Key extends AbstractItem implements ITakeableItem, IItemUseableOn {
+public class Key extends GenericItem implements ITakeableItem, IItemUseableOn {
 
 	public Key(String name, String description) {
 		super(name, description);
@@ -24,7 +24,7 @@ public class Key extends AbstractItem implements ITakeableItem, IItemUseableOn {
 	}
 
 	@Override
-	public void useItemOn(AbstractItem item) {
+	public void useItemOn(GenericItem item) {
 		if (item instanceof LockedDoor) {
 			((LockedDoor) item).unlockDoor(this);
 		} else {

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import character.Inventory;
 import character.PlayerState;
-import items.AbstractItem;
+import items.GenericItem;
 import types.Action;
 import types.Action.MovementAdverb;
 import types.Action.Verb;
@@ -70,20 +70,20 @@ public class Parser {
 		case destroy:
 		case examineObject:
 		{
-			AbstractItem item = scanStringForItem(splitInput, playerAndRoom);
+			GenericItem item = scanStringForItem(splitInput, playerAndRoom);
 			return new ItemAction(verb, item);
 		}
 		// Item as Direct Object (Room Only)
 		case take:
 		{
-			AbstractItem item = scanStringForItem(splitInput, playerState.getCurrentRoomInventory());
+			GenericItem item = scanStringForItem(splitInput, playerState.getCurrentRoomInventory());
 			return new ItemAction(verb, item);
 		}
 		// Two items, Direct and Indirect (Room and/or Player)
 		case useOn:
 		{
 			try {
-				AbstractItem itemUse = scanStringForItem(splitInput, playerAndRoom);
+				GenericItem itemUse = scanStringForItem(splitInput, playerAndRoom);
 				
 				// Drop the words of the first item
 				int lastIndex = getFirstIndexOfNextItem(splitInput, playerAndRoom);
@@ -96,7 +96,7 @@ public class Parser {
 					return new ItemAction(verb, itemUse, null);
 				}
 				splitInput = Arrays.copyOfRange(splitInput, lastIndex, splitInput.length);
-				AbstractItem itemUseOn = scanStringForItem(splitInput, playerAndRoom);
+				GenericItem itemUseOn = scanStringForItem(splitInput, playerAndRoom);
 				return new ItemAction(verb, itemUse, itemUseOn);
 			} catch (ArrayIndexOutOfBoundsException e) {
 				return new ItemAction(verb, null, null);
@@ -112,7 +112,7 @@ public class Parser {
 		}
 	}
 	
-	public AbstractItem scanStringForItem(String string, Inventory inventory) {
+	public GenericItem scanStringForItem(String string, Inventory inventory) {
 		return scanStringForItem(string.split(" "), inventory);
 	}
 	
@@ -124,7 +124,7 @@ public class Parser {
 	 * 
 	 */
 	
-	public AbstractItem scanStringForItem(String[] splitString, Inventory inventory) {
+	public GenericItem scanStringForItem(String[] splitString, Inventory inventory) {
 		// This for loop searches [1, 2, 3] as so:
 		// [1], [1, 2], [1, 2, 3]
 		// [2], [2, 3]
@@ -134,7 +134,7 @@ public class Parser {
 			for (int itemLength = 1; itemLength <= splitString.length - i; itemLength++) {
 				// From a slice of the array, join the elements with spaces in between and search for the item
 				String itemName = String.join(" ", Arrays.copyOfRange(splitString, i, i+itemLength));
-				AbstractItem item = inventory.getItemByName(itemName);
+				GenericItem item = inventory.getItemByName(itemName);
 				if (item != null) {
 					return item;
 				}
@@ -164,7 +164,7 @@ public class Parser {
 			for (int itemLength = 1; itemLength <= splitString.length - i; itemLength++) {
 				// From a slice of the array, join the elements with spaces in between and search for the item
 				String itemName = String.join(" ", Arrays.copyOfRange(splitString, i, i+itemLength));
-				AbstractItem item = inventory.getItemByName(itemName);
+				GenericItem item = inventory.getItemByName(itemName);
 				if (item != null) {
 					if (i + itemLength > splitString.length) {
 						return -2;

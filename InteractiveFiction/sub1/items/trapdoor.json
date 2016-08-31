@@ -1,0 +1,10 @@
+{
+    "itemName": "Trapdoor",
+    "itemDescription": "A trapdoor, seems to be locked",
+    "door": {
+        "locked": {
+            "lever": 3
+        },
+        "exit": "up"
+    }
+}

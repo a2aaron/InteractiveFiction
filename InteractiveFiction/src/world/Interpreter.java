@@ -37,39 +37,6 @@ public class Interpreter {
 	}
 
 	public static void main(String[] args) {
-//		CompassRoom startingRoom = new CompassRoom(
-//				"Starting Room", "This is the room you start in!");
-//		startingRoom.addItem(new Vace("TEST", "HELP"));
-//		startingRoom.addItem(new Lever("Lever", LeverPosition.up));
-//		
-//		CompassRoom northRoom = new CompassRoom(
-//				"North Room","It's the north pole!");
-//		CompassRoom eastRoom = new CompassRoom(
-//				"East Room", "Easter.");
-//		CompassRoom westRoom = new CompassRoom(
-//				"West Room", "Wester.");
-//		
-//		Key key = new Key("Key", "It's a key");
-//		LockedDoor lockedDoor = new LockedDoor("Locked Door", key);
-//
-//		LockedDoorRoom southRoom = new LockedDoorRoom(
-//				"South Room", "A southern farm.", lockedDoor, MovementAdverb.DOWN);
-//		southRoom.addItem(key);
-//		southRoom.addItem(lockedDoor);
-//
-//		CompassRoom lockedRoom = new CompassRoom("Locked Room", "Locks");
-//		CompassExit.twoWayLink(MovementAdverb.DOWN, southRoom, lockedRoom);
-//		
-//		CompassExit.twoWayLink(MovementAdverb.UP, startingRoom, northRoom);
-//		CompassExit.twoWayLink(MovementAdverb.RIGHT, startingRoom, eastRoom);
-//		CompassExit.twoWayLink(MovementAdverb.LEFT, startingRoom, westRoom);
-//		CompassExit.twoWayLink(MovementAdverb.DOWN, startingRoom, southRoom);
-//		
-////		startingRoom.twoSidedLink(MovementAdverb.north, northRoom);
-////		startingRoom.twoSidedLink(MovementAdverb.east, eastRoom);
-////		startingRoom.twoSidedLink(MovementAdverb.west, westRoom);
-////		startingRoom.twoSidedLink(MovementAdverb.south, southRoom);
-//		
 		File file = new File("sub1/exits.json");
 		JSONObject exits = null;
 		try {
@@ -88,14 +55,14 @@ public class Interpreter {
 			GenericRoom room = null;
 			try {
 				JSONObject roomData = JSONObjectFromFile(roomFile);
-				room = new GenericRoom(roomData);
+				room = WorldImporter.genericRoomFromJSON(roomData);
 			} catch (FileNotFoundException e) {
-				System.out.println(roomFile.getName() + " missing. Creating blank room instead");
+				System.err.println(roomFile.getName() + " missing. Creating blank room instead");
 				room = new GenericRoom(internalRoomName, "");
 			} catch (JSONException e) {
+				System.err.println("Syntax error in file " + roomFile.getName());
+				room = new GenericRoom(internalRoomName, "");
 				e.printStackTrace();
-			} finally {
-				
 			}
 			
 			rooms.put(internalRoomName, room);
@@ -108,24 +75,25 @@ public class Interpreter {
 		for (int i = 0; i < exitList.length(); i++) {
 			JSONObject exit = exitList.getJSONObject(i);
 			String roomName = exit.getString("roomName");
+			GenericRoom currentRoom = rooms.get(roomName);
+			StringBuilder sb = new StringBuilder();
 			for (String key : exit.keySet()) {
 				MovementAdverb direction = MovementAdverb.stringToAdverb(key);
 				if (direction != null) {
-					GenericRoom currentRoom = rooms.get(roomName); 
 					GenericRoom exitRoom = rooms.get(exit.getString(key));
 					currentRoom.getExits().addExit(direction, exitRoom);
-					currentRoom.appendRoomDescription(key + "\n");
+					sb.append(key + ", ");
 				}
+				
 			}
+			currentRoom.appendExtendedRoomDescription("\nYou may go: " + sb);
 		}
 		
 		playerInput = new Scanner(System.in);
 		playerState = new PlayerState(new Inventory(), startingRoom);
 		playerInteractor = new Interact(playerState);
 		Parser playerParser = new Parser(playerState);
-		
-		System.out.println(playerState.getCurrentRoom().getExtendedRoomDescription());
-		
+		System.out.println("[GAME START]");
 		while(playerInteractor.isPlaying()) {
 			System.out.print("[" + playerState.getCurrentRoom().getRoomName() + "] > ");
 			String input = playerInput.nextLine();

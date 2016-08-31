@@ -1,0 +1,9 @@
+{
+    "roomName": "Room",
+    "roomDescription": "",
+    "itemList": [
+        "diaryPage.json",
+        "lever.json"
+
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "roomName": "Dripping Pipe",
+    "roomDescription": "",
+    "itemList": [
+        "weakPipe.json",
+        "pearl.json"
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "roomName": "Room with Bolted Box",
+    "roomDescription": "",
+    "itemList": [
+        "lockbox.json",
+        "keypad.json"
+    ]
+}

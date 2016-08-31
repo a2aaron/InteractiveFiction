@@ -1,0 +1,8 @@
+{
+    "roomName": "Room",
+    "roomDescription": "",
+    "itemList": [
+        "trapdoor.json",
+        "lever.json"
+    ]
+}

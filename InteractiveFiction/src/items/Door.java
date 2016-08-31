@@ -1,6 +1,6 @@
 package items;
 
-public class Door extends AbstractItem {
+public class Door extends GenericItem {
 	public enum DoorState {open, closed};
 	public DoorState doorState;
 	

@@ -14,12 +14,13 @@ import java.nio.file.Paths;
 import org.json.*;
 import org.junit.Test;
 
-import items.AbstractItem;
+import items.GenericItem;
 import items.Vace;
 import rooms.CompassRoom;
 import rooms.Exit;
 import rooms.GenericRoom;
 import rooms.RoomInventory;
+import world.WorldImporter;
 
 public class WorldImporterTest {	
 	File roomFile = new File("test/test/testRoom.json");
@@ -38,7 +39,8 @@ public class WorldImporterTest {
 	public void createRoomFromJSONTest() throws Exception {
 		JSONTokener tokener = new JSONTokener(new FileInputStream(roomFile));
 		JSONObject reader = new JSONObject(tokener);
-		GenericRoom room = new GenericRoom(reader);
+		assertTrue(reader != null); //Sanity check
+		GenericRoom room = WorldImporter.genericRoomFromJSON(reader);
 		assertTrue(room.getRoomName() != null);
 		assertTrue(room.getRoomDescription() != null);
 		assertTrue(room.getExits() != null);

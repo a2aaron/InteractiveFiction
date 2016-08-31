@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import character.Inventory;
 
-public class Vace extends AbstractItem implements IBreakableItem, ITakeableItem {
+public class Vace extends GenericItem implements IBreakableItem, ITakeableItem {
 	boolean isBroken = false;
 	boolean isTakeable = true;
 	String color;

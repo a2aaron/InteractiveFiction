@@ -3,13 +3,13 @@ package rooms;
 import java.util.ArrayList;
 
 import character.Inventory;
-import items.AbstractItem;
+import items.GenericItem;
 
 public class RoomInventory extends Inventory {
 	
-	ArrayList<AbstractItem> roomList = new ArrayList<AbstractItem>(); 
+	ArrayList<GenericItem> roomList = new ArrayList<GenericItem>(); 
 	
-	public RoomInventory(AbstractItem item) {
+	public RoomInventory(GenericItem item) {
 		super(item);
 		roomList.add(item);
 	}

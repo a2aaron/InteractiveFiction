@@ -1,0 +1,8 @@
+{
+    "itemName": "Lever",
+    "itemDescription": "A simple lever",
+    "useable": {
+        "onetime": true,
+        "boolean": true
+    }
+}

@@ -1,6 +1,6 @@
 package types;
 
-import items.AbstractItem;
+import items.GenericItem;
 import rooms.GenericRoom;
 
 
@@ -107,14 +107,14 @@ public class Action {
 	
 	
 	// Use [object1] on [object2]
-	public Action(Verb verb, AbstractItem directObject, AbstractItem indirectObject) {
+	public Action(Verb verb, GenericItem directObject, GenericItem indirectObject) {
 		this.verb = verb;
 		this.directObject = directObject;
 		this.indirectObject = indirectObject;
 	}
 	
 	// Use [object]
-	public Action(Verb verb, AbstractItem directObject) {
+	public Action(Verb verb, GenericItem directObject) {
 		this.verb = verb;
 		this.directObject = directObject;
 	}

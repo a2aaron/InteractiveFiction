@@ -1,0 +1,9 @@
+{
+    "roomName": "Generator",
+    "roomDescription": "",
+    "itemList": [
+        "generatorLever.json",
+        "generatorElectricalHazard.json",
+        "generatorBoltedSquare.json"
+    ]
+}

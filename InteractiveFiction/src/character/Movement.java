@@ -3,7 +3,7 @@ package character;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import items.AbstractItem;
+import items.GenericItem;
 import rooms.CompassRoom;
 import types.Action.MovementAdverb;
 
@@ -48,7 +48,7 @@ public class Movement {
 		return currentRoom.getRoomInventory();
 	}
 	
-	public CopyOnWriteArrayList<AbstractItem> getCurrentRoomInventoryList() {
+	public CopyOnWriteArrayList<GenericItem> getCurrentRoomInventoryList() {
 		return currentRoom.getRoomInventoryList();
 	}
 }
