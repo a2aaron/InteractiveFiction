@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.junit.Test;

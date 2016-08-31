@@ -4,7 +4,6 @@ import items.GenericItem;
 import items.IBreakableItem;
 import items.IItemUseableOn;
 import items.ITakeableItem;
-import rooms.CompassRoom;
 import rooms.GenericRoom;
 import types.Action;
 import types.ItemAction;

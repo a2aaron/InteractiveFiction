@@ -4,22 +4,11 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.json.*;
 import org.junit.Test;
 
-import items.GenericItem;
 import items.Vace;
-import rooms.CompassRoom;
-import rooms.Exit;
 import rooms.GenericRoom;
-import rooms.RoomInventory;
 import world.WorldImporter;
 
 public class WorldImporterTest {	

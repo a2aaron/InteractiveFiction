@@ -1,16 +1,7 @@
 package rooms;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import items.GenericItem;
 import types.Action.MovementAdverb;
-import world.Interpreter;
 
 public class GenericRoom {
 	String roomName = "";

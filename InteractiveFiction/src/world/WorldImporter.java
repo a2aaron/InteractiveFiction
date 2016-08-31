@@ -2,10 +2,7 @@ package world;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import org.json.*;
 
 import character.Interact;

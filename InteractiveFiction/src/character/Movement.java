@@ -1,9 +1,6 @@
 package character;
 
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import items.GenericItem;
 import rooms.CompassRoom;
 import types.Action.MovementAdverb;
 

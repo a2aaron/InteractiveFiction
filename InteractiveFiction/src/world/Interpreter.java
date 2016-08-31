@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.concurrent.CopyOnWriteArraySet;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,15 +13,7 @@ import org.json.JSONTokener;
 import character.Interact;
 import character.Inventory;
 import character.PlayerState;
-import items.Key;
-import items.Lever;
-import items.Lever.LeverPosition;
-import items.LockedDoor;
-import items.Vace;
-import rooms.CompassExit;
-import rooms.CompassRoom;
 import rooms.GenericRoom;
-import rooms.LockedDoorRoom;
 import types.Action;
 import types.Action.MovementAdverb;
 
