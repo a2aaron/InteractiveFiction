@@ -24,12 +24,9 @@ public class Vace extends GenericTakeableItem implements IBreakableItem {
 	public Vace() {
 		super();
 	}
-	
-	public Vace(JSONObject item) throws Exception {
-		super(item);
-	}
 
-	public void useItem() { // TODO: actually use this
+	@Override
+	public void breakItem() {
 		isBroken = true;
 		//System.out.println("You break the " + name + ".");
 		setDescription("This vace is broken");
@@ -45,10 +42,5 @@ public class Vace extends GenericTakeableItem implements IBreakableItem {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	@Override
-	public void breakItem() {
-		useItem();
 	}
 }

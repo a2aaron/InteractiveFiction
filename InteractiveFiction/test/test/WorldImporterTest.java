@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import items.Vace;
 import rooms.GenericRoom;
+import world.ItemImporter;
 import world.WorldImporter;
 
 public class WorldImporterTest {	
@@ -19,7 +20,7 @@ public class WorldImporterTest {
 	public void createItemFromJSONTest() throws Exception {
 		JSONTokener tokener = new JSONTokener(new FileInputStream(itemFile));
 		JSONObject reader = new JSONObject(tokener);
-		Vace item = new Vace(reader);
+		Vace item = (Vace) ItemImporter.createItem(reader);
 		assertTrue(item.getName() != null);
 		assertTrue(item.getDescription() != null);
 	}

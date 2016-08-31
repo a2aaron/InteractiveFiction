@@ -3,5 +3,11 @@
     "roomDescription": "This room has a strange metal device that can hold four metal triangles.",
     "itemList": [
         "tileWheel.json"
-    ]
+    ],
+    "exits": {
+        "left": "wheelPipe",
+        "right": "intersection",
+        "down": "lighthouse",
+        "exit": "elevator",
+    }
 }

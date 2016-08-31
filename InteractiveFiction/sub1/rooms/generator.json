@@ -5,5 +5,8 @@
         "generatorLever.json",
         "generatorElectricalHazard.json",
         "generatorBoltedSquare.json"
-    ]
+    ],
+    "exits": {
+        "left": "intersection"
+    }
 }

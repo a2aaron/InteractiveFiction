@@ -4,5 +4,8 @@
     "itemList": [
         "weakPipe.json",
         "pearl.json"
-    ]
+    ],
+    "exits": {
+        "up": "radio"
+    }
 }

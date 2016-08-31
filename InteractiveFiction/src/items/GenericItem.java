@@ -13,11 +13,6 @@ public class GenericItem {
 		this.description = description;
 	}
 	
-	public GenericItem(JSONObject item) throws JSONException {
-		name = item.getString("itemName");
-		description = item.getString("itemDescription");
-	}
-	
 	public GenericItem() {   }
 
 	public String getDescription() { return description; }

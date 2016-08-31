@@ -4,5 +4,8 @@
     "itemList": [
         "lockbox.json",
         "keypad.json"
-    ]
+    ],
+    "exits": {
+        "up": "pressurePuzzle"
+    }
 }

@@ -3,6 +3,8 @@ package world;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
 import org.json.JSONArray;
@@ -28,13 +30,14 @@ public class Interpreter {
 
 	public static void main(String[] args) {
 		File file = new File("sub1/exits.json");
-		
-		GenericRoom startingRoom = null;
+		WorldImporter world = new WorldImporter();
 		try {
-			startingRoom = WorldImporter.createWorld(file);
-		} catch (JSONException | FileNotFoundException e) {
-			e.printStackTrace();
+			world.createRoomSet(new File("sub1/rooms"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		GenericRoom startingRoom = world.getStartingRoom();
 		
 		playerInput = new Scanner(System.in);
 		playerState = new PlayerState(new Inventory(), startingRoom);

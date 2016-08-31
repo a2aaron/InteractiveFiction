@@ -4,5 +4,8 @@
     "itemList": [
         "wheel.json",
         "lever.json"
-    ]
+    ],
+    "exits": {
+        "down": "chimeClock"
+    }
 }

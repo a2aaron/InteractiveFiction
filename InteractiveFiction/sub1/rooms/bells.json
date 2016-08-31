@@ -4,5 +4,8 @@
     "itemList": [
         "bells.json",
         "cubes.json",
-    ]
+    ],
+    "exits": {
+        "left": "pressureSolution"
+    }
 }

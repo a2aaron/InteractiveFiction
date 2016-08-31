@@ -3,5 +3,9 @@
     "roomDescription": "This room has a long vertical that can hold a wheel.",
     "itemList": [
         "wheelPipe.json"
-    ]
+    ],
+    "exits": {
+        "right": "tileWheel",
+        "left": "chimeClock"
+    }
 }

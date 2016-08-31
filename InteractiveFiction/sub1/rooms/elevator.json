@@ -3,5 +3,8 @@
     "roomDescription": "",
     "itemList": [
         "elevatorButton.json"
-    ]
+    ],
+    "exits": {
+        "forward": "outside"
+    }
 }

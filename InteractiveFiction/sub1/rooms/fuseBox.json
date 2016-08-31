@@ -3,5 +3,9 @@
     "roomDescription": "",
     "itemList": [
         "fuseBox.json"
-    ]
+    ],
+    "exits": {
+        "up": "horizontalPipe",
+        "right": "radio"
+    }
 }

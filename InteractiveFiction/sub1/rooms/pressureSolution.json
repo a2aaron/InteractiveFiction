@@ -3,5 +3,11 @@
     "roomDescription": "",
     "itemList": [
         "pressureSolution.json"
-    ]
+    ],
+    "exits": {
+        "up": "diaryLever",
+        "left": "lockbox",
+        "right": "bells"
+    }
+
 }

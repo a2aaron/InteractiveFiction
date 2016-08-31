@@ -3,7 +3,12 @@ package world;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
 import org.json.*;
 
@@ -16,66 +21,75 @@ import rooms.GenericRoom;
 import rooms.RoomInventory;
 import types.Action.MovementAdverb;
 
-public class WorldImporter {	
-	public static GenericRoom createWorld(File file) throws JSONException, FileNotFoundException {
-		JSONObject exits = new JSONObject(new JSONTokener(new FileInputStream(file)));
-		JSONArray nameList = exits.getJSONArray("nameList");
-		HashMap<String, GenericRoom> rooms = new HashMap<String, GenericRoom>();
-		
-		GenericRoom startingRoom = null;
-		for (int i = 0; i < nameList.length(); i++) {
-			String internalRoomName = nameList.getString(i);
-			File roomFile = new File("sub1/rooms/" + internalRoomName + ".json");
-			GenericRoom room = null;
+public class WorldImporter {
+	GenericRoom startingRoom;
+	HashMap<String, GenericRoom> roomSet = new HashMap<String, GenericRoom>();
+	
+	public WorldImporter() {   }
+	
+	public void createRoomSet(File rooms) throws IOException {
+		File[] files = rooms.listFiles();
+		for (File file : files) {
+			if (!file.isFile() || !getExtension(file).equals("json"))  {
+				continue;
+			}
 			try {
-				JSONObject roomData = WorldImporter.JSONObjectFromFile(roomFile);
-				room = WorldImporter.genericRoomFromJSON(roomData);
-			} catch (FileNotFoundException e) {
-				System.err.println(roomFile.getName() + " missing. Creating blank room instead");
-				room = new GenericRoom(internalRoomName, "");
+				GenericRoom room = genericRoomFromJSON(JSONObjectFromFile(file));
+				roomSet.put(file.getName(), room);
 			} catch (JSONException e) {
-				System.err.println("Syntax error in file " + roomFile.getName());
-				room = new GenericRoom(internalRoomName, "");
 				e.printStackTrace();
+				System.err.println(file.toString() + " has a syntax error, adding blank room instead");
+				roomSet.put("", new GenericRoom());
+			} catch (FileNotFoundException e) {
+				System.err.println(file.toString() + " does not exist, adding blank room instead");
+				roomSet.put("", new GenericRoom());
 			}
-			
-			rooms.put(internalRoomName, room);
-			if (nameList.getString(i).equals("tileWheel")) {
-				startingRoom = room; 
-			}
-		}
-		// TODO: It's nicer if you only have the exits per room instead of a seperate list
-		JSONArray exitList = exits.getJSONArray("exitList");
-		for (int i = 0; i < exitList.length(); i++) {
-			JSONObject exit = exitList.getJSONObject(i);
-			String roomName = exit.getString("roomName");
-			GenericRoom currentRoom = rooms.get(roomName);
-			StringBuilder sb = new StringBuilder();
-			for (String key : exit.keySet()) {
-				MovementAdverb direction = MovementAdverb.stringToAdverb(key);
-				if (direction != null) {
-					GenericRoom exitRoom = rooms.get(exit.getString(key));
-					currentRoom.getExits().addExit(direction, exitRoom);
-					sb.append(key + ", ");
-				}
-				
-			}
-			currentRoom.appendExtendedRoomDescription("\nYou may go: " + sb);
-		}
-		return startingRoom;
+		}		
+		linkRoomSet(rooms);
+		setStartingRoom();
 	}
+	
+	private void linkRoomSet(File rooms) throws IOException {
+		File[] files = rooms.listFiles();
+		for (File file : files) {
+			if (!file.isFile() || !getExtension(file).equals("json")) {
+				continue;
+			}
+			try {
+				JSONObject roomData = JSONObjectFromFile(file);
+				JSONObject exits = roomData.getJSONObject("exits");
+				for (String key : exits.keySet()) {
+					MovementAdverb direction = MovementAdverb.stringToAdverb(key);
+					if (direction != null) {
+						String fromName = file.getName();
+						String toName = exits.getString(key) + ".json";
+						GenericRoom roomLinkFrom = roomSet.get(fromName);
+						GenericRoom roomLinkTo = roomSet.get(toName);
+						roomLinkFrom.getExits().addExit(direction, roomLinkTo);
+					}
+				}
+			} catch (FileNotFoundException e) {
+				System.err.println(file.toString() + " not found! No exit added.");
+			} catch (JSONException e) {
+				System.err.println(file.toString() + " has no exit object! No exit added.");
+			} 
+		}
+	}
+	
+	public void setStartingRoom() {
+		roomSet.forEach((name, room) -> {
+			if (name.equals("tileWheel.json")) {
+				startingRoom = room;
+			}
+		});
+	}
+	
 	
 	public static GenericRoom genericRoomFromJSON(JSONObject file) throws JSONException {
 		String roomName = file.getString("roomName");
 		String roomDescription = file.getString("roomDescription");
 		String extendedRoomDescription = roomDescription;
 		CompassExit exits = new CompassExit();
-		// CompassExit creation. Falls back to blank exit if it can't find any exit object
-		try {
-			exits = new CompassExit(file.getJSONObject("exits"));
-		} catch (JSONException e) {
-			System.out.println("No exits object found for " + roomName + ", creating empty exit instead");
-		}
 		GenericRoom room = new GenericRoom(roomName, roomDescription, extendedRoomDescription, new RoomInventory(), exits);
 		// Items creation. Falls back to no items if it can't create them.
 		try{
@@ -101,5 +115,22 @@ public class WorldImporter {
 	
 	public static JSONObject JSONObjectFromFile(File file) throws JSONException, FileNotFoundException  {
 		return new JSONObject(new JSONTokener(new FileInputStream(file)));
+	}
+	
+	public GenericRoom getStartingRoom() {
+		return startingRoom;
+	}
+	
+	public HashMap<String, GenericRoom> getRoomSet() {
+		return roomSet;
+	}
+	
+	public static String getExtension(File file) {
+		String extension = "";
+		int dotIndex = file.getName().lastIndexOf(".");
+		if (dotIndex >= 0) {
+			extension = file.getName().substring(dotIndex + 1);
+		}
+		return extension;
 	}
 }

@@ -4,5 +4,10 @@
     "itemList": [
         "radio.json",
         "spoon.json"
-    ]
+    ], 
+    "exits": {
+        "left": "fuseBox",
+        "down": "weakPipe",
+        "up": "tileGenerator"
+    }
 }

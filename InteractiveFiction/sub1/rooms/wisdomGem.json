@@ -3,5 +3,8 @@
     "roomDescription": "",
     "itemList": [
         "wisdomGem.json"
-    ]
+    ],
+    "exits": {
+        "down": "trapDoorLever"
+    }
 }

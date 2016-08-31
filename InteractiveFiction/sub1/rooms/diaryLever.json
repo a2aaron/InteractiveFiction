@@ -4,6 +4,9 @@
     "itemList": [
         "diaryPage.json",
         "lever.json"
-
-    ]
+    ],
+    "exits": {
+        "up": "lighthouse",
+        "down": "pressureSolution"
+    }
 }
