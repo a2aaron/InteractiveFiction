@@ -1,26 +1,9 @@
 package items;
 
-import character.Inventory;
-
-public class Key extends GenericItem implements ITakeableItem, IItemUseableOn {
+public class Key extends GenericTakeableItem implements IItemUseableOn {
 
 	public Key(String name, String description) {
 		super(name, description);
-	}
-
-	@Override
-	public void takeItem(Inventory destination) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public boolean isTakeable() {
-		return true;
-	}
-
-	@Override
-	public void useItem() {
-		System.out.println("You can't just use the key, you have to use it on something!");
 	}
 
 	@Override

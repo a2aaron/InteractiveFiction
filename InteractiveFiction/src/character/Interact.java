@@ -4,6 +4,7 @@ import items.GenericItem;
 import items.IBreakableItem;
 import items.IItemUseableOn;
 import items.ITakeableItem;
+import items.IUseableItem;
 import rooms.GenericRoom;
 import types.Action;
 import types.ItemAction;
@@ -44,7 +45,11 @@ public class Interact {
 					System.out.println(directObject.getDescription());
 					break;
 				case use:
-					directObject.useItem();
+					if (directObject instanceof IUseableItem) {
+						((IUseableItem) directObject).useItem();
+					} else {
+						
+					}
 					break;
 				case take:
 					if (directObject instanceof ITakeableItem) {

@@ -28,55 +28,12 @@ public class Interpreter {
 
 	public static void main(String[] args) {
 		File file = new File("sub1/exits.json");
-		JSONObject exits = null;
-		try {
-			exits = new JSONObject(new JSONTokener(new FileInputStream(file)));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JSONArray nameList = exits.getJSONArray("nameList");
-		HashMap<String, GenericRoom> rooms = new HashMap<String, GenericRoom>();
 		
 		GenericRoom startingRoom = null;
-		for (int i = 0; i < nameList.length(); i++) {
-			String internalRoomName = nameList.getString(i);
-			File roomFile = new File("sub1/rooms/" + internalRoomName + ".json");
-			GenericRoom room = null;
-			try {
-				JSONObject roomData = JSONObjectFromFile(roomFile);
-				room = WorldImporter.genericRoomFromJSON(roomData);
-			} catch (FileNotFoundException e) {
-				System.err.println(roomFile.getName() + " missing. Creating blank room instead");
-				room = new GenericRoom(internalRoomName, "");
-			} catch (JSONException e) {
-				System.err.println("Syntax error in file " + roomFile.getName());
-				room = new GenericRoom(internalRoomName, "");
-				e.printStackTrace();
-			}
-			
-			rooms.put(internalRoomName, room);
-			if (nameList.getString(i).equals("tileWheel")) {
-				startingRoom = room; 
-			}
-		}
-		
-		JSONArray exitList = exits.getJSONArray("exitList");
-		for (int i = 0; i < exitList.length(); i++) {
-			JSONObject exit = exitList.getJSONObject(i);
-			String roomName = exit.getString("roomName");
-			GenericRoom currentRoom = rooms.get(roomName);
-			StringBuilder sb = new StringBuilder();
-			for (String key : exit.keySet()) {
-				MovementAdverb direction = MovementAdverb.stringToAdverb(key);
-				if (direction != null) {
-					GenericRoom exitRoom = rooms.get(exit.getString(key));
-					currentRoom.getExits().addExit(direction, exitRoom);
-					sb.append(key + ", ");
-				}
-				
-			}
-			currentRoom.appendExtendedRoomDescription("\nYou may go: " + sb);
+		try {
+			startingRoom = WorldImporter.createWorld(file);
+		} catch (JSONException | FileNotFoundException e) {
+			e.printStackTrace();
 		}
 		
 		playerInput = new Scanner(System.in);
@@ -93,9 +50,5 @@ public class Interpreter {
 		
 		System.out.println("Goodbye");
 		playerInput.close();
-	}
-	
-	public static JSONObject JSONObjectFromFile(File file) throws JSONException, FileNotFoundException  {
-		return new JSONObject(new JSONTokener(new FileInputStream(file)));
 	}
 }

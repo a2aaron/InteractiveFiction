@@ -5,8 +5,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class GenericItem {
-	String name;
-	String description;
+	String name = "";
+	String description = "";
 	
 	public GenericItem(String name, String description) {
 		this.name = name;
@@ -18,9 +18,10 @@ public class GenericItem {
 		description = item.getString("itemDescription");
 	}
 	
+	public GenericItem() {   }
+
 	public String getDescription() { return description; }
 	public String getName() { return name; }
-	public void useItem() {   };
 	
 	public void setName(String itemName) {
 		this.name = itemName;

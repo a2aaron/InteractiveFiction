@@ -1,6 +1,6 @@
 package items;
 
-public class Lever extends GenericItem {
+public class Lever extends GenericItem implements IUseableItem {
     public enum LeverPosition {up, down};
     LeverPosition leverPosition;
 
@@ -14,7 +14,6 @@ public class Lever extends GenericItem {
     	leverPosition = initialPosition;
     }
 
-    @Override
     public void useItem() {
         if (leverPosition == LeverPosition.up) {
             leverPosition = LeverPosition.down;
@@ -28,5 +27,10 @@ public class Lever extends GenericItem {
     public LeverPosition getLeverPosition() {
         return leverPosition;
     }
+
+	@Override
+	public boolean isUseable() {
+		return true;
+	}
 
 }

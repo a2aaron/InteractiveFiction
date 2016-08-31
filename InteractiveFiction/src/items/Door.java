@@ -1,6 +1,6 @@
 package items;
 
-public class Door extends GenericItem {
+public class Door extends GenericItem implements IUseableItem {
 	public enum DoorState {open, closed};
 	public DoorState doorState;
 	
@@ -9,7 +9,6 @@ public class Door extends GenericItem {
         doorState = initialState;
     }
 
-	@Override
 	public void useItem() {
         if (doorState == DoorState.closed) {
         	doorState = DoorState.open;
@@ -20,11 +19,12 @@ public class Door extends GenericItem {
         }
 	}
 	
-	public void openDoor() {
-		useItem();
-	}
-	
 	public DoorState getDoorState() {
 		return doorState;
+	}
+
+	@Override
+	public boolean isUseable() {
+		return true;
 	}
 }

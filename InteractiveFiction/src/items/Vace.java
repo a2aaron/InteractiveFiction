@@ -4,10 +4,10 @@ import org.json.JSONObject;
 
 import character.Inventory;
 
-public class Vace extends GenericItem implements IBreakableItem, ITakeableItem {
+public class Vace extends GenericTakeableItem implements IBreakableItem {
 	boolean isBroken = false;
 	boolean isTakeable = true;
-	String color;
+	String color = "";
 	//String name;
 	
 	public Vace(String name, String description, String color) {
@@ -22,45 +22,17 @@ public class Vace extends GenericItem implements IBreakableItem, ITakeableItem {
 	}
 	
 	public Vace() {
-		this("", "", "");
+		super();
 	}
 	
 	public Vace(JSONObject item) throws Exception {
 		super(item);
 	}
 
-	public void useItem(String command) { // TODO: actually use this
-		command = command.toLowerCase();
-		if (command == "examine " + name ||
-			command == "look " + name) {
-			getDescription();
-		} else if (command == "break " + name && isBroken == false) {
-			breakItem();
-		} else {
-			System.out.println("Invalid command: " + command);
-		}
-	}
-	
-	public void breakItem() {
+	public void useItem() { // TODO: actually use this
 		isBroken = true;
 		//System.out.println("You break the " + name + ".");
 		setDescription("This vace is broken");
-	}
-
-	@Override
-	public void useItem() {
-		// TODO: Should this do anything else?
-		breakItem();
-	}
-	
-	public void takeItem(Inventory destination) {
-		// TODO: create an event based system where
-		// calling this method returns some event (look up Java events?)
-		// and we do stuff with that (ex: return success event, failure event, trap event).
-	}
-	
-	public boolean isTakeable() {
-		return isTakeable;
 	}
 
 	public boolean isBroken() {
@@ -73,5 +45,10 @@ public class Vace extends GenericItem implements IBreakableItem, ITakeableItem {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	@Override
+	public void breakItem() {
+		useItem();
 	}
 }
