@@ -1,0 +1,11 @@
+{
+    "roomName": "Chime Clock",
+    "roomDescription": "",
+    "itemList": [
+        "chimeClock.json"
+    ],
+    "exits": {
+        "up": "wheelLever",
+        "right": "wheelPipe",
+    }
+}

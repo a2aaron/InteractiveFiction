@@ -1,0 +1,15 @@
+{
+    "roomName": "Wisdom Gem",
+    "roomDescription": "",
+    "itemList": [
+        "wisdomGem.json"
+    ],
+    "exits": {
+        "down": "trapDoorLever"
+    },
+    "items": {  
+        "itemName": "Wisdom Gem",
+        "itemDescription": "A strange floating white gem",
+        "takeable": true
+    }
+}

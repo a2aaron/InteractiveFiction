@@ -1,0 +1,10 @@
+{
+    "roomName": "Horizontal Pipes",
+    "roomDescription": "",
+    "itemList": [
+    ],
+    "exits": {
+        "left": "lighthouse",
+        "down": "fuseBox"
+    }
+}

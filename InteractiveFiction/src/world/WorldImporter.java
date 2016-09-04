@@ -27,6 +27,10 @@ public class WorldImporter {
 	
 	public WorldImporter() {   }
 	
+	public WorldImporter(File rooms) throws IOException {
+		createRoomSet(rooms);
+	}
+	
 	public void createRoomSet(File rooms) throws IOException {
 		File[] files = rooms.listFiles();
 		for (File file : files) {

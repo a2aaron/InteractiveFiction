@@ -1,0 +1,11 @@
+{
+    "roomName": "Piston Pipes",
+    "roomDescription": "",
+    "itemList": [
+        "pistons.json"
+    ],
+    "exits": {
+        "right": "lighthouse",
+        "down": "ancientCoin"
+    }
+}

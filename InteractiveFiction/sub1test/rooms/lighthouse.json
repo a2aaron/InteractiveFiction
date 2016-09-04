@@ -1,0 +1,13 @@
+{
+    "roomName": "Room with Painting",
+    "roomDescription": "",
+    "itemList": [
+        "painting.json"
+    ],
+    "exits": {
+        "left": "pressurePuzzle",
+        "right": "horizontalPipe",
+        "up": "tileWheel",
+        "down": "diaryLever"
+    }
+}

@@ -65,18 +65,22 @@ public class Action {
 			case "n":
 			case "north":
 			case "up":
+			case "u":
 				return MovementAdverb.UP;
 			case "s":
 			case "south":
 			case "down":
+			case "d":
 				return MovementAdverb.DOWN;
 			case "w":
 			case "west":
 			case "left":
+			case "l":
 				return MovementAdverb.LEFT;
 			case "e":
 			case "east":
 			case "right":
+			case "r":
 				return MovementAdverb.RIGHT;
 			default:
 				return null;

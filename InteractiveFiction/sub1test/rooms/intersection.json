@@ -1,0 +1,11 @@
+{
+    "roomName": "Room",
+    "roomDescription": "",
+    "itemList": [
+    ],
+    "exits": {
+        "left": "tileWheel",
+        "right": "generator",
+        "up": "trapDoorLever"
+    }
+}

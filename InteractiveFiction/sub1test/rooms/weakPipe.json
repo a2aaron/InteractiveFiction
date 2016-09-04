@@ -1,0 +1,22 @@
+{
+    "roomName": "Dripping Pipe",
+    "roomDescription": "This room has a cracked pipe dripping purple liquid all over the floor.",
+    "items": {
+        "weakPipe": {
+            "itemName": "Cracked Pipe",
+            "itemDescription": "A pipe leaking fluid all over the floor",
+            "locked": {
+                "field": "inventory",
+                "key": "wheelPipe"
+            },
+            "inventory": {
+                "pearl": {
+                    "takeable": true
+                }
+            }
+        }
+    },
+    "exits": {
+        "up": "radio"
+    }
+}

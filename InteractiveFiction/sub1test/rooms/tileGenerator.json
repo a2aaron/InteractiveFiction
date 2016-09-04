@@ -1,0 +1,10 @@
+{
+    "roomName": "Room With Strange Circular Device",
+    "roomDescription": "A room with a machine. The machine has three lights on it.",
+    "itemList": [
+        "tileGenerator.json"
+    ],
+    "exits": {
+        "down": "radio"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "itemName": "Lockbox",
+    "itemDescription": "A lobcked box",
+    "inventory": {
+        "locked": {
+            "use": true,
+        },
+    }
+}

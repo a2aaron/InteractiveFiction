@@ -1,0 +1,13 @@
+{
+    "roomName": "Lockbox",
+    "roomDescription": "",
+    "itemList": [
+        "lockbox.json",
+        "keypad.json"
+    ],
+    "exits": {
+        "left": "fuseBox",
+        "down": "weakPipe",
+        "up": "tileGenerator"
+    }
+}

@@ -29,10 +29,9 @@ public class Interpreter {
 	}
 
 	public static void main(String[] args) {
-		File file = new File("sub1/exits.json");
-		WorldImporter world = new WorldImporter();
+		WorldImporter world = null;
 		try {
-			world.createRoomSet(new File("sub1/rooms"));
+			world = new WorldImporter(new File("sub1/rooms"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

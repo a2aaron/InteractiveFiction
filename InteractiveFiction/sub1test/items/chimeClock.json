@@ -1,0 +1,15 @@
+{
+    "itemName": "Chime Clock",
+    "itemDescription": "A wheel that looks likes it fits somewhere",
+    "useOn": {
+        "item": "pearl.json",
+        "losesItem": true,
+        "respondsTo": ["place", "insert", "put"]
+    },
+    "inventory": {
+        "locked": "useOn",
+        "itemList": [
+            "tile.json"
+        ]
+    }
+}

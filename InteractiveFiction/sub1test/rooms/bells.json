@@ -1,0 +1,11 @@
+{
+    "roomName": "Four Bells, Four Cubes",
+    "roomDescription": "",
+    "itemList": [
+        "bells.json",
+        "cubes.json",
+    ],
+    "exits": {
+        "left": "pressureSolution"
+    }
+}

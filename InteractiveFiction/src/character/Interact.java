@@ -11,9 +11,6 @@ import types.ItemAction;
 import world.Parser;
 
 public class Interact {
-	//public enum Action {quit, inventory, use, take, destroy,
-	//					useOn, examineRoom, examineObject, move};
-
 	PlayerState playerState;
 	Parser playerParser;
 	boolean playing = true;
@@ -48,7 +45,7 @@ public class Interact {
 					if (directObject instanceof IUseableItem) {
 						((IUseableItem) directObject).useItem();
 					} else {
-						
+						System.out.println("Can't use the" + directObject.getName());
 					}
 					break;
 				case take:

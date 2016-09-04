@@ -1,0 +1,12 @@
+{
+    "roomName": "Room",
+    "roomDescription": "",
+    "itemList": [
+        "trapdoor.json",
+        "lever.json"
+    ],
+    "exits": {
+        "up": "wisdomGem",
+        "down": "intersection"
+    }
+}

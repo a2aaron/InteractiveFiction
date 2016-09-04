@@ -1,0 +1,14 @@
+{
+    "itemName": "Wheel",
+    "itemDescription": "A wheel that looks likes it fits somewhere",
+    "takeable": {},
+    "useOn": {
+        "item": "wheelPipe",
+        "losesItem": true,
+        "respondsTo": ["place", "insert", "put"]
+    },
+    "useable": {
+        "locked": "useOn",
+        "respondsTo": ["spin", "turn", "rotate"]
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "itemName": "Metal Device",
+    "itemDescription": "What a strange device",
+    "usedOn": {
+        "item": "tile.json",
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "itemName": "Spoon",
+    "itemDescription": "This is a spoon",
+    "takeable": {},
+    "useOn": {
+        "item": "generator",
+    }
+}
