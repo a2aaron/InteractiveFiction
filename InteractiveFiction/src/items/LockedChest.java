@@ -2,7 +2,9 @@ package items;
 
 import java.util.function.Function;
 
-import character.Inventory;
+import inventory.Inventory;
+import items.utility.GenericItem;
+import items.utility.ILockedItem;
 
 public class LockedChest extends Chest implements ILockedItem {
 

@@ -13,12 +13,12 @@ import java.util.Scanner;
 import org.json.*;
 
 import character.Interact;
-import character.Inventory;
 import character.PlayerState;
-import items.GenericItem;
+import inventory.Inventory;
+import inventory.RoomInventory;
+import items.utility.GenericItem;
 import rooms.CompassExit;
 import rooms.GenericRoom;
-import rooms.RoomInventory;
 import types.Action.MovementAdverb;
 
 public class WorldImporter {

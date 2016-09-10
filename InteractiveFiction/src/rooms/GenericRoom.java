@@ -1,6 +1,7 @@
 package rooms;
 
-import items.GenericItem;
+import inventory.RoomInventory;
+import items.utility.GenericItem;
 import types.Action.MovementAdverb;
 
 public class GenericRoom {

@@ -2,7 +2,9 @@ package items;
 
 import org.json.JSONObject;
 
-import character.Inventory;
+import inventory.Inventory;
+import items.utility.GenericTakeableItem;
+import items.utility.IBreakableItem;
 
 public class Vace extends GenericTakeableItem implements IBreakableItem {
 	boolean isBroken = false;
@@ -11,10 +13,8 @@ public class Vace extends GenericTakeableItem implements IBreakableItem {
 	//String name;
 	
 	public Vace(String name, String description, String color) {
-		super(name, description);
+		super(name, description + "This vace is the color " + color);
 		this.color = color;
-		this.description = description 
-				+ "This vace is the color " + color;
 	}
 	
 	public Vace(String name, String color) {

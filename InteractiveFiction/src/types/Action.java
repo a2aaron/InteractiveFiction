@@ -1,6 +1,6 @@
 package types;
 
-import items.GenericItem;
+import items.utility.GenericItem;
 import rooms.GenericRoom;
 
 

@@ -1,10 +1,11 @@
 package character;
 
-import items.GenericItem;
-import items.IBreakableItem;
-import items.IItemUseableOn;
-import items.ITakeableItem;
-import items.IUseableItem;
+import inventory.Inventory;
+import items.utility.GenericItem;
+import items.utility.IBreakableItem;
+import items.utility.IItemUseableOn;
+import items.utility.ITakeableItem;
+import items.utility.IUseableItem;
 import rooms.GenericRoom;
 import types.Action;
 import types.ItemAction;

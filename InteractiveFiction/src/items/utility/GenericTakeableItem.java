@@ -1,8 +1,8 @@
-package items;
+package items.utility;
 
 import org.json.JSONObject;
 
-import character.Inventory;
+import inventory.Inventory;
 
 public class GenericTakeableItem extends GenericItem implements ITakeableItem {
 

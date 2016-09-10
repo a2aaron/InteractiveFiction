@@ -13,8 +13,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import character.Interact;
-import character.Inventory;
 import character.PlayerState;
+import inventory.Inventory;
 import rooms.GenericRoom;
 import types.Action;
 import types.Action.MovementAdverb;

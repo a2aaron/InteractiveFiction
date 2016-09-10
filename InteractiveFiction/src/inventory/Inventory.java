@@ -1,8 +1,8 @@
-package character;
+package inventory;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import items.GenericItem;
+import items.utility.GenericItem;
 
 public class Inventory {
 	CopyOnWriteArrayList<GenericItem> inventoryList = new CopyOnWriteArrayList<GenericItem>();

@@ -3,6 +3,9 @@ package items;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
+import items.utility.GenericItem;
+import items.utility.ILockedItem;
+
 public class LockedLever extends Lever implements ILockedItem {
 
 	boolean locked = true;

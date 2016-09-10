@@ -1,6 +1,7 @@
 package character;
 
 
+import inventory.Inventory;
 import rooms.CompassRoom;
 import types.Action.MovementAdverb;
 

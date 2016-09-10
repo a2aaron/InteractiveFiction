@@ -3,9 +3,9 @@ package world;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import character.Inventory;
 import character.PlayerState;
-import items.GenericItem;
+import inventory.Inventory;
+import items.utility.GenericItem;
 import types.Action;
 import types.Action.MovementAdverb;
 import types.Action.Verb;

@@ -1,5 +1,8 @@
 package items;
 
+import items.utility.GenericItem;
+import items.utility.IUseableItem;
+
 public class Lever extends GenericItem implements IUseableItem {
     public enum LeverPosition {up, down};
     LeverPosition leverPosition = LeverPosition.up;
@@ -23,6 +26,8 @@ public class Lever extends GenericItem implements IUseableItem {
 		this(name, description, LeverPosition.up);
 	}
 
+    public Lever() {   }
+    
 	public void useItem() {
         if (leverPosition == LeverPosition.up) {
             leverPosition = LeverPosition.down;
@@ -41,5 +46,4 @@ public class Lever extends GenericItem implements IUseableItem {
 	public boolean isUseable() {
 		return true;
 	}
-
 }

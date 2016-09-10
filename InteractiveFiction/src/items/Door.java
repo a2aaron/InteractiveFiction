@@ -1,5 +1,8 @@
 package items;
 
+import items.utility.GenericItem;
+import items.utility.IUseableItem;
+
 public class Door extends GenericItem implements IUseableItem {
 	public enum DoorState {open, closed};
 	public DoorState doorState;

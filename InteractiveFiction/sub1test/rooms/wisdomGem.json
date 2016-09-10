@@ -1,6 +1,6 @@
 {
-    "roomName": "Wisdom Gem",
-    "roomDescription": "",
+    "name": "Wisdom Gem",
+    "description": "",
     "itemList": [
         "wisdomGem.json"
     ],
@@ -8,8 +8,8 @@
         "down": "trapDoorLever"
     },
     "items": {  
-        "itemName": "Wisdom Gem",
-        "itemDescription": "A strange floating white gem",
+        "name": "Wisdom Gem",
+        "description": "A strange floating white gem",
         "takeable": true
     }
 }

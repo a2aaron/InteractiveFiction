@@ -1,6 +1,7 @@
 package items;
 
-import character.Inventory;
+import inventory.Inventory;
+import items.utility.GenericItem;
 
 public class Chest extends GenericItem {
 	Inventory inventory = new Inventory();

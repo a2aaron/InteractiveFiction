@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import character.Inventory;
+import inventory.Inventory;
 import items.Vace;
 import rooms.GenericRoom;
 

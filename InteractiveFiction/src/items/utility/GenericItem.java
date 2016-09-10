@@ -1,4 +1,4 @@
-package items;
+package items.utility;
 
 
 import org.json.JSONException;

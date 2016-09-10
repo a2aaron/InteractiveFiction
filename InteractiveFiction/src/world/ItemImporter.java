@@ -3,11 +3,13 @@ package world;
 import org.json.JSONObject;
 
 import items.*;
+import items.utility.GenericItem;
+import items.utility.GenericTakeableItem;
 
 public class ItemImporter {
 	public static Class determineClass(JSONObject item) {
 		if (item.has("takeable")) { 
-			return items.GenericTakeableItem.class;
+			return items.utility.GenericTakeableItem.class;
 		} else if (item.has("useable")) {
 			JSONObject useable = item.getJSONObject("useable");
 			if (fieldEqualsObject(useable, "type", "lever")) {
@@ -17,9 +19,9 @@ public class ItemImporter {
 					return items.Lever.class;	
 				}
 			}
-			return items.IUseableItem.class;
+			return items.utility.IUseableItem.class;
 		}
-		return items.GenericItem.class;
+		return items.utility.GenericItem.class;
 	}
 	
 	public static GenericItem createItem(JSONObject item) {
@@ -28,7 +30,7 @@ public class ItemImporter {
 		String name = item.getString("itemName");
 		String description = item.getString("itemDescription");
 		
-		if (itemClass == items.GenericTakeableItem.class) {
+		if (itemClass == items.utility.GenericTakeableItem.class) {
 			return new GenericTakeableItem(name, description);
 		} else if (itemClass == items.OneTimeLever.class){
 			return new OneTimeLever(name, description);

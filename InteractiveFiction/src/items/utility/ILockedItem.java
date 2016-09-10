@@ -1,4 +1,4 @@
-package items;
+package items.utility;
 
 public interface ILockedItem {
 	public boolean isLocked();

@@ -1,6 +1,6 @@
-package items;
+package items.utility;
 
-import character.Inventory;
+import inventory.Inventory;
 
 public interface ITakeableItem {
 	public void takeItem(Inventory destination);

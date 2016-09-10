@@ -1,6 +1,7 @@
 package rooms;
 
 import items.Door.DoorState;
+import inventory.RoomInventory;
 import items.LockedDoor;
 import types.Action.MovementAdverb;
 

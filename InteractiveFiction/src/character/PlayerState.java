@@ -1,8 +1,9 @@
 package character;
 
-import items.GenericItem;
+import inventory.Inventory;
+import inventory.RoomInventory;
+import items.utility.GenericItem;
 import rooms.GenericRoom;
-import rooms.RoomInventory;
 
 public class PlayerState {
 	int playerEnergy = 100;

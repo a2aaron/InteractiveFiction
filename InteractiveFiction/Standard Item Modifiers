@@ -1,0 +1,7 @@
+Standard Item Modifiers
+
+internalName - The string used to refer to an object. Does not have to match the itemName but no two objects may share the same name.
+
+"internalName": {
+    "name"
+}

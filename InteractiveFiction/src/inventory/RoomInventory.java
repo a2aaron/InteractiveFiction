@@ -1,9 +1,8 @@
-package rooms;
+package inventory;
 
 import java.util.ArrayList;
 
-import character.Inventory;
-import items.GenericItem;
+import items.utility.GenericItem;
 
 public class RoomInventory extends Inventory {
 	

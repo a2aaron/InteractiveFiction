@@ -5,8 +5,8 @@ import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
-import character.Inventory;
 import character.PlayerState;
+import inventory.Inventory;
 import items.Vace;
 import rooms.GenericRoom;
 import types.Action;

@@ -1,5 +1,6 @@
 package rooms;
 
+import inventory.RoomInventory;
 import items.Vace;
 import types.Action.MovementAdverb;
 

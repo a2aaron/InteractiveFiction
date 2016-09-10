@@ -1,4 +1,4 @@
-package items;
+package items.utility;
 
 public interface IBreakableItem {
 	public void breakItem();

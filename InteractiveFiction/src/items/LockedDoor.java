@@ -1,5 +1,7 @@
 package items;
 
+import items.utility.GenericItem;
+
 public class LockedDoor extends Door {
 	public enum LockState {locked, unlocked};
 	

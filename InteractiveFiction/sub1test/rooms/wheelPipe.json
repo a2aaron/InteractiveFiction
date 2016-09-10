@@ -1,9 +1,53 @@
 {
-    "roomName": "Wheel Pipe",
-    "roomDescription": "This room has a long vertical that can hold a wheel.",
-    "itemList": [
-        "wheelPipe.json"
-    ],
+    "name": "Wheel Pipe",
+    "description": "This room has a long vertical that can hold a wheel.",
+    "items": {
+        "wheelPipe": {
+        "name": "Pipe with Hole",
+        "description": "A metal pipe that has a hole fit for a wheel",
+        "fields": {
+            "solved": false,
+        },
+        "examine": {
+            "respondsTo": [
+                "examine",
+                "look at"
+                "look"
+            ]
+        },
+        "inventory": {
+            "takeable": false,
+            "accepts": "wheel",
+        },
+        "use": {
+            "respondsTo": [
+                "spin",
+                "turn",
+                "use"
+            ],
+            "locked": {
+                "key": {
+                    "item": "wheel",
+                    "newItemName": "Wheel Pipe",
+                    "newItemDescription": "A metal pipe outfited with a wheel",
+                }
+                }
+            },
+            "onUse": [
+                {
+                    "condition": {
+                        "solved": true
+                    }
+                }
+                {
+                    "condition": {},
+                    "result": {
+                        "print": "You turn the wheel. Nothing happens."
+                    }
+                }
+                ]
+            }
+        },
     "exits": {
         "right": "tileWheel",
         "left": "chimeClock"

@@ -1,6 +1,6 @@
 package types;
 
-import items.GenericItem;
+import items.utility.GenericItem;
 
 public class ItemAction extends Action { 
 	public GenericItem directObject; // The object used in the action
